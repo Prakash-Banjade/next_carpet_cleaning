@@ -11,6 +11,11 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# static files
+/public
+public
+public/*
+
 # OS
 .DS_Store
 
