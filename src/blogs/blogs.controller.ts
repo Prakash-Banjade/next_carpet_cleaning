@@ -4,9 +4,6 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
-import { UploadBlogFileDto } from './dto/files-blog.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/config/multer.config';
 
 @ApiTags('blogs')
 @Controller('blogs')
@@ -33,12 +30,6 @@ export class BlogsController {
   @FormDataRequest({ storage: FileSystemStoredFile })
   update(@Param('id') id: string, @Body(ValidationPipe) updateBlogDto: UpdateBlogDto) {
     return this.blogsService.update(id, updateBlogDto);
-  }
-
-  @Post('upload')
-  @FormDataRequest({ storage: FileSystemStoredFile })
-  getHello(@Body() uploadBlogFileDto: UploadBlogFileDto): void {
-    console.log(uploadBlogFileDto);
   }
 
   @Delete(':id')
