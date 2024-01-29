@@ -10,6 +10,7 @@ import { BlogsModule } from './blogs/blogs.module';
 import { FileSystemStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { GalleryModule } from './gallery/gallery.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'public'), // serve static files eg: localhost:3000/filename.png
     }),
     ServicesModule,
-    BlogsModule
+    BlogsModule,
+    GalleryModule
   ],
   controllers: [AppController],
   providers: [AppService],

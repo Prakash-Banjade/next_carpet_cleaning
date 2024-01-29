@@ -35,7 +35,10 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         } else if (exception instanceof ValidationError) { // from class-validator
             errResponse.statusCode = HttpStatus.BAD_REQUEST;
             errResponse.message = exception.constraints[Object.keys(exception.constraints)[0]]
-        } else {
+        } else if (exception instanceof TypeError) { // from type script
+            errResponse.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+            errResponse.message = exception.message;
+        } else { // others
             errResponse.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errResponse.message = 'Internal Server Error'
         }

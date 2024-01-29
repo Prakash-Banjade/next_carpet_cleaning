@@ -15,11 +15,7 @@ export class ServicesService {
   async create(createServiceDto: CreateServiceDto) {
     const { content, coverImage, title } = createServiceDto
 
-    if (coverImage instanceof FileSystemStoredFile) {
-      const pathSegments = coverImage?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      createServiceDto.coverImage = fileName;
-    }
+    if (coverImage instanceof FileSystemStoredFile) createServiceDto.coverImage = this.getFileName(coverImage)
 
     return await this.serviceRepo.save({
       content,
@@ -45,11 +41,7 @@ export class ServicesService {
   async update(id: string, updateServiceDto: UpdateServiceDto) {
     const existingService = await this.findOne(id)
 
-    if (updateServiceDto?.coverImage instanceof FileSystemStoredFile) {
-      const pathSegments = updateServiceDto?.coverImage?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      updateServiceDto.coverImage = fileName;
-    }
+    if (updateServiceDto?.coverImage instanceof FileSystemStoredFile) updateServiceDto.coverImage = this.getFileName(updateServiceDto?.coverImage)
 
     Object.assign(existingService, updateServiceDto);
     return await this.serviceRepo.save(existingService);
@@ -65,5 +57,13 @@ export class ServicesService {
 
     if (!srevice) throw new BadRequestException('Failed to restore service')
     return srevice
+  }
+
+  public getFileName(file: FileSystemStoredFile | string) {
+    if (file instanceof FileSystemStoredFile) {
+      const pathSegments = file?.path.split('\\');
+      const fileName = pathSegments[pathSegments.length - 1];
+      return fileName;
+    } else return file;
   }
 }

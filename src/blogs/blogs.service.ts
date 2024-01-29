@@ -13,13 +13,9 @@ export class BlogsService {
 
   async create(createBlogDto: CreateBlogDto) {
     const { content, title, coverImage } = createBlogDto;
-    // console.log(coverImage);
     console.log(createBlogDto);
-    if (coverImage instanceof FileSystemStoredFile) {
-      const pathSegments = coverImage?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      createBlogDto.coverImage = fileName;
-    }
+    if (coverImage instanceof FileSystemStoredFile) createBlogDto.coverImage = this.getFileName(coverImage)
+
     return await this.blogRepo.save({
       content,
       title,
@@ -44,11 +40,7 @@ export class BlogsService {
   async update(id: string, updateBlogDto: UpdateBlogDto) {
     const existingBlog = await this.findOne(id);
 
-    if (updateBlogDto?.coverImage instanceof FileSystemStoredFile) {
-      const pathSegments = updateBlogDto?.coverImage?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      updateBlogDto.coverImage = fileName;
-    }
+    if (updateBlogDto?.coverImage instanceof FileSystemStoredFile) updateBlogDto.coverImage = this.getFileName(updateBlogDto?.coverImage);
 
     Object.assign(existingBlog, updateBlogDto);
     return await this.blogRepo.save(existingBlog);
@@ -66,5 +58,13 @@ export class BlogsService {
 
     if (!blog) throw new BadRequestException('Failed to restore blog')
     return blog
+  }
+
+  public getFileName(file: FileSystemStoredFile | string) {
+    if (file instanceof FileSystemStoredFile) {
+      const pathSegments = file?.path.split('\\');
+      const fileName = pathSegments[pathSegments.length - 1];
+      return fileName;
+    } else return file;
   }
 }
