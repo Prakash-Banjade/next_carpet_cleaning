@@ -4,6 +4,7 @@ import { UpdateServiceDto } from './dto/update-service.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Service } from './entities/service.entity';
 import { Repository } from 'typeorm';
+import { FileSystemStoredFile } from 'nestjs-form-data';
 
 @Injectable()
 export class ServicesService {
@@ -12,7 +13,19 @@ export class ServicesService {
 
 
   async create(createServiceDto: CreateServiceDto) {
-    return await this.serviceRepo.save(createServiceDto);
+    const { content, coverImage, title } = createServiceDto
+
+    if (coverImage instanceof FileSystemStoredFile) {
+      const pathSegments = coverImage?.path.split('\\');
+      const fileName = pathSegments[pathSegments.length - 1];
+      createServiceDto.coverImage = fileName;
+    }
+
+    return await this.serviceRepo.save({
+      content,
+      title,
+      coverImage: createServiceDto.coverImage as string || null,
+    });
   }
 
   async findAll() {
@@ -27,6 +40,13 @@ export class ServicesService {
 
   async update(id: string, updateServiceDto: UpdateServiceDto) {
     const existingService = await this.findOne(id)
+
+    if (updateServiceDto?.coverImage instanceof FileSystemStoredFile) {
+      const pathSegments = updateServiceDto?.coverImage?.path.split('\\');
+      const fileName = pathSegments[pathSegments.length - 1];
+      updateServiceDto.coverImage = fileName;
+    }
+
     Object.assign(existingService, updateServiceDto);
     return await this.serviceRepo.save(existingService);
   }

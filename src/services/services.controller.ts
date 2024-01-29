@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseI
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/config/multer.config';
+// import { FileInterceptor } from '@nestjs/platform-express';
+// import { multerOptions } from 'src/config/multer.config';
 import { ApiTags } from '@nestjs/swagger';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 
 
 @ApiTags('services')
@@ -14,6 +15,7 @@ export class ServicesController {
   constructor(private readonly servicesService: ServicesService) { }
 
   @Post()
+  @FormDataRequest({ storage: FileSystemStoredFile })
   create(@Body(ValidationPipe) createServiceDto: CreateServiceDto) {
     return this.servicesService.create(createServiceDto);
   }
@@ -29,6 +31,7 @@ export class ServicesController {
   }
 
   @Patch(':id')
+  @FormDataRequest({ storage: FileSystemStoredFile })
   update(@Param('id') id: string, @Body(ValidationPipe) updateServiceDto: UpdateServiceDto) {
     return this.servicesService.update(id, updateServiceDto);
   }
@@ -38,10 +41,10 @@ export class ServicesController {
     return this.servicesService.remove(id);
   }
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file', multerOptions))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    // console.log(file);
-    return console.log(file);
-  }
+  // @Post('upload')
+  // @UseInterceptors(FileInterceptor('file', multerOptions))
+  // uploadFile(@UploadedFile() file: Express.Multer.File) {
+  //   // console.log(file);
+  //   return console.log(file);
+  // }
 }

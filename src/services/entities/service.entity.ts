@@ -8,4 +8,7 @@ export class Service extends BaseEntity {
 
     @Column()
     content: string;
+
+    @Column({ nullable: true })
+    coverImage: string;
 }
