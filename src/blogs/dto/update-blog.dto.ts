@@ -1,4 +1,4 @@
-import { FileSystemStoredFile, IsFile } from 'nestjs-form-data';
+import { FileSystemStoredFile } from 'nestjs-form-data';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UpdateBlogDto {
