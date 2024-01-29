@@ -29,7 +29,11 @@ export class ServicesService {
   }
 
   async findAll() {
-    return await this.serviceRepo.find();
+    return await this.serviceRepo.find({
+      order: {
+        createdAt: 'ASC'
+      }
+    });
   }
 
   async findOne(id: string) {
