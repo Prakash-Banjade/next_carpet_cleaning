@@ -11,11 +11,18 @@ import { FileSystemStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GalleryModule } from './gallery/gallery.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import envConfig from './config/env.config';
+import { JwtModule } from '@nestjs/jwt';
+require('dotenv').config()
+
 
 @Module({
   imports: [
     ConfigModule.forRoot({ // nest env config 
-      isGlobal: true
+      isGlobal: true,
+      load: [envConfig]
     }),
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     TypeOrmModule.forFeature([BaseEntity]),
@@ -23,9 +30,18 @@ import { GalleryModule } from './gallery/gallery.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'), // serve static files eg: localhost:3000/filename.png
     }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.ACCESS_TOKEN_SECRET,
+      signOptions: {
+        expiresIn: '120s'
+      }
+    }),
     ServicesModule,
     BlogsModule,
-    GalleryModule
+    GalleryModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
