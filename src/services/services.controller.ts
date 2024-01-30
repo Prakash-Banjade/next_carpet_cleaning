@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
@@ -13,8 +13,9 @@ export class ServicesController {
   constructor(private readonly servicesService: ServicesService) { }
 
   @Post()
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })
-  create(@Body(ValidationPipe) createServiceDto: CreateServiceDto) {
+  create(@Body() createServiceDto: CreateServiceDto) {
     return this.servicesService.create(createServiceDto);
   }
 
@@ -29,8 +30,9 @@ export class ServicesController {
   }
 
   @Patch(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })
-  update(@Param('id') id: string, @Body(ValidationPipe) updateServiceDto: UpdateServiceDto) {
+  update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
     return this.servicesService.update(id, updateServiceDto);
   }
 
