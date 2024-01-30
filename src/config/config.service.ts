@@ -1,69 +1,50 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path'
-require('dotenv').config()
 
-class ConfigService {
+// const configService: TypeOrmModuleOptions = {
+//     type: 'mysql',
 
-    constructor(private env: { [k: string]: string | undefined }) { }
+//     host: 'yh3.domaininnepal.com',
+//     port: 3306,
+//     username: 'hubitcom_prakash122',
+//     password: 'prakash@122',
+//     database: 'hubitcom_rebelcleaning',
 
-    private getValue(key: string, throwOnMissing = true): string {
-        const value = this.env[key];
-        if (!value && throwOnMissing) {
-            throw new Error(`config error - missing env.${key}`);
-        }
+//     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
 
-        return value;
-    }
+//     migrationsTableName: 'migration',
 
-    public ensureValues(keys: string[]) {
-        keys.forEach(k => this.getValue(k, true));
-        return this;
-    }
+//     migrations: ['src/migration/*.ts'],
 
-    public getPort() {
-        return this.getValue('PORT', true);
-    }
+//     // cli: {
+//     //     migrationsDir: 'src/migration',
+//     // },
 
-    public isProduction() {
-        const mode = this.getValue('MODE', false);
-        return mode != 'DEV';
-    }
+//     autoLoadEntities: true,
+//     synchronize: true
+// };
 
-    public getTypeOrmConfig(): TypeOrmModuleOptions {
-        return {
-            type: 'postgres',
+const configService: TypeOrmModuleOptions = {
+    type: 'mysql',
 
-            host: this.getValue('POSTGRES_HOST'),
-            port: parseInt(this.getValue('POSTGRES_PORT')),
-            username: this.getValue('POSTGRES_USER'),
-            password: this.getValue('POSTGRES_PASSWORD'),
-            database: this.getValue('POSTGRES_DATABASE'),
+    host: 'localhost',
+    port: 3306,
+    username: 'root',
+    password: 'mySQL',
+    database: 'rebel_cleaning',
 
-            entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+    entities: [join(__dirname, '**', '*.entity.{ts,js}')],
 
-            migrationsTableName: 'migration',
+    migrationsTableName: 'migration',
 
-            migrations: ['src/migration/*.ts'],
+    migrations: ['src/migration/*.ts'],
 
-            // cli: {
-            //     migrationsDir: 'src/migration',
-            // },
+    // cli: {
+    //     migrationsDir: 'src/migration',
+    // },
 
-            ssl: this.isProduction(),
-            autoLoadEntities: true,
-            synchronize: true
-        };
-    }
-
-}
-
-const configService = new ConfigService(process.env)
-    .ensureValues([
-        'POSTGRES_HOST',
-        'POSTGRES_PORT',
-        'POSTGRES_USER',
-        'POSTGRES_PASSWORD',
-        'POSTGRES_DATABASE'
-    ]);
+    autoLoadEntities: true,
+    synchronize: true
+};
 
 export { configService };

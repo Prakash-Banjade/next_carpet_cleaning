@@ -24,7 +24,7 @@ require('dotenv').config()
       isGlobal: true,
       load: [envConfig]
     }),
-    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    TypeOrmModule.forRoot(configService),
     TypeOrmModule.forFeature([BaseEntity]),
     NestjsFormDataModule.config({ storage: FileSystemStoredFile, isGlobal: true, fileSystemStoragePath: 'public', autoDeleteFile: false }),
     ServeStaticModule.forRoot({
