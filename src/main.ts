@@ -12,6 +12,13 @@ async function bootstrap() {
     logger: ['log']
   });
 
+  app.enableCors({
+    origin: '*',
+    credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'DELETE', 'PATCH',],
+  });
+
   const { httpAdapter } = app.get(HttpAdapterHost)
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 

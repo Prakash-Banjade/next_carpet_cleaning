@@ -15,12 +15,18 @@ export class AuthService {
     const { email, password } = signInAuthDto
     const user = await this.userService.findOneByEmail(email)
 
-    if (user instanceof NotFoundException) throw new BadRequestException('Invalid email')
+    if (user instanceof NotFoundException) throw new BadRequestException({
+      message: 'Invalid email',
+      field: 'email'
+    })
 
     // const isMatch = bcrypt.compareSync(password, user.password)
     const isMatch = password === user.password;
 
-    if (!isMatch) throw new BadRequestException('Invalid password')
+    if (!isMatch) throw new BadRequestException({
+      message: 'Invalid password',
+      field: 'password'
+    })
 
     const payload = { email: user.email, id: user.id };
 
