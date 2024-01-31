@@ -11,7 +11,7 @@ export class CreateServiceDto {
     content: string;
 
     @IsOptional()    
-    @HasMimeType(['image/jpeg', 'image/png'], { message: 'Invalid type for cover image. Cover image must be a jpeg or png' })
+    @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for cover image. Cover image must be a jpeg or png' })
     @IsFile({ message: 'Invalid type for cover image. Cover image must be a file' })
     coverImage: FileSystemStoredFile | string;
 }

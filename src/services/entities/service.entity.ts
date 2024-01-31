@@ -3,12 +3,12 @@ import { Column, Entity } from "typeorm";
 
 @Entity()
 export class Service extends BaseEntity {
-    @Column()
+    @Column({ type: 'text' })
     title: string;
 
-    @Column()
+    @Column({ type: 'longtext' })
     content: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'text' })
     coverImage: string;
 }

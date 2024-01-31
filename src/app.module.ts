@@ -34,7 +34,7 @@ require('dotenv').config()
       global: true,
       secret: process.env.ACCESS_TOKEN_SECRET,
       signOptions: {
-        expiresIn: '120s'
+        expiresIn: '1200s'
       }
     }),
     ServicesModule,
