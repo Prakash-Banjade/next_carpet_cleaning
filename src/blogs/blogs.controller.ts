@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes, Req } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { CustomRequest } from 'src/types/CustomRequest';
 
 @ApiTags('blogs')
 @Controller('blogs')
@@ -13,8 +14,8 @@ export class BlogsController {
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })
-  create(@Body() createBlogDto: CreateBlogDto) {
-    return this.blogsService.create(createBlogDto);
+  create(@Body() createBlogDto: CreateBlogDto, @Req() req: CustomRequest) {
+    return this.blogsService.create(createBlogDto, req.user.id);
   }
 
   @Get()

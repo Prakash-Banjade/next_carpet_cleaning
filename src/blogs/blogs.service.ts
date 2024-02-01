@@ -5,20 +5,28 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Blog } from './entities/blog.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import { UserService } from 'src/users/users.service';
 
 @Injectable()
 export class BlogsService {
 
-  constructor(@InjectRepository(Blog) private readonly blogRepo: Repository<Blog>) { }
+  constructor(
+    @InjectRepository(Blog) private readonly blogRepo: Repository<Blog>,
+    private readonly userService: UserService,
+  ) { }
 
-  async create(createBlogDto: CreateBlogDto) {
+  async create(createBlogDto: CreateBlogDto, authorId: string) {
     const { content, title, coverImage } = createBlogDto;
+    // generating author
+    const author = await this.userService.findOneById(authorId);
+
     createBlogDto.coverImage = this.getFileName(coverImage)
 
     return await this.blogRepo.save({
       content,
       title,
       coverImage: createBlogDto.coverImage as string || null,
+      author,
     });
   }
 
@@ -26,6 +34,11 @@ export class BlogsService {
     return await this.blogRepo.find({
       order: {
         createdAt: 'ASC'
+      },
+      select: {
+        author: {
+          password: false,
+        }
       }
     });
   }

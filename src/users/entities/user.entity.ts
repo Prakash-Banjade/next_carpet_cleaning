@@ -1,14 +1,21 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 import { BaseEntity } from "src/entities/base.entity";
+import { Blog } from "src/blogs/entities/blog.entity";
 
 @Entity()
 export class User extends BaseEntity {
+    @Column()
+    name: string;
+
     @Column()
     email: string;
 
     @Column()
     password: string;
+
+    @OneToMany(() => Blog, blog => blog.author)
+    blogs: Blog[]
 
     @BeforeInsert()
     @BeforeUpdate()
