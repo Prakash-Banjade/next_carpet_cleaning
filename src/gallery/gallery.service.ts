@@ -28,7 +28,7 @@ export class GalleryService {
 
     return await this.galleryRepo.save({
       title: createGalleryDto.title,
-      images,
+      images: images || []
     })
   }
 
@@ -49,16 +49,21 @@ export class GalleryService {
   async update(id: string, updateGalleryDto: UpdateGalleryDto) {
     const existingGallery = await this.findOne(id);
 
-    const images: string[] = [];
-    updateGalleryDto.images?.map((image: FileSystemStoredFile | string) => {
-      if (image instanceof FileSystemStoredFile) {
-        images.push(this.getFileName(image));
-      } else images.push(image);
-    })
+    console.log(updateGalleryDto);
 
-    updateGalleryDto.images = images;
+    const images: string[] = updateGalleryDto?.previousImages instanceof Array ? updateGalleryDto?.previousImages : typeof updateGalleryDto?.previousImages === 'string' ? [updateGalleryDto?.previousImages] : [];
 
-    Object.assign(existingGallery, updateGalleryDto);
+    console.log(images);
+
+    updateGalleryDto.images instanceof Array ? updateGalleryDto.images?.map((image: FileSystemStoredFile) => {
+      images.push(this.getFileName(image));
+    }) : updateGalleryDto.images && images.push(this.getFileName(updateGalleryDto.images));
+
+    Object.assign(existingGallery, {
+      title: updateGalleryDto.title,
+      images: images || []
+    });
+
     return await this.galleryRepo.save(existingGallery);
   }
 
@@ -75,9 +80,9 @@ export class GalleryService {
   }
 
   public getFileName(file: FileSystemStoredFile | string) {
-    if (file instanceof FileSystemStoredFile) {
+    if (typeof file !== 'string') {
       const pathSegments = file?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
+      const fileName = pathSegments[pathSegments?.length - 1];
       return fileName;
     } else return file;
   }

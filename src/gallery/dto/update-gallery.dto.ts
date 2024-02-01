@@ -6,8 +6,12 @@ export class UpdateGalleryDto {
     @IsOptional()
     title?: string;
 
-    @HasMimeType(['image/jpeg', 'image/png'], { message: 'Invalid type for images. Images must be jpeg or png' })
-    @IsFile({ message: 'Invalid type for images. Images must be file type' })
+    @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for images. Images must be jpeg or png or webp', each: true })
+    @IsFile({ message: 'Invalid type for images. Images must be file type', each: true })
     @IsOptional()
-    images?: FileSystemStoredFile[] | string[]
+    images?: FileSystemStoredFile[]
+
+    @IsOptional()
+    @IsString({ message: 'Invalid type for previousImages. previousImages must be a string', each: true })
+    previousImages?: string[] | string
 }
