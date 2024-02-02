@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import envConfig from './config/env.config';
 import { JwtModule } from '@nestjs/jwt';
+import { ContactModule } from './contact/contact.module';
 require('dotenv').config()
 
 
@@ -42,6 +43,7 @@ require('dotenv').config()
     GalleryModule,
     AuthModule,
     UsersModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
