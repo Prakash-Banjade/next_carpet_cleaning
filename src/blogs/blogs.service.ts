@@ -19,7 +19,7 @@ export class BlogsService {
     const { content, title, coverImage } = createBlogDto;
     // generating author
     const author = await this.userService.findOneById(authorId);
-
+console.log("here")
     createBlogDto.coverImage = this.getFileName(coverImage)
 
     return await this.blogRepo.save({

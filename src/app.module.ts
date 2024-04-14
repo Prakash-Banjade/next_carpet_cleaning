@@ -42,7 +42,7 @@ require('dotenv').config()
     ServicesModule,
     BlogsModule,
     GalleryModule,
-    AuthModule,
+    // AuthModule,
     UsersModule,
     ContactModule,
     FaqModule,
