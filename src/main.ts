@@ -9,19 +9,18 @@ const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: ['log']
+    logger: ['log'],
   });
 
   app.enableCors({
     origin: '*',
     credentials: true,
     optionsSuccessStatus: 200,
-    methods: ['GET', 'POST', 'DELETE', 'PATCH',],
+    methods: ['GET', 'POST', 'DELETE', 'PATCH'],
   });
 
-  const { httpAdapter } = app.get(HttpAdapterHost)
+  const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
-
 
   // swagger
   const config = new DocumentBuilder()
@@ -31,12 +30,24 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    include: [ServicesModule, BlogsModule, GalleryModule]
+    include: [ServicesModule, BlogsModule, GalleryModule],
   });
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    customSiteTitle: 'Next Carpet Cleaning',
+    customfavIcon: 'https://avatars.githubusercontent.com/u/6936373?s=200&v=4',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js',
+    ],
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
+    ],
+  });
 
   await app.listen(PORT).then(() => {
     console.log(`Server running on port ${PORT}`);
-  })
+  });
 }
 bootstrap();
