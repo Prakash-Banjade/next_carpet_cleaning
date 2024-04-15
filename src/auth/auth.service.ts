@@ -1,6 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { SignInAuthDto } from './dto/signin-auth.dto';
-import { UserService } from 'src/users/users.service';
+import { UserService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
@@ -8,25 +12,27 @@ import * as bcrypt from 'bcryptjs';
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService
-  ) { }
+    private jwtService: JwtService,
+  ) {}
 
   async signIn(signInAuthDto: SignInAuthDto) {
-    const { email, password } = signInAuthDto
-    const user = await this.userService.findOneByEmail(email)
+    const { email, password } = signInAuthDto;
+    const user = await this.userService.findOneByEmail(email);
 
-    if (user instanceof NotFoundException) throw new BadRequestException({
-      message: 'Invalid email',
-      field: 'email'
-    })
+    if (user instanceof NotFoundException)
+      throw new BadRequestException({
+        message: 'Invalid email',
+        field: 'email',
+      });
 
     // const isMatch = bcrypt.compareSync(password, user.password)
     const isMatch = password === user.password;
 
-    if (!isMatch) throw new BadRequestException({
-      message: 'Invalid password',
-      field: 'password'
-    })
+    if (!isMatch)
+      throw new BadRequestException({
+        message: 'Invalid password',
+        field: 'password',
+      });
 
     const payload = { email: user.email, id: user.id };
 

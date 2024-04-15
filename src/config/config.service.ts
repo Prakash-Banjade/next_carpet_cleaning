@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { join } from 'path'
+import { join } from 'path';
 
 // const configService: TypeOrmModuleOptions = {
 //     type: 'mysql',
@@ -25,33 +25,28 @@ import { join } from 'path'
 // };
 
 const configService: TypeOrmModuleOptions = {
-    // type: 'mysql',
+  type: 'postgres',
+  url: 'postgres://default:hVDFk85vUyoc@ep-green-shape-a49wypyd-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require',
+  // type: 'mysql',
 
-    // host: 'localhost',
-    // port: 3306,
-    // username: 'root',
-    // password: 'mySQL',
-    // database: 'rebel_cleaning',
+  // host: 'localhost',
+  // port: 3306,
+  // username: 'root',
+  // password: 'mySQL',
+  // database: 'rebel_cleaning',
 
-    type: 'mysql',
-    host: 'yh3.domaininnepal.com',
-    port: 3306,
-    username: 'hubitcom_prakash122',
-    password: 'prakash@122',
-    database: 'hubitcom_rebelcleaning',
+  entities: [join(__dirname, '**', '*.entity.{ts,js}')],
 
-    entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+  migrationsTableName: 'migration',
 
-    migrationsTableName: 'migration',
+  migrations: ['src/migration/*.ts'],
 
-    migrations: ['src/migration/*.ts'],
+  // cli: {
+  //     migrationsDir: 'src/migration',
+  // },
 
-    // cli: {
-    //     migrationsDir: 'src/migration',
-    // },
-
-    autoLoadEntities: true,
-    synchronize: false
+  autoLoadEntities: true,
+  synchronize: false,
 };
 
 export { configService };

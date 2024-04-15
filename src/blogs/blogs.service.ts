@@ -5,27 +5,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Blog } from './entities/blog.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
-import { UserService } from 'src/users/users.service';
+import { UserService } from '../users/users.service';
 
 @Injectable()
 export class BlogsService {
-
   constructor(
     @InjectRepository(Blog) private readonly blogRepo: Repository<Blog>,
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   async create(createBlogDto: CreateBlogDto, authorId: string) {
     const { content, title, coverImage } = createBlogDto;
     // generating author
     const author = await this.userService.findOneById(authorId);
-console.log("here")
-    createBlogDto.coverImage = this.getFileName(coverImage)
+    console.log('here');
+    createBlogDto.coverImage = this.getFileName(coverImage);
 
     return await this.blogRepo.save({
       content,
       title,
-      coverImage: createBlogDto.coverImage as string || null,
+      coverImage: (createBlogDto.coverImage as string) || null,
       author,
     });
   }
@@ -33,19 +32,19 @@ console.log("here")
   async findAll() {
     return await this.blogRepo.find({
       order: {
-        createdAt: 'ASC'
+        createdAt: 'ASC',
       },
       select: {
         author: {
           password: false,
-        }
-      }
+        },
+      },
     });
   }
 
   async findOne(id: string) {
     const existingBlog = await this.blogRepo.findOneBy({ id });
-    if (!existingBlog) throw new BadRequestException('Blog not found')
+    if (!existingBlog) throw new BadRequestException('Blog not found');
     return existingBlog;
   }
 
@@ -61,15 +60,15 @@ console.log("here")
   async remove(id: string) {
     const existingBlog = await this.findOne(id);
     const deleted = await this.blogRepo.softRemove(existingBlog);
-    if (!deleted) throw new BadRequestException('Failed to remove blog')
+    if (!deleted) throw new BadRequestException('Failed to remove blog');
     return deleted;
   }
 
   async restore(id: string) {
     const blog = await this.blogRepo.restore({ id });
 
-    if (!blog) throw new BadRequestException('Failed to restore blog')
-    return blog
+    if (!blog) throw new BadRequestException('Failed to restore blog');
+    return blog;
   }
 
   public getFileName(file: FileSystemStoredFile | string) {

@@ -1,4 +1,8 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,10 +11,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ContactService {
-
   constructor(
-    @InjectRepository(Contact) private readonly contactRepo: Repository<Contact>
-  ) { }
+    @InjectRepository(Contact)
+    private readonly contactRepo: Repository<Contact>,
+  ) {}
 
   async fetch() {
     return await this.contactRepo.find();
@@ -19,15 +23,20 @@ export class ContactService {
   async create(createContactDto: CreateContactDto) {
     console.log(createContactDto);
     const existingContact = await this.contactRepo.find();
-    if (existingContact?.length) throw new ConflictException('Contact already exists')
-
+    if (existingContact?.length)
+      throw new ConflictException('Contact already exists');
     return await this.contactRepo.save(createContactDto);
   }
 
   async update(updateContactDto: UpdateContactDto) {
     const existingContact = await this.contactRepo.find();
-    if (!existingContact?.length) throw new BadRequestException('Contact not found')
-    Object.assign(existingContact[0], updateContactDto)
-    return await this.contactRepo.save(existingContact[0]);
+
+    if (!existingContact?.length) {
+      const result = await this.contactRepo.save(updateContactDto);
+      return result;
+    } else {
+      Object.assign(existingContact[0], updateContactDto);
+      return await this.contactRepo.save(existingContact);
+    }
   }
 }
