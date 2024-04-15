@@ -1,14 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  UsePipes,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UserService) { }
+  constructor(private readonly usersService: UserService) {}
 
   @Public()
   @Post()

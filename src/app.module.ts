@@ -17,18 +17,23 @@ import envConfig from './config/env.config';
 import { JwtModule } from '@nestjs/jwt';
 import { ContactModule } from './contact/contact.module';
 import { FaqModule } from './faq/faq.module';
-require('dotenv').config()
-
+require('dotenv').config();
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ // nest env config 
+    ConfigModule.forRoot({
+      // nest env config
       isGlobal: true,
-      load: [envConfig]
+      load: [envConfig],
     }),
     TypeOrmModule.forRoot(configService),
     TypeOrmModule.forFeature([BaseEntity]),
-    NestjsFormDataModule.config({ storage: FileSystemStoredFile, isGlobal: true, fileSystemStoragePath: 'public', autoDeleteFile: false }),
+    NestjsFormDataModule.config({
+      storage: FileSystemStoredFile,
+      isGlobal: true,
+      fileSystemStoragePath: 'public',
+      autoDeleteFile: false,
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'), // serve static files eg: localhost:3000/filename.png
     }),
@@ -36,13 +41,13 @@ require('dotenv').config()
       global: true,
       secret: process.env.ACCESS_TOKEN_SECRET,
       signOptions: {
-        expiresIn: '1200s'
-      }
+        expiresIn: '1200s',
+      },
     }),
     ServicesModule,
     BlogsModule,
     GalleryModule,
-    // AuthModule,
+    AuthModule,
     UsersModule,
     ContactModule,
     FaqModule,
@@ -50,4 +55,4 @@ require('dotenv').config()
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
