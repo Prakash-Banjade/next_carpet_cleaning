@@ -17,8 +17,8 @@ export class AboutController {
 
   @Post('banner')
   @FormDataRequest({ storage: FileSystemStoredFile })
-  setBanner(@Body() banner: FileSystemStoredFile) {
-    return this.aboutService.setBannerImage(banner)
+  setBanner(@Body() bannerImage: { bannerImage: FileSystemStoredFile }) {
+    return this.aboutService.setBannerImage(bannerImage.bannerImage)
   }
 
   @Get()

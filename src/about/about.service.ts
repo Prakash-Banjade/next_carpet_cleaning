@@ -14,10 +14,10 @@ export class AboutService {
   ) { }
   async setData(createAboutDto: CreateAboutDto) {
     const existingAboutData = await this.aboutRepo.find();
-    const bannerImage = createAboutDto.bannerImage ? this.getFileName(createAboutDto.bannerImage) : null;
-    const coverImage = createAboutDto.coverImage ? this.getFileName(createAboutDto.coverImage) : null;
+    const bannerImage = createAboutDto.bannerImage && this.getFileName(createAboutDto.bannerImage);
+    const coverImage = createAboutDto.coverImage && this.getFileName(createAboutDto.coverImage);
 
-    if (!existingAboutData.length){
+    if (!existingAboutData.length) {
       const newAboutData = await this.aboutRepo.save({
         title: createAboutDto.title,
         content: createAboutDto.content,
