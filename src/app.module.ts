@@ -19,6 +19,7 @@ import { ContactModule } from './contact/contact.module';
 import { FaqModule } from './faq/faq.module';
 import { AboutModule } from './about/about.module';
 import { PrivacyPolicyModule } from './privacy_policy/privacy_policy.module';
+import { HomePageModule } from './home-page/home-page.module';
 require('dotenv').config();
 
 @Module({
@@ -55,6 +56,7 @@ require('dotenv').config();
     FaqModule,
     AboutModule,
     PrivacyPolicyModule,
+    HomePageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
