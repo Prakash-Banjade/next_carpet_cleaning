@@ -9,7 +9,7 @@ import { ServicePageDto } from './dto/service-page.dto';
 @ApiTags('service-page')
 
 @Controller('service-page')
-export class ServicesController {
+export class ServicePageController {
     constructor(private readonly servicePage_service: ServicePage_Service) { }
 
     @Post()
