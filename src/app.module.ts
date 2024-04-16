@@ -17,6 +17,7 @@ import envConfig from './config/env.config';
 import { JwtModule } from '@nestjs/jwt';
 import { ContactModule } from './contact/contact.module';
 import { FaqModule } from './faq/faq.module';
+import { AboutModule } from './about/about.module';
 require('dotenv').config();
 
 @Module({
@@ -51,6 +52,7 @@ require('dotenv').config();
     UsersModule,
     ContactModule,
     FaqModule,
+    AboutModule,
   ],
   controllers: [AppController],
   providers: [AppService],
