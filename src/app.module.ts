@@ -18,6 +18,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ContactModule } from './contact/contact.module';
 import { FaqModule } from './faq/faq.module';
 import { AboutModule } from './about/about.module';
+import { PrivacyPolicyModule } from './privacy_policy/privacy_policy.module';
 require('dotenv').config();
 
 @Module({
@@ -53,6 +54,7 @@ require('dotenv').config();
     ContactModule,
     FaqModule,
     AboutModule,
+    PrivacyPolicyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
