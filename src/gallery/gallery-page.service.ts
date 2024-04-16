@@ -13,13 +13,12 @@ export class GalleryPageService {
 
     async getPageData() {
         const galleryPageData = await this.galleryRepo.find();
-        console.log(galleryPageData)
         return galleryPageData[0];
     }
 
     async setPageData(galleryPageDto: GalleryPageDto) {
         const existingPageData = await this.galleryRepo.find()
-        const bannerImage = galleryPageDto.bannerImage ? this.getFileName(galleryPageDto.bannerImage) : null;
+        const bannerImage = galleryPageDto.bannerImage && this.getFileName(galleryPageDto.bannerImage)
 
         if (!existingPageData?.length) {
             const newGalleryData = await this.galleryRepo.save({
