@@ -21,6 +21,7 @@ import { AboutModule } from './about/about.module';
 import { PrivacyPolicyModule } from './privacy_policy/privacy_policy.module';
 import { HomePageModule } from './home-page/home-page.module';
 import { SiteSettingsModule } from './site-settings/site-settings.module';
+import { MembersModule } from './members/members.module';
 require('dotenv').config();
 
 @Module({
@@ -59,6 +60,7 @@ require('dotenv').config();
     PrivacyPolicyModule,
     HomePageModule,
     SiteSettingsModule,
+    MembersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
