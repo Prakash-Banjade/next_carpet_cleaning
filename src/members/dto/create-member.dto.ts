@@ -15,7 +15,6 @@ export class CreateMemberDto {
     @IsNotEmpty()
     post: string;
 
-
     @IsOptional()
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for image. Image must be jpeg or png or webp' })
     @IsFile({ message: 'Invalid type for Image. Image must be file type' })
@@ -41,8 +40,7 @@ export class CreateMemberDto {
     @IsOptional()
     linkedIn?: string;
 
-    @IsString()
-    @IsPhoneNumber()
+    @IsPhoneNumber('AU')
     @IsOptional()
     phone?: string;
 }

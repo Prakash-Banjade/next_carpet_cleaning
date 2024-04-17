@@ -2,7 +2,7 @@ import { IsEmail, IsOptional, IsPhoneNumber, IsString, IsUrl } from "class-valid
 
 export class CreateContactDto {
     @IsOptional()
-    @IsString({ message: 'Phone must be string', each: true })
+    @IsPhoneNumber('AU', { each: true })
     phone?: string[];
 
     @IsOptional()
