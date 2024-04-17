@@ -23,6 +23,7 @@ import { HomePageModule } from './home-page/home-page.module';
 import { SiteSettingsModule } from './site-settings/site-settings.module';
 import { MembersModule } from './members/members.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
 require('dotenv').config();
 
 @Module({
@@ -63,6 +64,7 @@ require('dotenv').config();
     SiteSettingsModule,
     MembersModule,
     SubscriberModule,
+    TestimonialsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
