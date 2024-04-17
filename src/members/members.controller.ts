@@ -4,6 +4,7 @@ import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('members')
 @Controller('members')
@@ -17,11 +18,13 @@ export class MembersController {
     return this.membersService.create(createMemberDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.membersService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.membersService.findOne(id);

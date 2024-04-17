@@ -11,6 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { GalleryPageDto } from './dto/gallery-page.dto';
 import { GalleryPageService } from './gallery-page.service';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('gallery-page')
 @Controller('gallery-page')
@@ -24,6 +25,7 @@ export class GalleryPageController {
         return this.galleryPageService.setPageData(galleryPageDto)
     }
 
+    @Public()
     @Get()
     findAll() {
         console.log('gallery_page findAll')

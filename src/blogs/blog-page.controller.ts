@@ -11,6 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { BlogPageDto } from './dto/blog-page.dto';
 import { BlogPageService } from './blog-page.service';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('blog-page')
 @Controller('blog-page')
@@ -24,6 +25,7 @@ export class BlogPageController {
         return this.blogPageService.setPageData(blogPageDto)
     }
 
+    @Public()
     @Get()
     findAll() {
         console.log('blog_page findAll')

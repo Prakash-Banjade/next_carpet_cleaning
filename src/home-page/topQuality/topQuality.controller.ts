@@ -3,6 +3,7 @@ import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ApiTags } from '@nestjs/swagger';
 import { TopQualityService } from './topQuality.service';
 import { TopQualityDto } from '../dto/topQuality.dto';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('topQuality')
 @Controller('topQuality')
@@ -16,6 +17,7 @@ export class TopQualityController {
         return this.topQualityService.set(topQualityDto);
     }
 
+    @Public()
     @Get()
     getSettings() {
         return this.topQualityService.get();

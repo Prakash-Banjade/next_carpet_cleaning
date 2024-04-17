@@ -3,6 +3,7 @@ import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('subscribers')
 @Controller('subscribers')
@@ -15,11 +16,13 @@ export class SubscriberController {
     return this.subscriberService.create(createSubscriberDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.subscriberService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.subscriberService.findOne(id);

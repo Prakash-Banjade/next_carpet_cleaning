@@ -3,6 +3,7 @@ import { SiteSettingsService } from './site-settings.service';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { SiteSettingsDto } from './dto/site-settings.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('siteSettings')
 @Controller('siteSettings')
@@ -16,6 +17,7 @@ export class SiteSettingsController {
     return this.siteSettingsService.set(siteSettingsDto);
   }
 
+  @Public()
   @Get()
   getSettings() {
     return this.siteSettingsService.get();
