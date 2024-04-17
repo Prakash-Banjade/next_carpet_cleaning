@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Max, Min } from "class-validator";
+import { IsEmail, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Max, Min } from "class-validator";
 import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
 
 export class CreateTestimonialDto {
@@ -17,8 +17,8 @@ export class CreateTestimonialDto {
     email?: string;
 
     @IsOptional()
-    @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for images. Image must be jpeg or png or webp', each: true })
-    @IsFile({ message: 'Invalid type for Image. Image must be file type', each: true })
+    @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for images. Image must be jpeg or png or webp' })
+    @IsFile({ message: 'Invalid type for Image. Image must be file type' })
     image?: string | FileSystemStoredFile;
 
     @IsString({ message: 'Message must be a string' })
