@@ -27,6 +27,16 @@ async function bootstrap() {
     .setTitle('Rebel Cleaning API Docs')
     .setDescription('This is the documentation of backend apis.')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      }
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
