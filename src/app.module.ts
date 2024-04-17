@@ -17,6 +17,9 @@ import envConfig from './config/env.config';
 import { JwtModule } from '@nestjs/jwt';
 import { ContactModule } from './contact/contact.module';
 import { FaqModule } from './faq/faq.module';
+import { AboutModule } from './about/about.module';
+import { PrivacyPolicyModule } from './privacy_policy/privacy_policy.module';
+import { HomePageModule } from './home-page/home-page.module';
 require('dotenv').config();
 
 @Module({
@@ -41,7 +44,7 @@ require('dotenv').config();
       global: true,
       secret: process.env.ACCESS_TOKEN_SECRET,
       signOptions: {
-        expiresIn: '1200s',
+        expiresIn: '3600s',
       },
     }),
     ServicesModule,
@@ -51,6 +54,9 @@ require('dotenv').config();
     UsersModule,
     ContactModule,
     FaqModule,
+    AboutModule,
+    PrivacyPolicyModule,
+    HomePageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

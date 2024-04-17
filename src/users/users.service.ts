@@ -13,7 +13,8 @@ export class UserService {
     console.log(createUserDto);
     const existingUser = await this.findOneByEmail(createUserDto.email)
     if (existingUser instanceof User) throw new ConflictException('User already exists with this email')
-    return await this.userRepo.save(createUserDto);
+    const newUser = this.userRepo.create(createUserDto)
+    return await this.userRepo.save(newUser);
   }
 
   async findAll() {

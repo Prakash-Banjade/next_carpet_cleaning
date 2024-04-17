@@ -25,8 +25,7 @@ export class AuthService {
         field: 'email',
       });
 
-    // const isMatch = bcrypt.compareSync(password, user.password)
-    const isMatch = password === user.password;
+    const isMatch = bcrypt.compareSync(password, user.password)
 
     if (!isMatch)
       throw new BadRequestException({
