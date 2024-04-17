@@ -21,11 +21,6 @@ export class Testimonial extends BaseEntity {
     @BeforeInsert()
     @BeforeUpdate()
     checkRating() {
-        if (this.rating > 5) {
-            this.rating = 5;
-        }
-        if (this.rating < 0) {
-            this.rating = 0;
-        }
+        if (this.rating > 5 || this.rating < 0) throw new Error('Rating must be between 0 and 5');
     }
 }
