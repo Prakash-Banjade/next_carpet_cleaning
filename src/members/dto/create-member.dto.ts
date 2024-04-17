@@ -35,4 +35,15 @@ export class CreateMemberDto {
     @IsUrl()
     @IsOptional()
     twitter?: string;
+
+    @IsString()
+    @IsUrl()
+    @IsOptional()
+    linkedIn?: string;
+
+    @IsString()
+    @IsUrl()
+    @IsOptional()
+    phone?: string;
 }
+

@@ -23,4 +23,10 @@ export class Member extends BaseEntity {
 
     @Column({ nullable: true })
     twitter?: string;
+
+    @Column({ nullable: true })
+    linkedIn?: string;
+
+    @Column({ nullable: true })
+    phone?: string;
 }
