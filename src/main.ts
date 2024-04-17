@@ -13,7 +13,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: '*',
+    origin: ["https://rebelcleaning-cms.vercel.app"],
     credentials: true,
     optionsSuccessStatus: 200,
     methods: ['GET', 'POST', 'DELETE', 'PATCH'],
