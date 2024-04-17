@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,7 +15,11 @@ export class MembersService {
   async create(createMemberDto: CreateMemberDto) {
     const image = createMemberDto.image && this.getFileName(createMemberDto.image);
 
-    console.log(createMemberDto)
+    const existingMemberWithEmail = await this.memberRepository.findOneBy({
+      email: createMemberDto.email,
+    })
+
+    if (existingMemberWithEmail) throw new ConflictException('Member with this email already exists');
 
     const newMember = this.memberRepository.create({
       ...createMemberDto,
@@ -40,6 +44,12 @@ export class MembersService {
     const image = updateMemberDto.image && this.getFileName(updateMemberDto.image);
 
     const existingMember = await this.findOne(id);
+
+    const foundMember = await this.memberRepository.findOneBy({
+      email: updateMemberDto.email,
+    })
+
+    if (foundMember && foundMember.id !== id) throw new ConflictException('Member with this email already exists');
 
     Object.assign(existingMember, {
       ...updateMemberDto,

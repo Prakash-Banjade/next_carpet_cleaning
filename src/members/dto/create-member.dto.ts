@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, IsUrl } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsUrl } from "class-validator";
 import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
 
 export class CreateMemberDto {
@@ -42,7 +42,7 @@ export class CreateMemberDto {
     linkedIn?: string;
 
     @IsString()
-    @IsUrl()
+    @IsPhoneNumber()
     @IsOptional()
     phone?: string;
 }
