@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AboutService } from './about.service';
 import { CreateAboutDto } from './dto/create-about.dto';
-import { UpdateAboutDto } from './dto/update-about.dto';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 
 @Controller('about-page')
