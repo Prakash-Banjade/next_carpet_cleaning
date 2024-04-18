@@ -15,9 +15,6 @@ export class CreateMemberDto {
     @IsNotEmpty()
     post: string;
 
-    @IsString()
-    password: string;
-
     @IsOptional()
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for image. Image must be jpeg or png or webp' })
     @IsFile({ message: 'Invalid type for Image. Image must be file type' })

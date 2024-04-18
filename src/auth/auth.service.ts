@@ -26,6 +26,11 @@ export class AuthService {
         field: 'email',
       });
 
+    if (!member.isAdmin) throw new BadRequestException({
+      message: 'Only admins can sign in',
+      field: 'email',
+    });
+
     const isMatch = bcrypt.compareSync(password, member.password)
 
     if (!isMatch)
