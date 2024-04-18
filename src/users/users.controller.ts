@@ -8,15 +8,12 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
-  UseGuards,
-  Req,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiTags } from '@nestjs/swagger';
-import { RequestUser } from 'types';
 
 @ApiTags('users')
 @Controller('users')
@@ -48,7 +45,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: Request & { user: RequestUser }) {
-    return this.usersService.remove(id, req.user);
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
   }
 }

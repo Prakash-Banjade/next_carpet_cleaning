@@ -12,5 +12,6 @@ import { Member } from './entities/member.entity';
   ],
   controllers: [MembersController],
   providers: [MembersService],
+  exports: [MembersService],
 })
 export class MembersModule {}

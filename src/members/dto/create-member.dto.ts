@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsUrl } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsUrl, Min } from "class-validator";
 import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
 
 export class CreateMemberDto {
@@ -10,6 +10,10 @@ export class CreateMemberDto {
     @IsString()
     @IsOptional()
     email: string;
+
+    @IsString()
+    @Min(8, { message: 'Password must be at least 8 characters' })
+    password: string;
 
     @IsString()
     @IsNotEmpty()

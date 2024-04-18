@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Req } from '@nestjs/common';
 import { MembersService } from './members.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { RequestUser } from 'types';
 
 @ApiTags('members')
 @Controller('members')
@@ -38,7 +39,7 @@ export class MembersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.membersService.remove(id);
+  remove(@Param('id') id: string, @Req() req: Request & { user: RequestUser }) {
+    return this.membersService.remove(id, req.user);
   }
 }

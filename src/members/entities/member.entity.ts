@@ -1,13 +1,17 @@
 import { BaseEntity } from "src/entities/base.entity";
-import { Column, Entity } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm";
+import * as bcrypt from 'bcryptjs';
 
 @Entity()
 export class Member extends BaseEntity {
     @Column()
     name: string;
 
-    @Column({ nullable: true })
+    @Column()
     email: string;
+
+    @Column()
+    password: string;
 
     @Column()
     post: string;
@@ -29,4 +33,14 @@ export class Member extends BaseEntity {
 
     @Column({ nullable: true })
     phone?: string;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hashPassword() {
+        if (this.password.length < 8) throw new Error('Password must be at least 8 characters long');
+        if (this.password) {
+            const saltRounds = 10;
+            this.password = await bcrypt.hash(this.password, saltRounds);
+        }
+    }
 }

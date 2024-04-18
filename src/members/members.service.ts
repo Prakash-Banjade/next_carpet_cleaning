@@ -40,6 +40,12 @@ export class MembersService {
     return existingMember;
   }
 
+  async findOneByEmail(email: string) {
+    const existingUser = await this.memberRepository.findOneBy({ email })
+    if (!existingUser) return new NotFoundException('User not found')
+    return existingUser;
+  }
+
   async update(id: string, updateMemberDto: UpdateMemberDto) {
     const image = updateMemberDto.image && this.getFileName(updateMemberDto.image);
 
@@ -59,8 +65,11 @@ export class MembersService {
     return await this.memberRepository.save(existingMember);
   }
 
-  async remove(id: string) {
+  async remove(id: string, member: { id: string }) {
     const existingMember = await this.findOne(id);
+
+    if (existingMember.id === member.id) throw new ConflictException('You cannot remove yourself');
+
     return await this.memberRepository.softRemove(existingMember);
   }
 

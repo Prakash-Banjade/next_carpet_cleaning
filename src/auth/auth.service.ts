@@ -7,25 +7,26 @@ import { SignInAuthDto } from './dto/signin-auth.dto';
 import { UserService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import { MembersService } from 'src/members/members.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
+    private memberService: MembersService,
     private jwtService: JwtService,
   ) {}
 
   async signIn(signInAuthDto: SignInAuthDto) {
     const { email, password } = signInAuthDto;
-    const user = await this.userService.findOneByEmail(email);
+    const member = await this.memberService.findOneByEmail(email);
 
-    if (user instanceof NotFoundException)
+    if (member instanceof NotFoundException)
       throw new BadRequestException({
         message: 'Invalid email',
         field: 'email',
       });
 
-    const isMatch = bcrypt.compareSync(password, user.password)
+    const isMatch = bcrypt.compareSync(password, member.password)
 
     if (!isMatch)
       throw new BadRequestException({
@@ -33,7 +34,7 @@ export class AuthService {
         field: 'password',
       });
 
-    const payload = { email: user.email, id: user.id };
+    const payload = { email: member.email, id: member.id };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
