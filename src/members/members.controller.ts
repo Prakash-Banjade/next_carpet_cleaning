@@ -6,6 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from 'src/decorators/setPublicRoute.decorator';
 import { RequestUser } from 'types';
+import { User } from 'src/decorators/user.decorator';
 
 @ApiTags('members')
 @Controller('members')
@@ -39,7 +40,7 @@ export class MembersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: Request & { user: RequestUser }) {
-    return this.membersService.remove(id, req.user);
+  remove(@Param('id') id: string, @User() user: RequestUser) {
+    return this.membersService.remove(id, user);
   }
 }
