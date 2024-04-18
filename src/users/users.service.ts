@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { RequestUser } from 'types';
 
 @Injectable()
 export class UserService {
@@ -50,8 +51,13 @@ export class UserService {
     return await this.userRepo.save(existingUser);
   }
 
-  async remove(id: string) {
+  async remove(id: string, currentUser: RequestUser) {
     const existingUser = await this.findOneById(id)
+
+    if (existingUser.id === currentUser.id) {
+      throw new ConflictException('You cannot delete yourself')
+    }
+
     return await this.userRepo.softRemove(existingUser);
   }
 
