@@ -4,6 +4,7 @@ import { CreateTestimonialDto } from './dto/create-testimonial.dto';
 import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('testimonials')
 @Controller('testimonials')
@@ -17,11 +18,13 @@ export class TestimonialsController {
     return this.testimonialsService.create(createTestimonialDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.testimonialsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.testimonialsService.findOne(id);
