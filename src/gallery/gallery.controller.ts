@@ -4,6 +4,7 @@ import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('gallery')
 @Controller('gallery')
@@ -18,11 +19,13 @@ export class GalleryController {
   }
 
   @Get()
+  @Public()
   findAll() {
     return this.galleryService.findAll();
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.galleryService.findOne(id);
   }
