@@ -4,7 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { SignInAuthDto } from './dto/signin-auth.dto';
-import { UserService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { MembersService } from 'src/members/members.service';
