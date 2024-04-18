@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsUrl, Length } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsUrl } from "class-validator";
 import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
 
 export class CreateMemberDto {
@@ -12,12 +12,11 @@ export class CreateMemberDto {
     email: string;
 
     @IsString()
-    @Length(8)
-    password: string;
-
-    @IsString()
     @IsNotEmpty()
     post: string;
+
+    @IsString()
+    password: string;
 
     @IsOptional()
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for image. Image must be jpeg or png or webp' })

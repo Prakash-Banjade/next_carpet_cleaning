@@ -10,11 +10,14 @@ export class Member extends BaseEntity {
     @Column()
     email: string;
 
-    @Column()
+    @Column({ default: null, nullable: true })
     password: string;
 
     @Column()
     post: string;
+
+    @Column({ type: 'boolean', default: false })
+    isAdmin?: boolean;
 
     @Column({ nullable: true })
     image?: string;
@@ -37,7 +40,6 @@ export class Member extends BaseEntity {
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword() {
-        if (this.password.length < 8) throw new Error('Password must be at least 8 characters long');
         if (this.password) {
             const saltRounds = 10;
             this.password = await bcrypt.hash(this.password, saltRounds);
