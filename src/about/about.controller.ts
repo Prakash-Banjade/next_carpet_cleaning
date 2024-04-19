@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AboutService } from './about.service';
 import { CreateAboutDto } from './dto/create-about.dto';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('about-page')
 @Controller('about-page')
 export class AboutController {
   constructor(private readonly aboutService: AboutService) { }
 
   @Post()
-  @UsePipes(ValidationPipe)
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })
   create(@Body() createAboutDto: CreateAboutDto) {
     return this.aboutService.setData(createAboutDto);
