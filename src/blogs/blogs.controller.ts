@@ -15,7 +15,6 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
-import { CustomRequest } from '../types/CustomRequest';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 
@@ -29,8 +28,8 @@ export class BlogsController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes("multipart/form-data")
-  create(@Body() createBlogDto: CreateBlogDto, @Req() req: CustomRequest) {
-    return this.blogsService.create(createBlogDto, req.user.id);
+  create(@Body() createBlogDto: CreateBlogDto) {
+    return this.blogsService.create(createBlogDto);
   }
 
   @Get()

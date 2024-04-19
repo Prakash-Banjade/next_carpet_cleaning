@@ -3,6 +3,7 @@ import { FaqService } from './faq.service';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiBearerAuth()
 @ApiTags('faq')
@@ -16,11 +17,13 @@ export class FaqController {
     return this.faqService.create(createFaqDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.faqService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.faqService.findOne(id);
