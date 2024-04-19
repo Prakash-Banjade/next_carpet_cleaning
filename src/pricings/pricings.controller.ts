@@ -3,8 +3,9 @@ import { PricingsService } from './pricings.service';
 import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @ApiTags('pricings')
 @Controller('pricings')
 export class PricingsController {

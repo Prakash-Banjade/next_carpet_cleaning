@@ -1,17 +1,22 @@
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
+import { FileSystemStoredFile } from "nestjs-form-data";
 
 export class CreateAboutDto {
+    @ApiProperty()
     @IsString({ message: 'Title must be a string' })
     @IsNotEmpty({ message: 'Title is required' })
     title: string;
 
+    @ApiProperty()
     @IsString({ message: 'Content must be a string' })
     content: string;
 
+    @ApiPropertyOptional({ type: 'string', format: 'binary' })
     @IsOptional()
-    coverImage: FileSystemStoredFile | string;
+    coverImage?: FileSystemStoredFile | string;
 
+    @ApiPropertyOptional({ type: 'string', format: 'binary' })
     @IsOptional()
-    bannerImage: FileSystemStoredFile | string;
+    bannerImage?: FileSystemStoredFile | string;
 }

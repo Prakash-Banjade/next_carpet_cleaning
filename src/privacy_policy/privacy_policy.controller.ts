@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/c
 import { PrivacyPolicyService } from './privacy_policy.service';
 import { CreatePrivacyPolicyDto } from './dto/create-privacy_policy.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @ApiTags('privacy-policy')
 @Controller('privacy-policy')
 export class PrivacyPolicyController {

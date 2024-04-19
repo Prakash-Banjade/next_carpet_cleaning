@@ -3,8 +3,9 @@ import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { HeroSectionDto } from '../dto/heroSection.dto';
 import { HeroSectionService } from './heroSection.service';
 import { Public } from '../../decorators/setPublicRoute.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
   @ApiTags('home/hero-section')
 @Controller('hero-section')
 export class HeroSectionController {
@@ -13,6 +14,7 @@ export class HeroSectionController {
   @Post()
   @UsePipes(ValidationPipe)
   @FormDataRequest({ storage: FileSystemStoredFile })
+  @ApiConsumes('multipart/form-data')
   create(@Body() createAboutDto: HeroSectionDto) {
     return this.heroService.setData(createAboutDto);
   }
