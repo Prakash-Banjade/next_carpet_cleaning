@@ -6,7 +6,7 @@ export class Testimonial extends BaseEntity {
     @Column()
     name: string;
 
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'decimal' })
     rating: number;
 
     @Column({ nullable: true })
