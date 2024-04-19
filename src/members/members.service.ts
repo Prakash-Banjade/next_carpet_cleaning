@@ -33,6 +33,9 @@ export class MembersService {
     return await this.memberRepository.find({
       where: {
         isAdmin: false,
+      },
+      select: {
+        password: false,
       }
     });
   }

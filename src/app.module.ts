@@ -24,6 +24,7 @@ import { SiteSettingsModule } from './site-settings/site-settings.module';
 import { MembersModule } from './members/members.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { TestimonialsModule } from './testimonials/testimonials.module';
+import { PricingsModule } from './pricings/pricings.module';
 require('dotenv').config();
 
 @Module({
@@ -65,6 +66,7 @@ require('dotenv').config();
     MembersModule,
     SubscriberModule,
     TestimonialsModule,
+    PricingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
