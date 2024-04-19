@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { PricingOfferDto } from '../dto/pricingOffer.dto';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../../decorators/setPublicRoute.decorator';
 import { PricingOfferService } from './pricing-offer.service';
 import { ApiTags } from '@nestjs/swagger';
 

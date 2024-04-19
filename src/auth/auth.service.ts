@@ -6,7 +6,7 @@ import {
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { MembersService } from 'src/members/members.service';
+import { MembersService } from '../members/members.service';
 
 @Injectable()
 export class AuthService {

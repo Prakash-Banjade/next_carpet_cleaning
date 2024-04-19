@@ -9,10 +9,9 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
-import { GalleryPageService } from 'src/gallery/gallery-page.service';
 import { ContactPageDto } from './dto/contact-page.dto';
 import { ContactPageService } from './contact-page.service';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiTags('contact-page')
 @Controller('contact-page')

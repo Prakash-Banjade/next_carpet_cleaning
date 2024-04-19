@@ -4,7 +4,7 @@ import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ApiTags } from '@nestjs/swagger';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiTags('gallery')
 @Controller('gallery')

@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { MembersModule } from 'src/members/members.module';
+import { MembersModule } from '../members/members.module';
 
 @Module({
   imports: [MembersModule],
