@@ -1,7 +1,7 @@
-import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
+import { IsOptional } from "class-validator";
+import { FileSystemStoredFile } from "nestjs-form-data";
 
 export class ContactPageDto{
-    @HasMimeType(['image/jpeg', 'image/png','image/webp'], { message: 'Invalid type for banner image. Banner image must be a jpeg or png' })
-    @IsFile({ message: 'Invalid type for banner image. Banner image must be a file' })
+    @IsOptional()
     bannerImage: FileSystemStoredFile | string
 }

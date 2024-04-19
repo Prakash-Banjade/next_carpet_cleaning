@@ -7,7 +7,7 @@ export class HeroSection extends BaseEntity {
     title: string;
 
     @Column()
-    subTitle: string;
+    subtitle: string;
 
     @Column()
     description: string;

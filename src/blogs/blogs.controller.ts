@@ -16,6 +16,7 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { CustomRequest } from '../../src/types/CustomRequest';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('blogs')
 @Controller('blogs')
@@ -30,11 +31,13 @@ export class BlogsController {
   }
 
   @Get()
+  @Public()
   findAll() {
     return this.blogsService.findAll();
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.blogsService.findOne(id);
   }

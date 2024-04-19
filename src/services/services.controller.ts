@@ -4,6 +4,7 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 
 @ApiTags('services')
@@ -19,11 +20,13 @@ export class ServicesController {
     return this.servicesService.create(createServiceDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.servicesService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.servicesService.findOne(id);

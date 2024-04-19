@@ -12,6 +12,7 @@ import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { GalleryPageService } from 'src/gallery/gallery-page.service';
 import { ContactPageDto } from './dto/contact-page.dto';
 import { ContactPageService } from './contact-page.service';
+import { Public } from 'src/decorators/setPublicRoute.decorator';
 
 @ApiTags('contact-page')
 @Controller('contact-page')
@@ -25,6 +26,7 @@ export class ContactPageController {
         return this.contactPageService.setPageData(contactPageDto)
     }
 
+    @Public()
     @Get()
     findAll() {
         console.log('contact_page findAll')
