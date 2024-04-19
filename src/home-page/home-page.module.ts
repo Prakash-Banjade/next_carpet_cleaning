@@ -11,12 +11,15 @@ import { TopQuality } from './entities/topQuality.entity';
 import { PricingOffer } from './entities/pricingOffer.entity';
 import { PricingOfferController } from './pricing-offer/pricing-offer.controller';
 import { PricingOfferService } from './pricing-offer/pricing-offer.service';
+import { CurrentOffer } from './entities/currentOffers.entity';
+import { CurrentOfferController } from './current-offers/currentOffer.controller';
+import { CurrentOfferService } from './current-offers/currentOffer.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([HeroSection, TopQuality, PricingOffer]),
+    TypeOrmModule.forFeature([HeroSection, TopQuality, PricingOffer, CurrentOffer]),
   ],
-  controllers: [HomePageController, HeroSectionController, TopQualityController, PricingOfferController],
-  providers: [HomePageService, HeroSectionService, TopQualityService, PricingOfferService],
+  controllers: [HomePageController, HeroSectionController, TopQualityController, PricingOfferController, CurrentOfferController],
+  providers: [HomePageService, HeroSectionService, TopQualityService, PricingOfferService, CurrentOfferService],
 })
 export class HomePageModule { }
