@@ -8,13 +8,13 @@ export class UpdateGalleryDto {
     @IsOptional()
     title?: string;
 
-    @ApiPropertyOptional({ type: 'string', format: 'binary' })
+    @ApiPropertyOptional({ type: 'string', format: 'binary', isArray: true })
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for images. Images must be jpeg or png or webp', each: true })
     @IsFile({ message: 'Invalid type for images. Images must be file type', each: true })
     @IsOptional()
     images?: FileSystemStoredFile[]
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({ type: 'string', format: 'binary', isArray: true })
     @IsOptional()
     @IsString({ message: 'Invalid type for previousImages. previousImages must be a string', each: true })
     previousImages?: string[] | string
