@@ -30,7 +30,11 @@ export class MembersService {
   }
 
   async findAll() {
-    return await this.memberRepository.find();
+    return await this.memberRepository.find({
+      where: {
+        isAdmin: false,
+      }
+    });
   }
 
   async findOne(id: string) {

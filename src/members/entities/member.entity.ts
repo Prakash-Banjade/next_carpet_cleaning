@@ -10,7 +10,7 @@ export class Member extends BaseEntity {
     @Column()
     email: string;
 
-    @Column({ default: null, nullable: true })
+    @Column({ default: null, nullable: true, select: false })
     password: string;
 
     @Column()
