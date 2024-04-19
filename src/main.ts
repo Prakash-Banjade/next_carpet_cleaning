@@ -5,6 +5,18 @@ import { ServicesModule } from './services/services.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { BlogsModule } from './blogs/blogs.module';
 import { GalleryModule } from './gallery/gallery.module';
+import { AboutModule } from './about/about.module';
+import { ContactModule } from './contact/contact.module';
+import { FaqModule } from './faq/faq.module';
+import { HomePageModule } from './home-page/home-page.module';
+import { MembersModule } from './members/members.module';
+import { PricingsModule } from './pricings/pricings.module';
+import { PrivacyPolicyModule } from './privacy_policy/privacy_policy.module';
+import { SiteSettingsModule } from './site-settings/site-settings.module';
+import { SubscriberModule } from './subscriber/subscriber.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
@@ -40,7 +52,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    include: [ServicesModule, BlogsModule, GalleryModule],
+    include: [ServicesModule, BlogsModule, GalleryModule, AboutModule, ContactModule, FaqModule, HomePageModule, MembersModule, PricingsModule, AuthModule, PrivacyPolicyModule, SiteSettingsModule, SubscriberModule, TestimonialsModule, UsersModule],
   });
   SwaggerModule.setup('api', app, document, {
     customSiteTitle: 'Next Carpet Cleaning',

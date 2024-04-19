@@ -13,11 +13,13 @@ import {
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { CustomRequest } from '../types/CustomRequest';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
+
+@ApiBearerAuth()
 @ApiTags('blogs')
 @Controller('blogs')
 export class BlogsController {
@@ -26,6 +28,7 @@ export class BlogsController {
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })
+  @ApiConsumes("multipart/form-data")
   create(@Body() createBlogDto: CreateBlogDto, @Req() req: CustomRequest) {
     return this.blogsService.create(createBlogDto, req.user.id);
   }

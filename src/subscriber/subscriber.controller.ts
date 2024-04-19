@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
+@ApiBearerAuth()
 @ApiTags('subscribers')
 @Controller('subscribers')
 export class SubscriberController {

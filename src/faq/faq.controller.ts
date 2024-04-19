@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseP
 import { FaqService } from './faq.service';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('faq')
 @Controller('faq')
 export class FaqController {
   constructor(private readonly faqService: FaqService) { }

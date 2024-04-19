@@ -3,8 +3,9 @@ import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { PricingOfferDto } from '../dto/pricingOffer.dto';
 import { Public } from '../../decorators/setPublicRoute.decorator';
 import { PricingOfferService } from './pricing-offer.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @ApiTags('home/pricing-offer')
 @Controller('pricing-offer')
 export class PricingOfferController {
@@ -13,6 +14,7 @@ export class PricingOfferController {
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
     @FormDataRequest({ storage: FileSystemStoredFile })
+    @ApiConsumes('multipart/form-data')
     create(@Body() pricingOfferDto: PricingOfferDto) {
         return this.pricingOfferService.setData(pricingOfferDto);
     }
