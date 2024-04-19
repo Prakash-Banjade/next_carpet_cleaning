@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PrivacyPolicyService } from './privacy_policy.service';
 import { CreatePrivacyPolicyDto } from './dto/create-privacy_policy.dto';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @Controller('privacy-policy')
 export class PrivacyPolicyController {

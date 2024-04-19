@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ServicePage_Service } from './service-page.service';
 import { ServicePageDto } from './dto/service-page.dto';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 
 @ApiTags('service-page')

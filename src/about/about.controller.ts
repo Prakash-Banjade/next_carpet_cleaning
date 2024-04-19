@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/c
 import { AboutService } from './about.service';
 import { CreateAboutDto } from './dto/create-about.dto';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('about-page')

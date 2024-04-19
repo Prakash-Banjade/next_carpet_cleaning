@@ -11,7 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { BlogPageDto } from './dto/blog-page.dto';
 import { BlogPageService } from './blog-page.service';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiTags('blog-page')
 @Controller('blog-page')

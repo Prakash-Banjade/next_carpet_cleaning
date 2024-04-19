@@ -15,8 +15,8 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
-import { CustomRequest } from '../../src/types/CustomRequest';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { CustomRequest } from '../types/CustomRequest';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiTags('blogs')
 @Controller('blogs')

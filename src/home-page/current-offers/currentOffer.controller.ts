@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../../decorators/setPublicRoute.decorator';
 import { CurrentOfferService } from './currentOffer.service';
 import { CurrentOfferDto } from '../dto/currentOffer.dto';
 import { ApiTags } from '@nestjs/swagger';

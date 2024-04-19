@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/c
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { HeroSectionDto } from '../dto/heroSection.dto';
 import { HeroSectionService } from './heroSection.service';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../../decorators/setPublicRoute.decorator';
 
 @Controller('hero-section')
 export class HeroSectionController {

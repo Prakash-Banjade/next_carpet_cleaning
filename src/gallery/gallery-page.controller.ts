@@ -11,7 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { GalleryPageDto } from './dto/gallery-page.dto';
 import { GalleryPageService } from './gallery-page.service';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiTags('gallery-page')
 @Controller('gallery-page')
