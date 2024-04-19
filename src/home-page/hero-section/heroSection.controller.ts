@@ -3,7 +3,9 @@ import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { HeroSectionDto } from '../dto/heroSection.dto';
 import { HeroSectionService } from './heroSection.service';
 import { Public } from '../../decorators/setPublicRoute.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+  @ApiTags('home/hero-section')
 @Controller('hero-section')
 export class HeroSectionController {
   constructor(private readonly heroService: HeroSectionService) { }

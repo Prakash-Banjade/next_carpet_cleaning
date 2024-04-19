@@ -8,7 +8,6 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 
 
 @ApiTags('service-page')
-
 @Controller('service-page')
 export class ServicePageController {
     constructor(private readonly servicePage_service: ServicePage_Service) { }
