@@ -27,10 +27,19 @@ export class ServicesService {
     });
   }
 
-  async findAll() {
+  async findAll(showContent: boolean = true) {
+    console.log(showContent, 'service')
     return await this.serviceRepo.find({
       order: {
         createdAt: 'ASC'
+      },
+      select: {
+        id: true,
+        title: true,
+        content: showContent,
+        coverImage: true,
+        createdAt: true,
+        updatedAt: true,
       }
     });
   }
@@ -48,7 +57,7 @@ export class ServicesService {
     const coverImage = await getImageUrl(updateServiceDto.coverImage)
 
     Object.assign(existingService, {
-      ...updateServiceDto, 
+      ...updateServiceDto,
       coverImage,
     });
     return await this.serviceRepo.save(existingService);
