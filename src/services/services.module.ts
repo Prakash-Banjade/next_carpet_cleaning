@@ -13,5 +13,6 @@ import { ServicePage } from './entities/service-page.entity';
   ],
   controllers: [ServicesController, ServicePageController],
   providers: [ServicesService, ServicePage_Service],
+  exports: [ServicesService],
 })
 export class ServicesModule { }

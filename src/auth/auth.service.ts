@@ -13,7 +13,7 @@ export class AuthService {
   constructor(
     private memberService: MembersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signIn(signInAuthDto: SignInAuthDto) {
     const { email, password } = signInAuthDto;

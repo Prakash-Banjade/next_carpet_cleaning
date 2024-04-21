@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes, Query, ParseBoolPipe } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
@@ -23,8 +23,10 @@ export class ServicesController {
 
   @Public()
   @Get()
-  findAll() {
-    return this.servicesService.findAll();
+  findAll(@Query('content') content: string) {
+
+    console.log(content)
+    return this.servicesService.findAll(!content);
   }
 
   @Public()

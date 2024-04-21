@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { BaseEntity } from '../../entities/base.entity';
+import { Booking } from '../../bookings/entities/booking.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -12,6 +13,12 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @OneToMany(() => Booking, (booking) => booking.user, { nullable: true })
+  bookings: Booking[];
 
   @BeforeInsert()
   @BeforeUpdate()
