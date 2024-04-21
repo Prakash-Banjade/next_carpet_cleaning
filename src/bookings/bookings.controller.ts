@@ -24,6 +24,7 @@ export class BookingsController {
     return this.bookingsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.bookingsService.findOne(id);
@@ -35,7 +36,6 @@ export class BookingsController {
     return this.bookingsService.update(id, updateBookingDto);
   }
 
-  @Public()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bookingsService.remove(id);
