@@ -17,12 +17,15 @@ import { SubscriberModule } from './subscriber/subscriber.module';
 import { TestimonialsModule } from './testimonials/testimonials.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import * as cookieParser from 'cookie-parser';
 const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log'],
   });
+
+  app.use(cookieParser()); // cookie parser middleware
 
   app.enableCors({
     origin: ['https://rebelcleaning-cms.vercel.app', 'http://localhost:5173'],
