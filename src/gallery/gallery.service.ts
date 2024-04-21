@@ -66,7 +66,16 @@ export class GalleryService {
     //   images: images || []
     // });
 
-    // TODO: Implement update logic
+    const { images, previousImages, title } = updateGalleryDto;
+
+    const imageUrlArray = images.map(async (image) => await getImageUrl(image));
+
+    const resolvedImagesURL = await Promise.all(imageUrlArray);
+
+    Object.assign(existingGallery, {
+      title,
+      images: [...previousImages, ...resolvedImagesURL],
+    })
 
     return await this.galleryRepo.save(existingGallery);
   }
