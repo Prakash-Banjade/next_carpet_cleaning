@@ -1,13 +1,19 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { UserAuthDto } from './dto/user-auth.dto';
+import * as bcrypt from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) public readonly userRepo: Repository<User>) { }
+  constructor(
+    @InjectRepository(User) public readonly userRepo: Repository<User>,
+    private jwtService: JwtService,
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     console.log(createUserDto);
@@ -59,5 +65,31 @@ export class UserService {
     const user = await this.userRepo.restore(id);
     if (!user) throw new NotFoundException('User not found')
     return user;
+  }
+
+  // *** Authentication ***
+  async signIn(userAuthDto: UserAuthDto) {
+    const { email, password } = userAuthDto;
+    const user = await this.userRepo.findOneBy({ email });
+
+    if (user instanceof NotFoundException)
+      throw new BadRequestException({
+        message: 'Invalid email',
+        field: 'email',
+      });
+
+    const isMatch = bcrypt.compareSync(password, user.password)
+
+    if (!isMatch)
+      throw new BadRequestException({
+        message: 'Invalid password',
+        field: 'password',
+      });
+
+    const payload = { email: user.email, id: user.id };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }

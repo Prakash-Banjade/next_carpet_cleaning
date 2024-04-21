@@ -8,12 +8,15 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
+  Res,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UserAuthDto } from './dto/user-auth.dto';
+import { Response } from 'express';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -48,5 +51,20 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+  }
+
+
+  // *** Authentication ***
+  @Post('login')
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  async signIn(@Body() userAuthDto: UserAuthDto, @Res({ passthrough: true }) res: Response) {
+    const { access_token } = await this.usersService.signIn(userAuthDto);
+
+    res.cookie('user_access_token', access_token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+    }).send({ status: 'ok' });
   }
 }
