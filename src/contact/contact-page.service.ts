@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FileSystemStoredFile } from 'nestjs-form-data';
+import { FileSystemStoredFile, MemoryStoredFile } from 'nestjs-form-data';
 import { ContactPage } from './entities/contact-page.entity';
 import { ContactPageDto } from './dto/contact-page.dto';
+import getImageUrl from '../utils/getImageUrl';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @Injectable()
 export class ContactPageService {
@@ -19,7 +21,8 @@ export class ContactPageService {
 
     async setPageData(contactPageDto: ContactPageDto) {
         const existingPageData = await this.contactRepo.find()
-        const bannerImage = contactPageDto.bannerImage ? this.getFileName(contactPageDto.bannerImage) : null;
+        // const bannerImage = contactPageDto.bannerImage ? this.getFileName(contactPageDto.bannerImage) : null;
+        const bannerImage = await getImageUrl(contactPageDto.bannerImage);
 
         if (!existingPageData?.length) {
             const newcontactData = await this.contactRepo.save({
@@ -37,8 +40,9 @@ export class ContactPageService {
         return await this.contactRepo.save(existingPageData[0]);
     }
 
-    async setBannerImage(banner: FileSystemStoredFile) {
-        const bannerImage = banner && this.getFileName(banner)
+    async setBannerImage(bannerImageDto: BannerImageDto) {
+        // const bannerImage = banner && this.getFileName(banner)
+        const bannerImage = await getImageUrl(bannerImageDto.bannerImage);
         const existingcontactData = await this.contactRepo.find();
 
         if (!existingcontactData?.length) { // if no data is present in the database create a new one with banner image

@@ -4,6 +4,7 @@ import { FileSystemStoredFile } from 'nestjs-form-data';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HeroSection } from '../entities/heroSection.entity';
 import { HeroSectionDto } from '../dto/heroSection.dto';
+import getImageUrl from '../../utils/getImageUrl';
 
 @Injectable()
 export class HeroSectionService {
@@ -13,7 +14,8 @@ export class HeroSectionService {
   ) { }
   async setData(heroSectionDto: HeroSectionDto) {
     const existingheroData = await this.heroRepo.find();
-    const image = heroSectionDto.image && this.getFileName(heroSectionDto.image);
+    // const image = heroSectionDto.image && this.getFileName(heroSectionDto.image);
+    const image = await getImageUrl(heroSectionDto.image);
 
     if (!existingheroData.length) {
       const newheroData = await this.heroRepo.save({

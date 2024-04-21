@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEmail, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Max, Min } from "class-validator";
-import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
+import { HasMimeType, IsFile, MemoryStoredFile } from "nestjs-form-data";
 
 export class CreateTestimonialDto {
     @ApiProperty()
@@ -24,11 +24,10 @@ export class CreateTestimonialDto {
     @ApiPropertyOptional({ type: 'string', format: 'binary' })
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for images. Image must be jpeg or png or webp' })
     @IsFile({ message: 'Invalid type for Image. Image must be file type' })
-    image?: string | FileSystemStoredFile;
+    image?: MemoryStoredFile;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @IsString({ message: 'Message must be a string' })
     @Length(10, 500, { message: 'Message must be between 10 and 500 characters' })
-    @IsOptional()
     message?: string;
 }

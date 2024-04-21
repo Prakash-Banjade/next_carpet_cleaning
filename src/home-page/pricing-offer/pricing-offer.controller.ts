@@ -13,7 +13,7 @@ export class PricingOfferController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: FileSystemStoredFile })
+    // @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     create(@Body() pricingOfferDto: PricingOfferDto) {
         return this.pricingOfferService.setData(pricingOfferDto);

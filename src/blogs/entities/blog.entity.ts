@@ -12,7 +12,4 @@ export class Blog extends BaseEntity {
 
   @Column({ nullable: true })
   coverImage: string; // filename
-
-  @ManyToOne(() => User, (user) => user.blogs, { eager: true })
-  author: User;
 }

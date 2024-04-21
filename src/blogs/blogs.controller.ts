@@ -8,14 +8,12 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
-  Req,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
-import { CustomRequest } from '../types/CustomRequest';
+import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 
@@ -27,10 +25,10 @@ export class BlogsController {
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: FileSystemStoredFile })
+  @FormDataRequest({ storage: MemoryStoredFile })
   @ApiConsumes("multipart/form-data")
-  create(@Body() createBlogDto: CreateBlogDto, @Req() req: CustomRequest) {
-    return this.blogsService.create(createBlogDto, req.user.id);
+  create(@Body() createBlogDto: CreateBlogDto) {
+    return this.blogsService.create(createBlogDto);
   }
 
   @Get()
@@ -47,7 +45,8 @@ export class BlogsController {
 
   @Patch(':id')
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: FileSystemStoredFile })
+  @FormDataRequest({ storage: MemoryStoredFile })
+  @ApiConsumes("multipart/form-data")
   update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
     return this.blogsService.update(id, updateBlogDto);
   }

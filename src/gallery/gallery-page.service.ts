@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { GalleryPage } from './entities/gallery-page.entity';
 import { GalleryPageDto } from './dto/gallery-page.dto';
+import getImageUrl from '../utils/getImageUrl';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @Injectable()
 export class GalleryPageService {
@@ -18,7 +20,8 @@ export class GalleryPageService {
 
     async setPageData(galleryPageDto: GalleryPageDto) {
         const existingPageData = await this.galleryRepo.find()
-        const bannerImage = galleryPageDto.bannerImage && this.getFileName(galleryPageDto.bannerImage)
+        // const bannerImage = galleryPageDto.bannerImage && this.getFileName(galleryPageDto.bannerImage)
+        const bannerImage = await getImageUrl(galleryPageDto.bannerImage)
 
         if (!existingPageData?.length) {
             const newGalleryData = await this.galleryRepo.save({
@@ -36,8 +39,10 @@ export class GalleryPageService {
         return await this.galleryRepo.save(existingPageData[0]);
     }
 
-    async setBannerImage(banner: FileSystemStoredFile) {
-        const bannerImage = banner && this.getFileName(banner)
+    async setBannerImage(bannerImageDto: BannerImageDto) {
+        // const bannerImage = banner && this.getFileName(banner)
+
+        const bannerImage = await getImageUrl(bannerImageDto.bannerImage)
         const existingAboutData = await this.galleryRepo.find();
 
         if (!existingAboutData?.length) { // if no data is present in the database create a new one with banner image

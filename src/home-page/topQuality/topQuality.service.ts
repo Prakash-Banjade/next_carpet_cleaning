@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { TopQuality } from '../entities/topQuality.entity';
 import { TopQualityDto } from '../dto/topQuality.dto';
+import getImageUrl from '../../utils/getImageUrl';
 
 @Injectable()
 export class TopQualityService {
@@ -13,7 +14,8 @@ export class TopQualityService {
   ) { }
 
   async set(topQualityDto: TopQualityDto) {
-    const image = topQualityDto.image && this.getFileName(topQualityDto.image);
+    // const image = topQualityDto.image && this.getFileName(topQualityDto.image);
+    const image = await getImageUrl(topQualityDto.image);
 
     const existingSettings = await this.topQualityRepo.find();
 

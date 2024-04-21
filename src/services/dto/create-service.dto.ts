@@ -1,6 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsString } from "class-validator";
+import { MemoryStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
 
 export class CreateServiceDto {
     @ApiProperty()
@@ -13,9 +13,8 @@ export class CreateServiceDto {
     @IsNotEmpty({ message: "Content can't be empty" })
     content: string;
 
-    @ApiPropertyOptional({ type: 'string', format: 'binary' })
-    @IsOptional()    
+    @ApiProperty({ type: 'string', format: 'binary' })
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for cover image. Cover image must be a jpeg or png' })
     @IsFile({ message: 'Invalid type for cover image. Cover image must be a file' })
-    coverImage: FileSystemStoredFile | string;
+    coverImage: MemoryStoredFile;
 }

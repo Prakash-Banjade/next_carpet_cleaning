@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Member } from './entities/member.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class MembersService {
@@ -13,7 +14,8 @@ export class MembersService {
   ) { }
 
   async create(createMemberDto: CreateMemberDto) {
-    const image = createMemberDto.image && this.getFileName(createMemberDto.image);
+    // const image = createMemberDto.image && this.getFileName(createMemberDto.image);
+    const image = await getImageUrl(createMemberDto.image);
 
     const existingMemberWithEmail = await this.memberRepository.findOneBy({
       email: createMemberDto.email,
@@ -54,7 +56,8 @@ export class MembersService {
   }
 
   async update(id: string, updateMemberDto: UpdateMemberDto) {
-    const image = updateMemberDto.image && this.getFileName(updateMemberDto.image);
+    // const image = updateMemberDto.image && this.getFileName(updateMemberDto.image);
+    const image = await getImageUrl(updateMemberDto.image);
 
     const existingMember = await this.findOne(id);
 

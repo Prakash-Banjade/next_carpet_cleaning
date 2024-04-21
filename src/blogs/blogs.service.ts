@@ -4,28 +4,23 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Blog } from './entities/blog.entity';
 import { Repository } from 'typeorm';
-import { FileSystemStoredFile } from 'nestjs-form-data';
-import { UserService } from '../users/users.service';
+import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class BlogsService {
   constructor(
-    @InjectRepository(Blog) private readonly blogRepo: Repository<Blog>,
-    private readonly userService: UserService,
-  ) {}
+    @InjectRepository(Blog) private readonly blogRepo: Repository<Blog>
+  ) { }
 
-  async create(createBlogDto: CreateBlogDto, authorId: string) {
+  async create(createBlogDto: CreateBlogDto) {
     const { content, title, coverImage } = createBlogDto;
-    // generating author
-    const author = await this.userService.findOneById(authorId);
-    console.log('here');
-    createBlogDto.coverImage = this.getFileName(coverImage);
+
+    const url = await getImageUrl(coverImage);
 
     return await this.blogRepo.save({
       content,
       title,
-      coverImage: (createBlogDto.coverImage as string) || null,
-      author,
+      coverImage: url,
     });
   }
 
@@ -33,12 +28,7 @@ export class BlogsService {
     return await this.blogRepo.find({
       order: {
         createdAt: 'ASC',
-      },
-      select: {
-        author: {
-          password: false,
-        },
-      },
+      }
     });
   }
 
@@ -51,9 +41,12 @@ export class BlogsService {
   async update(id: string, updateBlogDto: UpdateBlogDto) {
     const existingBlog = await this.findOne(id);
 
-    updateBlogDto.coverImage = this.getFileName(updateBlogDto?.coverImage);
+    const coverImage = await getImageUrl(updateBlogDto.coverImage);
 
-    Object.assign(existingBlog, updateBlogDto);
+    Object.assign(existingBlog, {
+      ...updateBlogDto,
+      coverImage,
+    });
     return await this.blogRepo.save(existingBlog);
   }
 
@@ -71,11 +64,11 @@ export class BlogsService {
     return blog;
   }
 
-  public getFileName(file: FileSystemStoredFile | string) {
-    if (typeof file !== 'string') {
-      const pathSegments = file?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      return fileName;
-    } else return file;
-  }
+  // public getFileName(file: FileSystemStoredFile | string) {
+  //   if (typeof file !== 'string') {
+  //     const pathSegments = file?.path.split('\\');
+  //     const fileName = pathSegments[pathSegments.length - 1];
+  //     return fileName;
+  //   } else return file;
+  // }
 }

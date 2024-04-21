@@ -3,18 +3,19 @@ import { CreateAboutDto } from './dto/create-about.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AboutPage } from './entities/about.entity';
 import { Repository } from 'typeorm';
-import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from '../utils/getImageUrl';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @Injectable()
 export class AboutService {
-
   constructor(
     @InjectRepository(AboutPage) private readonly aboutRepo: Repository<AboutPage>,
   ) { }
   async setData(createAboutDto: CreateAboutDto) {
     const existingAboutData = await this.aboutRepo.find();
-    const bannerImage = createAboutDto.bannerImage && this.getFileName(createAboutDto.bannerImage);
-    const coverImage = createAboutDto.coverImage && this.getFileName(createAboutDto.coverImage);
+
+    const bannerImage = await getImageUrl(createAboutDto.bannerImage);
+    const coverImage = await getImageUrl(createAboutDto.coverImage);
 
     if (!existingAboutData.length) {
       const newAboutData = await this.aboutRepo.save({
@@ -45,8 +46,8 @@ export class AboutService {
     return aboutPageData;
   }
 
-  async setBannerImage(banner: FileSystemStoredFile) {
-    const bannerImage = banner ? this.getFileName(banner) : null;
+  async setBannerImage(bannerImageDto: BannerImageDto) {
+    const bannerImage = await getImageUrl(bannerImageDto.bannerImage);
     const existingAboutData = await this.aboutRepo.find();
 
     if (!existingAboutData?.length) { // if no data is present in the database create a new one with banner image
@@ -65,13 +66,5 @@ export class AboutService {
     })
 
     return await this.aboutRepo.save(existingAboutData[0]);
-  }
-
-  public getFileName(file: FileSystemStoredFile | string) {
-    if (typeof file !== 'string') {
-      const pathSegments = file?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      return fileName;
-    } else return file;
   }
 }
