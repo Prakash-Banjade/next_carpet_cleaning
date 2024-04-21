@@ -25,6 +25,6 @@ export class AuthController {
       secure: false,
       sameSite: 'lax',
       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-    }).send({ status: 'ok' });
+    }).send({ status: 'ok', access_token });
   }
 }

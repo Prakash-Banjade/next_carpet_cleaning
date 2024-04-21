@@ -8,7 +8,7 @@ export class Booking extends BaseEntity {
     @Column()
     location: string;
 
-    @ManyToOne(() => Service, (service) => service.bookings, {eager: true})
+    @ManyToOne(() => Service, (service) => service.bookings)
     service: Service;
 
     @ManyToOne(() => User, (user) => user.bookings)

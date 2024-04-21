@@ -14,7 +14,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { Response } from 'express';
 
@@ -24,7 +24,7 @@ import { Response } from 'express';
 export class UsersController {
   constructor(private readonly usersService: UserService) { }
 
-  @Public()
+  @ApiExcludeEndpoint()
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createUserDto: CreateUserDto) {
@@ -53,7 +53,6 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-
   // *** Authentication ***
   @Post('login')
   @UsePipes(new ValidationPipe({ whitelist: true }))
@@ -65,6 +64,6 @@ export class UsersController {
       secure: false,
       sameSite: 'lax',
       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-    }).send({ status: 'ok' });
+    }).send({ status: 'ok', access_token });
   }
 }
