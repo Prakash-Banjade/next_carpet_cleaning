@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { ServicePage } from './entities/service-page.entity';
 import { ServicePageDto } from './dto/service-page.dto';
-import getImageUrl from 'src/utils/getImageUrl';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import getImageUrl from '../utils/getImageUrl';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @Injectable()
 export class ServicePage_Service {

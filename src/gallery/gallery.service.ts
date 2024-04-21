@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Gallery } from './entities/gallery.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
-import getImageUrl from 'src/utils/getImageUrl';
+import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class GalleryService {

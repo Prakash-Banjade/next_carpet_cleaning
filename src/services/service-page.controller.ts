@@ -5,7 +5,7 @@ import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ServicePage_Service } from './service-page.service';
 import { ServicePageDto } from './dto/service-page.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 
 @ApiBearerAuth()

@@ -4,9 +4,7 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Blog } from './entities/blog.entity';
 import { Repository } from 'typeorm';
-import { FileSystemStoredFile } from 'nestjs-form-data';
-import { put } from "@vercel/blob";
-import getImageUrl from 'src/utils/getImageUrl';
+import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class BlogsService {

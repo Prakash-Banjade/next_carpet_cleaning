@@ -4,7 +4,7 @@ import { FileSystemStoredFile } from 'nestjs-form-data';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HeroSection } from '../entities/heroSection.entity';
 import { HeroSectionDto } from '../dto/heroSection.dto';
-import getImageUrl from 'src/utils/getImageUrl';
+import getImageUrl from '../../utils/getImageUrl';
 
 @Injectable()
 export class HeroSectionService {

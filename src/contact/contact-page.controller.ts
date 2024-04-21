@@ -11,7 +11,7 @@ import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ContactPageDto } from './dto/contact-page.dto';
 import { ContactPageService } from './contact-page.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @ApiBearerAuth()
 @ApiTags('contact-page')

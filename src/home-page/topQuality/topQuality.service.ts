@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { TopQuality } from '../entities/topQuality.entity';
 import { TopQualityDto } from '../dto/topQuality.dto';
-import getImageUrl from 'src/utils/getImageUrl';
+import getImageUrl from '../../utils/getImageUrl';
 
 @Injectable()
 export class TopQualityService {

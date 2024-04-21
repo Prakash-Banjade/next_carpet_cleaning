@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BlogPageDto } from './dto/blog-page.dto';
 import { BlogPage } from './entities/blog-page.entity';
-import getImageUrl from 'src/utils/getImageUrl';
+import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class BlogPageService {

@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, UsePipes, ValidationPipe, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AboutService } from './about.service';
 import { CreateAboutDto } from './dto/create-about.dto';
 import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @ApiBearerAuth()
 @ApiTags('about-page')

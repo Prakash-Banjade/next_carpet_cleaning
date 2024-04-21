@@ -11,7 +11,7 @@ import { FormDataRequest, MemoryStoredFile } from 'nestjs-form-data';
 import { GalleryPageDto } from './dto/gallery-page.dto';
 import { GalleryPageService } from './gallery-page.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @ApiBearerAuth()
 @ApiTags('gallery-page')

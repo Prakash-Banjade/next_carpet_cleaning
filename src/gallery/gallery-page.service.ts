@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { GalleryPage } from './entities/gallery-page.entity';
 import { GalleryPageDto } from './dto/gallery-page.dto';
-import getImageUrl from 'src/utils/getImageUrl';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import getImageUrl from '../utils/getImageUrl';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @Injectable()
 export class GalleryPageService {

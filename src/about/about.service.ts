@@ -3,8 +3,8 @@ import { CreateAboutDto } from './dto/create-about.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AboutPage } from './entities/about.entity';
 import { Repository } from 'typeorm';
-import getImageUrl from 'src/utils/getImageUrl';
-import { BannerImageDto } from 'src/utils/banner-image.dto';
+import getImageUrl from '../utils/getImageUrl';
+import { BannerImageDto } from '../utils/banner-image.dto';
 
 @Injectable()
 export class AboutService {
