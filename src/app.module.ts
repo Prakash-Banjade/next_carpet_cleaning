@@ -25,6 +25,7 @@ import { MembersModule } from './members/members.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { TestimonialsModule } from './testimonials/testimonials.module';
 import { PricingsModule } from './pricings/pricings.module';
+import { BookingsModule } from './bookings/bookings.module';
 require('dotenv').config();
 
 @Module({
@@ -67,6 +68,7 @@ require('dotenv').config();
     SubscriberModule,
     TestimonialsModule,
     PricingsModule,
+    BookingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
