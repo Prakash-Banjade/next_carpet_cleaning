@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Service } from './entities/service.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from 'src/utils/getImageUrl';
 
 @Injectable()
 export class ServicesService {
@@ -13,15 +14,16 @@ export class ServicesService {
 
 
   async create(createServiceDto: CreateServiceDto) {
-    const { content, coverImage, title } = createServiceDto
+    const { content, title } = createServiceDto
 
-    createServiceDto.coverImage = this.getFileName(coverImage)
+    // createServiceDto.coverImage = this.getFileName(coverImage)
+    const coverImage = await getImageUrl(createServiceDto.coverImage)
 
     console.log(createServiceDto.coverImage);
     return await this.serviceRepo.save({
       content,
       title,
-      coverImage: createServiceDto.coverImage as string || null,
+      coverImage,
     });
   }
 
@@ -42,9 +44,13 @@ export class ServicesService {
   async update(id: string, updateServiceDto: UpdateServiceDto) {
     const existingService = await this.findOne(id)
 
-    updateServiceDto.coverImage = this.getFileName(updateServiceDto.coverImage)
+    // updateServiceDto.coverImage = this.getFileName(updateServiceDto.coverImage)
+    const coverImage = await getImageUrl(updateServiceDto.coverImage)
 
-    Object.assign(existingService, updateServiceDto);
+    Object.assign(existingService, {
+      ...updateServiceDto, 
+      coverImage,
+    });
     return await this.serviceRepo.save(existingService);
   }
 

@@ -1,10 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Public } from '../../decorators/setPublicRoute.decorator';
 import { CurrentOfferService } from './currentOffer.service';
-import { CurrentOfferDto } from '../dto/currentOffer.dto';
-import { ApiTags } from '@nestjs/swagger';
-import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { CreateCurrentOfferDto } from '../dto/create-currentOffer.dto';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FormDataRequest, MemoryStoredFile } from 'nestjs-form-data';
+import { UpdateCurrentOfferDto } from '../dto/update-currentOffer.dto';
 
+@ApiBearerAuth()
 @ApiTags('current-offers')
 @Controller('current-offers')
 export class CurrentOfferController {
@@ -12,9 +14,10 @@ export class CurrentOfferController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: FileSystemStoredFile })
-    create(@Body() currentOfferDto: CurrentOfferDto) {
-        return this.currentOfferService.create(currentOfferDto);
+    @FormDataRequest({ storage: MemoryStoredFile })
+    @ApiConsumes('multipart/form-data')
+    create(@Body() createCurrentOfferDto: CreateCurrentOfferDto) {
+        return this.currentOfferService.create(createCurrentOfferDto);
     }
 
     @Public()
@@ -30,10 +33,11 @@ export class CurrentOfferController {
     }
 
     @Patch(':id')
-    @FormDataRequest({ storage: FileSystemStoredFile })
+    @FormDataRequest({ storage: MemoryStoredFile })
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    update(@Param('id') id: string, @Body() currentOfferDto: CurrentOfferDto) {
-        return this.currentOfferService.update(id, currentOfferDto);
+    @ApiConsumes('multipart/form-data')
+    update(@Param('id') id: string, @Body() updateCurrentOfferDto: UpdateCurrentOfferDto) {
+        return this.currentOfferService.update(id, updateCurrentOfferDto);
     }
 
     @Delete(':id')

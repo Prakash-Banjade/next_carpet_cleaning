@@ -5,26 +5,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Gallery } from './entities/gallery.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from 'src/utils/getImageUrl';
 
 @Injectable()
 export class GalleryService {
   constructor(@InjectRepository(Gallery) private readonly galleryRepo: Repository<Gallery>) { }
 
   async create(createGalleryDto: CreateGalleryDto) {
-    console.log(createGalleryDto);
-
     const images: string[] = [];
 
-    if (createGalleryDto.images instanceof Array) { // checking for array because file can be single also
-      createGalleryDto.images?.map((image: FileSystemStoredFile | string) => {
-        const fileName = this.getFileName(image);
-        images.push(fileName);
-      })
-    } else {
-      const singleImage = createGalleryDto.images as FileSystemStoredFile; // FormDataRequest doesn't create array for single file upload
-      const fileName = this.getFileName(singleImage);
-      images.push(fileName);
-    }
+    // <----- Below code is for FileSystemStoredFile ---->
+    // if (createGalleryDto.images instanceof Array) { // checking for array because file can be single also
+    //   createGalleryDto.images?.map((image: FileSystemStoredFile | string) => {
+    //     const fileName = this.getFileName(image);
+    //     images.push(fileName);
+    //   })
+    // } else {
+    //   const singleImage = createGalleryDto.images as FileSystemStoredFile; // FormDataRequest doesn't create array for single file upload
+    //   const fileName = this.getFileName(singleImage);
+    //   images.push(fileName);
+    // }
+
+    // <----- Below code is for MemoryStoredFile ---->
+    createGalleryDto.images.forEach(async (image) => {
+      const url = await getImageUrl(image);
+      images.push(url);
+    })
 
     return await this.galleryRepo.save({
       title: createGalleryDto.title,
@@ -49,20 +55,18 @@ export class GalleryService {
   async update(id: string, updateGalleryDto: UpdateGalleryDto) {
     const existingGallery = await this.findOne(id);
 
-    console.log(updateGalleryDto);
+    // const images: string[] = updateGalleryDto?.previousImages instanceof Array ? updateGalleryDto?.previousImages : typeof updateGalleryDto?.previousImages === 'string' ? [updateGalleryDto?.previousImages] : [];
 
-    const images: string[] = updateGalleryDto?.previousImages instanceof Array ? updateGalleryDto?.previousImages : typeof updateGalleryDto?.previousImages === 'string' ? [updateGalleryDto?.previousImages] : [];
+    // updateGalleryDto.images instanceof Array ? updateGalleryDto.images?.map((image: FileSystemStoredFile) => {
+    //   images.push(this.getFileName(image));
+    // }) : updateGalleryDto.images && images.push(this.getFileName(updateGalleryDto.images));
 
-    console.log(images);
+    // Object.assign(existingGallery, {
+    //   title: updateGalleryDto.title,
+    //   images: images || []
+    // });
 
-    updateGalleryDto.images instanceof Array ? updateGalleryDto.images?.map((image: FileSystemStoredFile) => {
-      images.push(this.getFileName(image));
-    }) : updateGalleryDto.images && images.push(this.getFileName(updateGalleryDto.images));
-
-    Object.assign(existingGallery, {
-      title: updateGalleryDto.title,
-      images: images || []
-    });
+    // TODO: Implement update logic
 
     return await this.galleryRepo.save(existingGallery);
   }

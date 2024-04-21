@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Testimonial } from './entities/testimonial.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from 'src/utils/getImageUrl';
 
 @Injectable()
 export class TestimonialsService {
@@ -15,7 +16,8 @@ export class TestimonialsService {
 
   async create(createTestimonialDto: CreateTestimonialDto) {
 
-    const image = createTestimonialDto.image && this.getFileName(createTestimonialDto.image);
+    // const image = createTestimonialDto.image && this.getFileName(createTestimonialDto.image);
+    const image = await getImageUrl(createTestimonialDto.image);
 
     if (createTestimonialDto.email) {
       const existingReviewer = await this.testimonialRepo.findOne({ where: { email: createTestimonialDto.email } });
@@ -44,7 +46,8 @@ export class TestimonialsService {
   async update(id: string, updateTestimonialDto: UpdateTestimonialDto) {
     const existingReview = await this.findOne(id);
 
-    const image = updateTestimonialDto.image && this.getFileName(updateTestimonialDto.image);
+    // const image = updateTestimonialDto.image && this.getFileName(updateTestimonialDto.image);
+    const image = await getImageUrl(updateTestimonialDto.image);
 
     if (updateTestimonialDto.email) {
       const existingReviewer = await this.testimonialRepo.findOne({ where: { email: updateTestimonialDto.email } });

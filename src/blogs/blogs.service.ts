@@ -6,6 +6,7 @@ import { Blog } from './entities/blog.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { put } from "@vercel/blob";
+import getImageUrl from 'src/utils/getImageUrl';
 
 @Injectable()
 export class BlogsService {
@@ -15,16 +16,13 @@ export class BlogsService {
 
   async create(createBlogDto: CreateBlogDto) {
     const { content, title, coverImage } = createBlogDto;
-    createBlogDto.coverImage = this.getFileName(coverImage);
 
-    const { url } = await put(createBlogDto.coverImage, 'Hello World!', { access: 'public' });
-
-    console.log(url)
+    const url = await getImageUrl(coverImage);
 
     return await this.blogRepo.save({
       content,
       title,
-      coverImage: (createBlogDto.coverImage as string) || null,
+      coverImage: url,
     });
   }
 
@@ -45,9 +43,12 @@ export class BlogsService {
   async update(id: string, updateBlogDto: UpdateBlogDto) {
     const existingBlog = await this.findOne(id);
 
-    updateBlogDto.coverImage = this.getFileName(updateBlogDto?.coverImage);
+    const coverImage = await getImageUrl(updateBlogDto.coverImage);
 
-    Object.assign(existingBlog, updateBlogDto);
+    Object.assign(existingBlog, {
+      ...updateBlogDto,
+      coverImage,
+    });
     return await this.blogRepo.save(existingBlog);
   }
 
@@ -65,11 +66,11 @@ export class BlogsService {
     return blog;
   }
 
-  public getFileName(file: FileSystemStoredFile | string) {
-    if (typeof file !== 'string') {
-      const pathSegments = file?.path.split('\\');
-      const fileName = pathSegments[pathSegments.length - 1];
-      return fileName;
-    } else return file;
-  }
+  // public getFileName(file: FileSystemStoredFile | string) {
+  //   if (typeof file !== 'string') {
+  //     const pathSegments = file?.path.split('\\');
+  //     const fileName = pathSegments[pathSegments.length - 1];
+  //     return fileName;
+  //   } else return file;
+  // }
 }

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsUrl } from "class-validator";
-import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
+import { FileSystemStoredFile, HasMimeType, IsFile, MemoryStoredFile } from "nestjs-form-data";
 
 export class CreateMemberDto {
     @ApiProperty()
@@ -19,10 +19,9 @@ export class CreateMemberDto {
     post: string;
 
     @ApiPropertyOptional({ type: 'string', format: 'binary' })
-    @IsOptional()
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for image. Image must be jpeg or png or webp' })
     @IsFile({ message: 'Invalid type for Image. Image must be file type' })
-    image?: string | FileSystemStoredFile;
+    image?: MemoryStoredFile;
 
     @ApiPropertyOptional()
     @IsString()
@@ -49,7 +48,7 @@ export class CreateMemberDto {
     linkedIn?: string;
 
     @ApiPropertyOptional()
-    @IsPhoneNumber('AU')
+    @IsPhoneNumber('AU', { message: 'Invalid phone number. Must be an Australian phone number' })
     @IsOptional()
     phone?: string;
 }

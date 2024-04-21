@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SiteSettings } from './entities/site-setting.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from 'src/utils/getImageUrl';
 
 @Injectable()
 export class SiteSettingsService {
@@ -13,8 +14,10 @@ export class SiteSettingsService {
   ) { }
 
   async set(siteSettingsDto: SiteSettingsDto) {
-    const primaryImage = siteSettingsDto.primaryImage && this.getFileName(siteSettingsDto.primaryImage);
-    const secondaryImage = siteSettingsDto.secondaryImage && this.getFileName(siteSettingsDto.secondaryImage);
+    // const primaryImage = siteSettingsDto.primaryImage && this.getFileName(siteSettingsDto.primaryImage);
+    // const secondaryImage = siteSettingsDto.secondaryImage && this.getFileName(siteSettingsDto.secondaryImage);
+    const primaryImage = await getImageUrl(siteSettingsDto.primaryImage)
+    const secondaryImage = await getImageUrl(siteSettingsDto.secondaryImage)
 
     const existingSettings = await this.siteSettingsRepo.find();
 

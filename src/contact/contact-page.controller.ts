@@ -5,14 +5,15 @@ import {
     Body,
     ValidationPipe,
     UsePipes,
-    Req,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ContactPageDto } from './dto/contact-page.dto';
 import { ContactPageService } from './contact-page.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
+import { BannerImageDto } from 'src/utils/banner-image.dto';
 
+@ApiBearerAuth()
 @ApiTags('contact-page')
 @Controller('contact-page')
 export class ContactPageController {
@@ -20,7 +21,8 @@ export class ContactPageController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: FileSystemStoredFile })
+    @FormDataRequest({ storage: MemoryStoredFile })
+    @ApiConsumes('multipart/form-data')
     set(@Body() contactPageDto: ContactPageDto) {
         return this.contactPageService.setPageData(contactPageDto)
     }
@@ -33,8 +35,10 @@ export class ContactPageController {
     }
 
     @Post('banner')
-    @FormDataRequest({ storage: FileSystemStoredFile })
-    setBanner(@Body() bannerImage: { bannerImage: FileSystemStoredFile }) {
-        return this.contactPageService.setBannerImage(bannerImage.bannerImage)
+    @FormDataRequest({ storage: MemoryStoredFile })
+    @ApiConsumes('multipart/form-data')
+    @UsePipes(new ValidationPipe({ whitelist: true }))
+    setBanner(@Body() bannerImageDto: BannerImageDto) {
+        return this.contactPageService.setBannerImage(bannerImageDto)
     }
 }

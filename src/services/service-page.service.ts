@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import { ServicePage } from './entities/service-page.entity';
 import { ServicePageDto } from './dto/service-page.dto';
+import getImageUrl from 'src/utils/getImageUrl';
+import { BannerImageDto } from 'src/utils/banner-image.dto';
 
 @Injectable()
 export class ServicePage_Service {
@@ -12,16 +14,17 @@ export class ServicePage_Service {
 
 
     async setPageData(servicePageDto: ServicePageDto) {
-        const { content, bannerImage, title } = servicePageDto
+        const { content, title } = servicePageDto
 
-        servicePageDto.bannerImage = this.getFileName(bannerImage)
+        // servicePageDto.bannerImage = this.getFileName(bannerImage)
+        const bannerImage = await getImageUrl(servicePageDto.bannerImage)
 
         const existingPageData = await this.servicePageRepo.find();
 
         if (!existingPageData?.length) {
             const newServicePageData = await this.servicePageRepo.save({
                 content,
-                bannerImage: servicePageDto.bannerImage,
+                bannerImage,
                 title
             })
 
@@ -30,7 +33,7 @@ export class ServicePage_Service {
 
         Object.assign(existingPageData[0], {
             content,
-            bannerImage: servicePageDto.bannerImage,
+            bannerImage,
             title
         })
 
@@ -42,8 +45,9 @@ export class ServicePage_Service {
         return servicePageData[0]
     }
 
-    async setBannerImage(banner: FileSystemStoredFile) {
-        const bannerImage = banner && this.getFileName(banner)
+    async setBannerImage(bannerImageDto: BannerImageDto) {
+        // const bannerImage = banner && this.getFileName(banner)
+        const bannerImage = await getImageUrl(bannerImageDto.bannerImage)
         const existingAboutData = await this.servicePageRepo.find();
 
         if (!existingAboutData?.length) { // if no data is present in the database create a new one with banner image

@@ -2,8 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CurrentOffer } from '../entities/currentOffers.entity';
-import { CurrentOfferDto } from '../dto/currentOffer.dto';
+import { CreateCurrentOfferDto } from '../dto/create-currentOffer.dto';
 import { FileSystemStoredFile } from 'nestjs-form-data';
+import getImageUrl from 'src/utils/getImageUrl';
+import { UpdateCurrentOfferDto } from '../dto/update-currentOffer.dto';
 
 @Injectable()
 export class CurrentOfferService {
@@ -11,11 +13,12 @@ export class CurrentOfferService {
     @InjectRepository(CurrentOffer) private readonly currentOfferRepo: Repository<CurrentOffer>,
   ) { }
 
-  async create(currentOfferDto: CurrentOfferDto) {
-    const image = currentOfferDto.image && this.getFileName(currentOfferDto.image);
+  async create(createCurrentOfferDto: CreateCurrentOfferDto) {
+    // const image = currentOfferDto.image && this.getFileName(currentOfferDto.image);
+    const image = await getImageUrl(createCurrentOfferDto.image);
 
     const newPricing = this.currentOfferRepo.create({
-      ...currentOfferDto,
+      ...createCurrentOfferDto,
       image
     });
 
@@ -38,13 +41,14 @@ export class CurrentOfferService {
     return existingOffer;
   }
 
-  async update(id: string, currentOfferDto: CurrentOfferDto) {
+  async update(id: string, updateCurrentOfferDto: UpdateCurrentOfferDto) {
     const existingOffer = await this.findOne(id)
 
-    const image = currentOfferDto.image && this.getFileName(currentOfferDto.image);
+    // const image = updateCurrentOfferDto.image && this.getFileName(updateCurrentOfferDto.image);
+    const image = await getImageUrl(updateCurrentOfferDto.image);
 
     Object.assign(existingOffer, {
-      ...currentOfferDto,
+      ...updateCurrentOfferDto,
       image
     });
     return await this.currentOfferRepo.save(existingOffer);
