@@ -21,11 +21,11 @@ export class BookingsService {
 
     let user = await this.userService.findOneByEmail(email);
 
-    if (!user) {
+    if (user instanceof NotFoundException) {
       user = await this.userService.create({
         email: email,
         name: createBookingDto.name,
-        password: Math.floor(Math.random() * 8).toString(),
+        password: Array.from({ length: 8 }, () => Math.floor(Math.random() * 10)).join(''),
         phone: createBookingDto.phone,
       })
     }
