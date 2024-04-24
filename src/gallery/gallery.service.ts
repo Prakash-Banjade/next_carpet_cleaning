@@ -27,10 +27,10 @@ export class GalleryService {
     // }
 
     // <----- Below code is for MemoryStoredFile ---->
-    createGalleryDto.images.forEach(async (image) => {
+    for (const image of createGalleryDto.images){
       const url = await getImageUrl(image);
       images.push(url);
-    })
+    }
 
     return await this.galleryRepo.save({
       title: createGalleryDto.title,
