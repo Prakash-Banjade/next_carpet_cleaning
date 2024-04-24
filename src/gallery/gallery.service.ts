@@ -27,10 +27,10 @@ export class GalleryService {
     // }
 
     // <----- Below code is for MemoryStoredFile ---->
-    createGalleryDto.images.forEach(async (image) => {
+    for (const image of createGalleryDto.images) {
       const url = await getImageUrl(image);
       images.push(url);
-    })
+    }
 
     return await this.galleryRepo.save({
       title: createGalleryDto.title,
@@ -68,13 +68,19 @@ export class GalleryService {
 
     const { images, previousImages, title } = updateGalleryDto;
 
-    const imageUrlArray = images.map(async (image) => await getImageUrl(image));
+    const imagesUrlArray: string[] = [];
 
-    const resolvedImagesURL = await Promise.all(imageUrlArray);
+    for (const image of images) {
+      const url = await getImageUrl(image);
+      imagesUrlArray.push(url);
+    }
+
+    // previousImagesArray can be a single image or an array, so handle accordingly
+    const previousImagesArray = previousImages instanceof Array ? previousImages : typeof previousImages === 'string' ? [previousImages] : [];
 
     Object.assign(existingGallery, {
       title,
-      images: [...previousImages, ...resolvedImagesURL],
+      images: [...previousImagesArray, ...imagesUrlArray],
     })
 
     return await this.galleryRepo.save(existingGallery);

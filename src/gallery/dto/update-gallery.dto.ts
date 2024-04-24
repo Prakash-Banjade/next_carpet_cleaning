@@ -14,7 +14,7 @@ export class UpdateGalleryDto {
     @IsOptional()
     images?: MemoryStoredFile[]
 
-    @ApiPropertyOptional({ type: 'string', format: 'binary', isArray: true })
+    @ApiPropertyOptional()
     @IsOptional()
     @IsString({ message: 'Invalid type for previousImages. previousImages must be a string', each: true })
     previousImages?: string[]
