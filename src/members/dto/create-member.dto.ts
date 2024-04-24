@@ -18,7 +18,7 @@ export class CreateMemberDto {
     @IsNotEmpty()
     post: string;
 
-    @ApiPropertyOptional({ type: 'string', format: 'binary' })
+    @ApiProperty({ type: 'string', format: 'binary' })
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for image. Image must be jpeg or png or webp' })
     @IsFile({ message: 'Invalid type for Image. Image must be file type' })
     image?: MemoryStoredFile;
@@ -47,9 +47,8 @@ export class CreateMemberDto {
     @IsOptional()
     linkedIn?: string;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @IsPhoneNumber('AU', { message: 'Invalid phone number. Must be an Australian phone number' })
-    @IsOptional()
     phone?: string;
 }
 

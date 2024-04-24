@@ -18,6 +18,7 @@ import { TestimonialsModule } from './testimonials/testimonials.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import cookieParser from 'cookie-parser';
+import { BookingsModule } from './bookings/bookings.module';
 const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
@@ -55,7 +56,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    include: [ServicesModule, BlogsModule, GalleryModule, AboutModule, ContactModule, FaqModule, HomePageModule, MembersModule, PricingsModule, AuthModule, PrivacyPolicyModule, SiteSettingsModule, SubscriberModule, TestimonialsModule, UsersModule],
+    include: [ServicesModule, BlogsModule, GalleryModule, AboutModule, ContactModule, FaqModule, HomePageModule, MembersModule, PricingsModule, AuthModule, PrivacyPolicyModule, SiteSettingsModule, SubscriberModule, TestimonialsModule, UsersModule, BookingsModule],
   });
   SwaggerModule.setup('api', app, document, {
     customSiteTitle: 'Next Carpet Cleaning',
