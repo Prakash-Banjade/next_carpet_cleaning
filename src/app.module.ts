@@ -52,7 +52,7 @@ require('dotenv').config();
       global: true,
       secret: process.env.ACCESS_TOKEN_SECRET,
       signOptions: {
-        expiresIn: '3600s',
+        expiresIn: '1d',
       },
     }),
     ThrottlerModule.forRoot([{ // rate limiting, only 3 requests per second

@@ -27,7 +27,7 @@ export class ServicesService {
     });
   }
 
-  async findAll(showContent: boolean = true) {
+  async findAll(showContent: string = 'true') {
     console.log(showContent, 'service')
     return await this.serviceRepo.find({
       order: {
@@ -36,7 +36,7 @@ export class ServicesService {
       select: {
         id: true,
         title: true,
-        content: showContent,
+        content: showContent === 'true',
         coverImage: true,
         createdAt: true,
         updatedAt: true,
