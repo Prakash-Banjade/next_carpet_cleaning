@@ -3,6 +3,12 @@ import { Service } from "../../services/entities/service.entity";
 import { User } from "../../users/entities/user.entity";
 import { Column, Entity, ManyToOne } from "typeorm";
 
+export enum Status {
+    PENDING = 'pending',
+    SUCCESSED = 'successed',
+    REJECTED = 'rejected',
+}
+
 @Entity()
 export class Booking extends BaseEntity {
     @Column()
@@ -16,6 +22,9 @@ export class Booking extends BaseEntity {
 
     @Column()
     message: string;
+
+    @Column({ type: 'enum', enum: Status, default: Status.PENDING })
+    status: Status
 
     @Column()
     time: string;
