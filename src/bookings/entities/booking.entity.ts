@@ -14,7 +14,7 @@ export class Booking extends BaseEntity {
     @Column()
     location: string;
 
-    @ManyToOne(() => Service, (service) => service.bookings)
+    @ManyToOne(() => Service, (service) => service.bookings, { onDelete: 'RESTRICT' })
     service: Service;
 
     @ManyToOne(() => User, (user) => user.bookings)

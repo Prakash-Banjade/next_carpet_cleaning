@@ -9,10 +9,7 @@ export class CreateTestimonialDto {
     name: string;
 
     @ApiProperty()
-    @IsNumber()
     @IsNotEmpty()
-    @Max(5, { message: 'Rating must be less than or equal to 5' })
-    @Min(0, { message: 'Rating must be greater than or equal to 0' })
     rating: number;
 
     @ApiPropertyOptional()
