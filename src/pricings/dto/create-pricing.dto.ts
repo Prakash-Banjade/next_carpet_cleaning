@@ -13,7 +13,7 @@ export class CreatePricingDto {
     price: number;
 
     @ApiProperty({ enum: ['month', 'year'] })
-    @IsEnum(['month', 'year'])
+    @IsEnum(['month', 'year'], { message: 'Per must be month or year' })
     @IsNotEmpty()
     per: ['month', 'year']
 
