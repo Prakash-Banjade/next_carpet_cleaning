@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseP
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
@@ -23,10 +23,9 @@ export class ServicesController {
 
   @Public()
   @Get()
+  @ApiQuery({ name: 'content', required: false, enum: ['false', 'true'] })
   findAll(@Query('content') content: string) {
-
-    console.log(content)
-    return this.servicesService.findAll(!content);
+    return this.servicesService.findAll(content);
   }
 
   @Public()
