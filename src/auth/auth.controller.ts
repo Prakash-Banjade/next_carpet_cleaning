@@ -21,7 +21,7 @@ export class AuthController {
     const { access_token } = await this.authService.signIn(signInDto);
 
     res.cookie('access_token', access_token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: 'none',
       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
