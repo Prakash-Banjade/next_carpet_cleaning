@@ -47,7 +47,7 @@ export class CreateMemberDto {
     @IsOptional()
     linkedIn?: string;
 
-    @ApiProperty()
+    @ApiProperty() 
     @IsPhoneNumber('AU', { message: 'Invalid phone number. Must be an Australian phone number' })
     phone?: string;
 }
