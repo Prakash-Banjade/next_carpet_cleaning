@@ -43,7 +43,14 @@ export class MembersService {
   }
 
   async findOne(id: string) {
-    const existingMember = await this.memberRepository.findOneBy({ id });
+    const existingMember = await this.memberRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        password: false
+      }
+    });
     if (!existingMember) throw new NotFoundException('Member not found');
 
     return existingMember;
