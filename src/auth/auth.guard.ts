@@ -30,7 +30,6 @@ export class AuthGuard implements CanActivate {
 
     const request: Request = context.switchToHttp().getRequest();
     const token = AuthGuard.extractJWTFromCookie(request); // static member so, AuthGuard.extractJWTFromCookie(request)
-    console.log(token);
     if (!token) {
       throw new UnauthorizedException();
     }

@@ -34,7 +34,6 @@ export class ContactController {
   // @Patch()
   // @UsePipes(new ValidationPipe({ whitelist: true }))
   // update(@Body() updateContactDto: UpdateContactDto) {
-  //   console.log('hey');
   //   return this.contactService.update(updateContactDto);
   // }
 
