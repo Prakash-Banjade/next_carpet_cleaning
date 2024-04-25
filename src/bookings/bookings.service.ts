@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { UserService } from '../users/users.service';
 import { ServicesService } from '../services/services.service';
 import { User } from '../users/entities/user.entity';
+import { Service } from 'src/services/entities/service.entity';
 
 @Injectable()
 export class BookingsService {
@@ -78,17 +79,23 @@ export class BookingsService {
 
     if (!user) throw new NotFoundException('User not found');
 
-    if (!updateBookingDto.service) throw new BadRequestException('Service is required');
-    const bookedService = await this.servicesService.findOne(updateBookingDto.service);
+    let service: Service;
+    if (updateBookingDto.service) {
+      const bookedService = await this.servicesService.findOne(updateBookingDto.service);
 
-    if (!bookedService) throw new NotFoundException('Service not found');
+      if (!bookedService) throw new NotFoundException('Service not found');
+
+      service = bookedService;
+    } else {
+      service = await this.servicesService.findOne(existingBooking.service?.id);
+    }
 
     Object.assign(existingBooking, {
       location: updateBookingDto.location,
       message: updateBookingDto.message,
       time: updateBookingDto.time,
       user,
-      service: bookedService
+      service: service
     });
 
     return await this.bookingRepository.save(existingBooking);
