@@ -41,7 +41,7 @@ export class AuthController {
   }
 
   @Public()
-  @Post('veryfyToken')
+  @Post('verifyToken')
   @ApiExcludeEndpoint()
   async veryfyToken(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
     if (!req.cookies.access_token) throw new BadRequestException('Invalid token')
