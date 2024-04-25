@@ -6,24 +6,22 @@ import {
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { MembersService } from '../members/members.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Member } from 'src/members/entities/member.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private memberService: MembersService,
     private jwtService: JwtService,
+    @InjectRepository(Member) private memberRepository: Repository<Member>,
   ) { }
 
   async signIn(signInAuthDto: SignInAuthDto) {
     const { email, password } = signInAuthDto;
-    const member = await this.memberService.findOneByEmail(email);
+    const member = await this.memberRepository.findOneBy({ email })
 
-    if (member instanceof NotFoundException)
-      throw new BadRequestException({
-        message: 'Invalid email',
-        field: 'email',
-      });
+    if (!member) throw new BadRequestException({ message: 'Invalid email', })
 
     if (!member.isAdmin) throw new BadRequestException({
       message: 'Only admins can sign in',
