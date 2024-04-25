@@ -9,11 +9,12 @@ import {
   ValidationPipe,
   UsePipes,
   Res,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
-import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiBearerAuth, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { Response } from 'express';
@@ -31,7 +32,6 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Public()
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -54,6 +54,7 @@ export class UsersController {
   }
 
   // *** Authentication ***
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async signIn(@Body() userAuthDto: UserAuthDto, @Res({ passthrough: true }) res: Response) {
