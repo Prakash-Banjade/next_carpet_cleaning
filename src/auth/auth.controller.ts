@@ -27,8 +27,8 @@ export class AuthController {
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: false,
+      sameSite: 'lax',
       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
     }).send({ status: 'ok', id });
   }
@@ -36,7 +36,8 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   logout(@Res({ passthrough: true }) res: Response) {
-    return res.clearCookie('access_token').send();
+    res.clearCookie('access_token');
+    return;
   }
 
   @Public()

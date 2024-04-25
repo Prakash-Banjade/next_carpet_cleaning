@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { UserService } from '../users/users.service';
 import { ServicesService } from '../services/services.service';
 import { User } from '../users/entities/user.entity';
-import { Service } from 'src/services/entities/service.entity';
+import { Service } from '../services/entities/service.entity';
 
 @Injectable()
 export class BookingsService {
