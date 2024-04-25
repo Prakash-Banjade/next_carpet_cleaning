@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UsePipes, ValidationPipe, Res, Req, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, UsePipes, ValidationPipe, Res, Req, BadRequestException, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -41,7 +41,7 @@ export class AuthController {
   }
 
   @Public()
-  @Post('verifyToken')
+  @Get('verifyToken')
   @ApiExcludeEndpoint()
   async veryfyToken(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
     if (!req.cookies.access_token) throw new BadRequestException('Invalid token')
