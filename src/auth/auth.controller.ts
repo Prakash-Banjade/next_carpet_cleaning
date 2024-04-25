@@ -35,9 +35,8 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
-  logout(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
-    if (!req.cookies.access_token) return;
-    return res.clearCookie('access_token').send({ status: 'ok' });
+  logout(@Res({ passthrough: true }) res: Response) {
+    return res.clearCookie('access_token').send();
   }
 
   @Public()
