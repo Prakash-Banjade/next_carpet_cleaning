@@ -18,13 +18,13 @@ export class AuthController {
     type: SignInAuthDto
   })
   async signin(@Body() signInDto: SignInAuthDto, @Res({ passthrough: true }) res: Response) {
-    const { access_token } = await this.authService.signIn(signInDto);
+    const { access_token, id } = await this.authService.signIn(signInDto);
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-    }).send({ status: 'ok', access_token });
+    }).send({ status: 'ok', id });
   }
 }
