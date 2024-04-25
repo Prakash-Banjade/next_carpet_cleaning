@@ -13,7 +13,6 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
-import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiBearerAuth, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { Response } from 'express';
