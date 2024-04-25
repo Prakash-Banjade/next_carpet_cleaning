@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiBearerAuth()
@@ -13,6 +13,7 @@ export class BookingsController {
 
   @Public()
   @Post()
+  @ApiConsumes('multipart/form-data')
   @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingsService.create(createBookingDto);
@@ -30,7 +31,7 @@ export class BookingsController {
 
   @Patch(':id')
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  @ApiBody({description: 'hey there', type: UpdateBookingDto })
+  @ApiConsumes("multipart/form-data")
   update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
     return this.bookingsService.update(id, updateBookingDto);
   }

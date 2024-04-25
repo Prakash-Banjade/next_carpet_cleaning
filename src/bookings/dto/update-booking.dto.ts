@@ -1,10 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Status } from '../entities/booking.entity';
-import { IsEmail, IsEnum, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsPhoneNumber, IsString, IsUUID } from 'class-validator';
 
 export class UpdateBookingDto {
-    @ApiPropertyOptional({ type: 'enum', enum: Status, description: 'status of booking' })
-    @IsEnum(Status, { message: 'status must be pending, successed or rejected' })
+    @ApiPropertyOptional({ type: 'enum', enum: Status, description: 'Status of booking' })
     status?: Status
 
     @ApiPropertyOptional()
@@ -17,7 +16,7 @@ export class UpdateBookingDto {
     @IsOptional()
     email?: string;
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({ description: 'Australian phone number' })
     @IsPhoneNumber('AU', { message: 'Invalid phone number. Must be Australian.' })
     @IsOptional()
     phone?: string;
@@ -27,9 +26,9 @@ export class UpdateBookingDto {
     @IsOptional()
     location?: string;
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({ type: 'string', format: 'uuid' })
     @IsOptional()
-    @IsString()
+    @IsUUID()
     service?: string;
 
     @ApiPropertyOptional()
@@ -37,7 +36,7 @@ export class UpdateBookingDto {
     @IsOptional()
     message?: string;
 
-    @ApiProperty()
+    @ApiPropertyOptional()
     @IsOptional()
     @IsString()
     time?: string;

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UsePipes, ValidationPipe, Res, Req, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, UsePipes, ValidationPipe, Res, Req, BadRequestException, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -27,21 +27,21 @@ export class AuthController {
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: false,
+      sameSite: 'lax',
       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
     }).send({ status: 'ok', id });
   }
 
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
-  logout(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
-    if (!req.cookies.access_token) return;
-    return res.clearCookie('access_token').send({ status: 'ok' });
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('access_token');
+    return;
   }
 
   @Public()
-  @Post('veryfyToken')
+  @Get('verifyToken')
   @ApiExcludeEndpoint()
   async veryfyToken(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
     if (!req.cookies.access_token) throw new BadRequestException('Invalid token')
