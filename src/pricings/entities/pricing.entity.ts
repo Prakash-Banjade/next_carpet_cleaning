@@ -1,17 +1,17 @@
-import { BaseEntity } from "../../entities/base.entity";
-import { Column, Entity } from "typeorm";
+import { BaseEntity } from '../../entities/base.entity';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
 export class Pricing extends BaseEntity {
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column({ type: 'integer' })
-    price: number;
+  @Column({ type: 'decimal' })
+  price: number;
 
-    @Column({ type: 'enum', enum: ['month', 'year'] })
-    per: ['month', 'year'];
+  @Column({ type: 'enum', enum: ['month', 'year'] })
+  per: ['month', 'year'];
 
-    @Column({ type: 'simple-array' })
-    description: string[];
+  @Column({ type: 'simple-array' })
+  description: string[];
 }
