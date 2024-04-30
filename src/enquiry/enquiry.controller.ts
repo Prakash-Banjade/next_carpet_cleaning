@@ -10,7 +10,7 @@ import {
 import { EnquiryService } from './enquiry.service';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { Public } from 'src/decorators/setPublicRoute.decorator';
+import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiBearerAuth()
 @Controller('enquiry')
