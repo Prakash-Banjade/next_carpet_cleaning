@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { EnquiryService } from './enquiry.service';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiBearerAuth()
@@ -20,6 +20,7 @@ export class EnquiryController {
 
   @Public()
   @Post()
+  @ApiConsumes()
   create(@Body() createEnquiryDto: CreateEnquiryDto) {
     return this.enquiryService.create(createEnquiryDto);
   }

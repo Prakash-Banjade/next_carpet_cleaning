@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTestimonialDto } from './dto/create-testimonial.dto';
 import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,7 +35,13 @@ export class TestimonialsService {
       image,
     });
 
-    return await this.testimonialRepo.save(newTestimonial);
+    const result = await this.testimonialRepo.save(newTestimonial);
+    if (!result) {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: 'Added successfully',
+    };
   }
 
   async findAll() {
@@ -56,12 +66,25 @@ export class TestimonialsService {
       image,
     });
 
-    return await this.testimonialRepo.save(existingReview);
+    const result = await this.testimonialRepo.save(existingReview);
+    if (!result) {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: 'Saved Successfully',
+    };
   }
 
   async remove(id: string) {
     const existingReview = await this.findOne(id);
-    return await this.testimonialRepo.softRemove(existingReview);
+
+    const result = await this.testimonialRepo.softRemove(existingReview);
+    if (!result) {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: 'Deleted Successfully',
+    };
   }
 
   public getFileName(file: FileSystemStoredFile | string) {
