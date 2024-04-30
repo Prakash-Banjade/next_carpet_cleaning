@@ -9,10 +9,11 @@ import {
 } from '@nestjs/common';
 import { EnquiryService } from './enquiry.service';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiBearerAuth()
+@ApiTags('enquiry')
 @Controller('enquiry')
 export class EnquiryController {
   constructor(private readonly enquiryService: EnquiryService) {}

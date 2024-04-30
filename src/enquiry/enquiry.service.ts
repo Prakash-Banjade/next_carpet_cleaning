@@ -13,6 +13,7 @@ export class EnquiryService {
   ) {}
 
   async create(createEnquiryDto: CreateEnquiryDto) {
+    console.log('hey');
     return await this.enquiryRepo.save(createEnquiryDto);
   }
 
@@ -21,7 +22,9 @@ export class EnquiryService {
   }
 
   async findOne(id: string) {
-    const result = await this.enquiryRepo.findOneBy(id);
+    const result = await this.enquiryRepo.findOneBy({
+      id,
+    });
     if (!result) {
       throw new NotFoundException('Enquiry not found');
     }
@@ -29,7 +32,9 @@ export class EnquiryService {
   }
 
   async remove(id: string) {
-    const result = await this.enquiryRepo.findOneBy(id);
+    const result = await this.enquiryRepo.findOneBy({
+      id,
+    });
     return await this.enquiryRepo.softRemove(result);
   }
 }

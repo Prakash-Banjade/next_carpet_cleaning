@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -8,23 +8,28 @@ import {
 } from 'class-validator';
 
 export class CreateEnquiryDto {
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsNotEmpty()
-  @IsPhoneNumber('AU')
-  phone: string[];
+  name: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsPhoneNumber('AU', {
+    message: 'Enter valid phone number',
+  })
+  phone: string;
+
+  @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   @IsString({ message: 'Email must be string' })
   email: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsNotEmpty()
   @IsString({ message: 'Address must be string' })
   address: string;
 
-  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   message?: string;
