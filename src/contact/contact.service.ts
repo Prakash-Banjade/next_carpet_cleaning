@@ -21,7 +21,6 @@ export class ContactService {
   }
 
   async create(createContactDto: CreateContactDto) {
-    console.log(createContactDto);
     const existingContact = await this.contactRepo.find();
     if (existingContact?.length)
       throw new ConflictException('Contact already exists');

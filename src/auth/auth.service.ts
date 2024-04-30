@@ -13,7 +13,7 @@ export class AuthService {
   constructor(
     private memberService: MembersService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signIn(signInAuthDto: SignInAuthDto) {
     const { email, password } = signInAuthDto;
@@ -25,12 +25,13 @@ export class AuthService {
         field: 'email',
       });
 
-    if (!member.isAdmin) throw new BadRequestException({
-      message: 'Only admins can sign in',
-      field: 'email',
-    });
+    if (!member.isAdmin)
+      throw new BadRequestException({
+        message: 'Only admins can sign in',
+        field: 'email',
+      });
 
-    const isMatch = bcrypt.compareSync(password, member.password)
+    const isMatch = bcrypt.compareSync(password, member.password);
 
     if (!isMatch)
       throw new BadRequestException({
@@ -39,10 +40,11 @@ export class AuthService {
       });
 
     const payload = { email: member.email, id: member.id };
+    const jwtToken = await this.jwtService.signAsync(payload);
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
-      id: member.id
+      access_token: jwtToken,
+      id: member.id,
     };
   }
 }
