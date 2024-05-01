@@ -1,73 +1,46 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Rebel Cleaning Backend Documentation
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Welcome to the documentation for Rebel Cleaning's backend application. This application serves as the backend for managing content related to Rebel Cleaning, an Australian-based carpet cleaning company.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
+- [Rebel Cleaning Backend Documentation](#rebel-cleaning-backend-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Routes](#routes)
+    - [Authentication Routes](#authentication-routes)
+    - [Content Management Routes (public)](#content-management-routes-public)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-## Description
+## Introduction
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The Rebel Cleaning backend application is built using Nest.js, a progressive Node.js framework. It provides a set of routes for managing content such as services, testimonials, gallery, and blog posts for Rebel Cleaning's website.
 
-## Installation
+## Routes
 
-```bash
-$ npm install
-```
+### Authentication Routes
 
-## Running the app
+- **POST /auth/login**: Endpoint for members authentication. Members can log in with their credentials (email and password).
+- **POST /members**: Endpoint for member registration. New members can create an account by providing necessary details.
+- **POST /auth/logout**: Endpoint for member logout. Members can invalidate their current session.
+- **POST /users/login**: Endpoint for users authentication. New users log in with their credentials.
+- **POST /users**: Endpoint for users registration. New users can be created by providing necessary details.
 
-```bash
-# development
-$ npm run start
+### Content Management Routes (public)
 
-# watch mode
-$ npm run start:dev
+- **GET /services**: Retrieve all carpet cleaning services offered by Rebel Cleaning.
+- **GET /blog**: Retrieve all blog posts related to carpet cleaning tips, news, and updates.
+- **GET /testimonials**: Retrieve all testimonials from satisfied customers.
+- **GET /members**: Retrieve all members working at Rebel Cleaning.
+- **GET /contact**: Retrieve the contact informations.
+- **GET /faq**: Retrieve all the frequently asked questions with their answers related to Rebel Cleaning.
+- **GET /gallery**: Retrieve gallery posts.  
+And other private routes.
 
-# production mode
-$ npm run start:prod
-```
+## Contributing
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+This project is not open to external contributions. Only authorized developers within Rebel Cleaning have access to modify or extend the backend application. If you have suggestions or improvements, please contact the development team at [Rebel Cleaning](mailto:rebelcleaningaus@gmail.com) for consideration.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is proprietary to Rebel Cleaning. Unauthorized use, reproduction, or distribution of this codebase is prohibited. For inquiries regarding the use of this software, please contact [Rebel Cleaning](mailto:rebelcleaningaus@gmail.com).

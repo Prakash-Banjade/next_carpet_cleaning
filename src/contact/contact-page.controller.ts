@@ -30,7 +30,6 @@ export class ContactPageController {
     @Public()
     @Get()
     findAll() {
-        console.log('contact_page findAll')
         return this.contactPageService.getPageData();
     }
 

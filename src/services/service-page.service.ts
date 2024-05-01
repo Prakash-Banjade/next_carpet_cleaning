@@ -71,7 +71,6 @@ export class ServicePage_Service {
         if (typeof file !== 'string') {
             const pathSegments = file?.path.split('\\');
             const fileName = pathSegments[pathSegments.length - 1];
-            console.log('filename: ', fileName);
             return fileName;
         } else return file;
     }

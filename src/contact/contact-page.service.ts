@@ -15,7 +15,6 @@ export class ContactPageService {
 
     async getPageData() {
         const contactPageData = await this.contactRepo.find();
-        console.log(contactPageData)
         return contactPageData[0];
     }
 

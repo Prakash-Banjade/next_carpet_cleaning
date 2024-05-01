@@ -16,7 +16,6 @@ export class UserService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     const existingUser = await this.findOneByEmail(createUserDto.email)
     if (existingUser instanceof User) throw new ConflictException('User already exists with this email')
     const newUser = this.userRepo.create(createUserDto)

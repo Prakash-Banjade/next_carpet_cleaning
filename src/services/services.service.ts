@@ -19,7 +19,6 @@ export class ServicesService {
     // createServiceDto.coverImage = this.getFileName(coverImage)
     const coverImage = await getImageUrl(createServiceDto.coverImage)
 
-    console.log(createServiceDto.coverImage);
     return await this.serviceRepo.save({
       content,
       title,
@@ -28,7 +27,6 @@ export class ServicesService {
   }
 
   async findAll(showContent: string = 'true') {
-    console.log(showContent, 'service')
     return await this.serviceRepo.find({
       order: {
         createdAt: 'ASC'
@@ -79,7 +77,6 @@ export class ServicesService {
     if (typeof file !== 'string') {
       const pathSegments = file?.path.split('\\');
       const fileName = pathSegments[pathSegments.length - 1];
-      console.log('filename: ', fileName);
       return fileName;
     } else return file;
   }

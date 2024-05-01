@@ -46,11 +46,4 @@ export class ServicesController {
   remove(@Param('id') id: string) {
     return this.servicesService.remove(id);
   }
-
-  // @Post('upload')
-  // @UseInterceptors(FileInterceptor('file', multerOptions))
-  // uploadFile(@UploadedFile() file: Express.Multer.File) {
-  //   // console.log(file);
-  //   return console.log(file);
-  // }
 }
