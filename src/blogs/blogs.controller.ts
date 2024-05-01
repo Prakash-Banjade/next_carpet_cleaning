@@ -23,7 +23,6 @@ export class BlogsController {
   constructor(private readonly blogsService: BlogsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createBlogDto: CreateBlogDto) {
@@ -43,7 +42,6 @@ export class BlogsController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {

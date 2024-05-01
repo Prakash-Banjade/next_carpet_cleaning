@@ -26,13 +26,12 @@ export class ContactController {
   }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createContactDto: CreateContactDto) {
     return this.contactService.create(createContactDto);
   }
 
   // @Patch()
-  // @UsePipes(new ValidationPipe({ whitelist: true }))
+  //
   // update(@Body() updateContactDto: UpdateContactDto) {
   //   return this.contactService.update(updateContactDto);
   // }

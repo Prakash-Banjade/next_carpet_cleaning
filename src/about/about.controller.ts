@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AboutService } from './about.service';
 import { CreateAboutDto } from './dto/create-about.dto';
 import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
@@ -10,11 +17,10 @@ import { BannerImageDto } from '../utils/banner-image.dto';
 @ApiTags('about-page')
 @Controller('about-page')
 export class AboutController {
-  constructor(private readonly aboutService: AboutService) { }
+  constructor(private readonly aboutService: AboutService) {}
 
   @Post()
   @ApiConsumes('multipart/form-data')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
   create(@Body() createAboutDto: CreateAboutDto) {
     return this.aboutService.setData(createAboutDto);
@@ -23,9 +29,8 @@ export class AboutController {
   @Post('banner')
   @ApiConsumes('multipart/form-data')
   @FormDataRequest({ storage: MemoryStoredFile })
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   setBanner(@Body() bannerImageDto: BannerImageDto) {
-    return this.aboutService.setBannerImage(bannerImageDto)
+    return this.aboutService.setBannerImage(bannerImageDto);
   }
 
   @Public()

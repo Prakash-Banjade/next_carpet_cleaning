@@ -23,11 +23,10 @@ import { Response } from 'express';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UserService) { }
+  constructor(private readonly usersService: UserService) {}
 
   @ApiExcludeEndpoint()
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -43,7 +42,6 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
@@ -56,15 +54,19 @@ export class UsersController {
   // *** Authentication ***
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async signIn(@Body() userAuthDto: UserAuthDto, @Res({ passthrough: true }) res: Response) {
+  async signIn(
+    @Body() userAuthDto: UserAuthDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const { access_token } = await this.usersService.signIn(userAuthDto);
 
-    res.cookie('user_access_token', access_token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
-      expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-    }).send({ status: 'ok', access_token });
+    res
+      .cookie('user_access_token', access_token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+      })
+      .send({ status: 'ok', access_token });
   }
 }

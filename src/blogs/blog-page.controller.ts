@@ -1,10 +1,10 @@
 import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    ValidationPipe,
-    UsePipes,
+  Controller,
+  Get,
+  Post,
+  Body,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
@@ -16,21 +16,18 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('blog-page')
 @Controller('blog-page')
 export class BlogPageController {
-    constructor(private readonly blogPageService: BlogPageService) { }
+  constructor(private readonly blogPageService: BlogPageService) {}
 
-    @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: MemoryStoredFile })
-    @ApiConsumes('multipart/form-data')
-    set(@Body() blogPageDto: BlogPageDto) {
-        return this.blogPageService.setPageData(blogPageDto)
-    }
+  @Post()
+  @FormDataRequest({ storage: MemoryStoredFile })
+  @ApiConsumes('multipart/form-data')
+  set(@Body() blogPageDto: BlogPageDto) {
+    return this.blogPageService.setPageData(blogPageDto);
+  }
 
-    @Public()
-    @Get()
-    findAll() {
-        return this.blogPageService.getPageData();
-    }
-
-
+  @Public()
+  @Get()
+  findAll() {
+    return this.blogPageService.getPageData();
+  }
 }
