@@ -16,7 +16,6 @@ import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
-
 @ApiBearerAuth()
 @ApiTags('blogs')
 @Controller('blogs')
@@ -26,7 +25,7 @@ export class BlogsController {
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
-  @ApiConsumes("multipart/form-data")
+  @ApiConsumes('multipart/form-data')
   create(@Body() createBlogDto: CreateBlogDto) {
     return this.blogsService.create(createBlogDto);
   }
@@ -46,7 +45,7 @@ export class BlogsController {
   @Patch(':id')
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
-  @ApiConsumes("multipart/form-data")
+  @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
     return this.blogsService.update(id, updateBlogDto);
   }

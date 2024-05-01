@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { PricingsService } from './pricings.service';
 import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
@@ -9,10 +19,9 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @ApiTags('pricings')
 @Controller('pricings')
 export class PricingsController {
-  constructor(private readonly pricingsService: PricingsService) { }
+  constructor(private readonly pricingsService: PricingsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createPricingDto: CreatePricingDto) {
     return this.pricingsService.create(createPricingDto);
   }
@@ -30,7 +39,6 @@ export class PricingsController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   update(@Param('id') id: string, @Body() updatePricingDto: UpdatePricingDto) {
     return this.pricingsService.update(id, updatePricingDto);
   }
