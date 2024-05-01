@@ -14,8 +14,12 @@ import { Repository } from 'typeorm';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
+<<<<<<< HEAD
     @InjectRepository(Member) private memberRepository: Repository<Member>,
   ) { }
+=======
+  ) {}
+>>>>>>> f42516ab59a2c59abb7c6bb1cb1554c6104d8ab3
 
   async signIn(signInAuthDto: SignInAuthDto) {
     const { email, password } = signInAuthDto;
@@ -23,12 +27,13 @@ export class AuthService {
 
     if (!member) throw new BadRequestException({ message: 'Invalid email', })
 
-    if (!member.isAdmin) throw new BadRequestException({
-      message: 'Only admins can sign in',
-      field: 'email',
-    });
+    if (!member.isAdmin)
+      throw new BadRequestException({
+        message: 'Only admins can sign in',
+        field: 'email',
+      });
 
-    const isMatch = bcrypt.compareSync(password, member.password)
+    const isMatch = bcrypt.compareSync(password, member.password);
 
     if (!isMatch)
       throw new BadRequestException({
@@ -37,10 +42,11 @@ export class AuthService {
       });
 
     const payload = { email: member.email, id: member.id };
+    const jwtToken = await this.jwtService.signAsync(payload);
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
-      id: member.id
+      access_token: jwtToken,
+      id: member.id,
     };
   }
 }

@@ -28,6 +28,7 @@ import { PricingsModule } from './pricings/pricings.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { EnquiryModule } from './enquiry/enquiry.module';
 require('dotenv').config();
 
 @Module({
@@ -55,10 +56,13 @@ require('dotenv').config();
         expiresIn: '86400s',
       },
     }),
-    ThrottlerModule.forRoot([{ // rate limiting, only 3 requests per second
-      ttl: 1000, // mili second
-      limit: 3,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        // rate limiting, only 3 requests per second
+        ttl: 1000, // mili second
+        limit: 3,
+      },
+    ]),
     ServicesModule,
     BlogsModule,
     GalleryModule,
@@ -75,15 +79,15 @@ require('dotenv').config();
     TestimonialsModule,
     PricingsModule,
     BookingsModule,
+    EnquiryModule,
   ],
   controllers: [AppController],
-  providers:
-    [
-      AppService,
-      {
-        provide: APP_GUARD,
-        useClass: ThrottlerGuard // global throttler guard (rate limiting for all routes)
-      }
-    ],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard, // global throttler guard (rate limiting for all routes)
+    },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

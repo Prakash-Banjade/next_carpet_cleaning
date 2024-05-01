@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  UsePipes,
+} from '@nestjs/common';
 import { GalleryService } from './gallery.service';
 import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
@@ -10,12 +20,11 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('gallery')
 @Controller('gallery')
 export class GalleryController {
-  constructor(private readonly galleryService: GalleryService) { }
+  constructor(private readonly galleryService: GalleryService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  @ApiConsumes('multipart/form-data')
   @FormDataRequest({ storage: MemoryStoredFile })
+  @ApiConsumes('multipart/form-data')
   create(@Body() createGalleryDto: CreateGalleryDto) {
     return this.galleryService.create(createGalleryDto);
   }
@@ -33,9 +42,8 @@ export class GalleryController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  @ApiConsumes('multipart/form-data')
   @FormDataRequest({ storage: MemoryStoredFile })
+  @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateGalleryDto: UpdateGalleryDto) {
     return this.galleryService.update(id, updateGalleryDto);
   }

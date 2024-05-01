@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,7 +13,10 @@ import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class GalleryService {
-  constructor(@InjectRepository(Gallery) private readonly galleryRepo: Repository<Gallery>) { }
+  constructor(
+    @InjectRepository(Gallery)
+    private readonly galleryRepo: Repository<Gallery>,
+  ) {}
 
   async create(createGalleryDto: CreateGalleryDto) {
     const images: string[] = [];
@@ -34,15 +41,15 @@ export class GalleryService {
 
     return await this.galleryRepo.save({
       title: createGalleryDto.title,
-      images: images || []
-    })
+      images: images || [],
+    });
   }
 
   async findAll() {
     return await this.galleryRepo.find({
       order: {
-        createdAt: 'ASC'
-      }
+        createdAt: 'ASC',
+      },
     });
   }
 
@@ -70,18 +77,25 @@ export class GalleryService {
 
     const imagesUrlArray: string[] = [];
 
-    for (const image of images) {
-      const url = await getImageUrl(image);
-      imagesUrlArray.push(url);
+    if (images?.length) {
+      for (const image of images) {
+        const url = await getImageUrl(image);
+        imagesUrlArray.push(url);
+      }
     }
 
     // previousImagesArray can be a single image or an array, so handle accordingly
-    const previousImagesArray = previousImages instanceof Array ? previousImages : typeof previousImages === 'string' ? [previousImages] : [];
+    const previousImagesArray =
+      previousImages instanceof Array
+        ? previousImages
+        : typeof previousImages === 'string'
+          ? [previousImages]
+          : [];
 
     Object.assign(existingGallery, {
       title,
       images: [...previousImagesArray, ...imagesUrlArray],
-    })
+    });
 
     return await this.galleryRepo.save(existingGallery);
   }
@@ -94,8 +108,8 @@ export class GalleryService {
   async restore(id: string) {
     const blog = await this.galleryRepo.restore({ id });
 
-    if (!blog) throw new BadRequestException('Failed to restore blog')
-    return blog
+    if (!blog) throw new BadRequestException('Failed to restore blog');
+    return blog;
   }
 
   public getFileName(file: FileSystemStoredFile | string) {

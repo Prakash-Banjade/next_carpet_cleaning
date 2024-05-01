@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TestimonialsService } from './testimonials.service';
 import { CreateTestimonialDto } from './dto/create-testimonial.dto';
 import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
@@ -10,10 +20,9 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('testimonials')
 @Controller('testimonials')
 export class TestimonialsController {
-  constructor(private readonly testimonialsService: TestimonialsService) { }
+  constructor(private readonly testimonialsService: TestimonialsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createTestimonialDto: CreateTestimonialDto) {
@@ -36,7 +45,10 @@ export class TestimonialsController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: MemoryStoredFile })
   @ApiConsumes('multipart/form-data')
-  update(@Param('id') id: string, @Body() updateTestimonialDto: UpdateTestimonialDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateTestimonialDto: UpdateTestimonialDto,
+  ) {
     return this.testimonialsService.update(id, updateTestimonialDto);
   }
 
