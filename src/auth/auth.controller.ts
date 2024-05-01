@@ -18,6 +18,7 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 import { ApiBody, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
+import { MembersService } from 'src/members/members.service';
 require('dotenv').config();
 
 @ApiTags('auth')
@@ -25,6 +26,7 @@ require('dotenv').config();
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly memberService: MembersService,
     private jwtService: JwtService,
   ) {}
 
@@ -58,7 +60,7 @@ export class AuthController {
   }
 
   @Get('verifyToken')
-  @ApiExcludeEndpoint()
+  // @ApiExcludeEndpoint()
   async verifyToken(
     @Res({ passthrough: true }) res: Response,
     @Req() req: Request,
@@ -75,9 +77,12 @@ export class AuthController {
         );
 
         if (payload) {
+          const user = await this.memberService.findOne(payload.id);
           return {
-            status: 'ok',
-            id: payload.id,
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            post: user.post,
           };
         }
       }

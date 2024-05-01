@@ -6,9 +6,10 @@ import { APP_GUARD } from '@nestjs/core';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Member } from '../members/entities/member.entity';
+import { MembersModule } from 'src/members/members.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Member])],
+  imports: [MembersModule, TypeOrmModule.forFeature([Member])],
   controllers: [AuthController],
   providers: [
     AuthService,
