@@ -52,7 +52,7 @@ export class AuthController {
       .send({ status: 'ok', id });
   }
 
-  @Post('logout')
+  @Get('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   logout(@Res({ passthrough: true }) res: Response) {
     res.clearCookie('access_token');
