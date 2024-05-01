@@ -7,7 +7,7 @@ import { SignInAuthDto } from './dto/signin-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Member } from 'src/members/entities/member.entity';
+import { Member } from '../members/entities/member.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
