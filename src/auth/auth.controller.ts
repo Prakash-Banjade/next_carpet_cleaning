@@ -10,6 +10,7 @@ import {
   Req,
   BadRequestException,
   Get,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signin-auth.dto';
@@ -56,23 +57,33 @@ export class AuthController {
     return;
   }
 
-  @Public()
   @Get('verifyToken')
   @ApiExcludeEndpoint()
-  async veryfyToken(
+  async verifyToken(
     @Res({ passthrough: true }) res: Response,
     @Req() req: Request,
   ) {
-    if (!req.cookies.access_token)
-      throw new BadRequestException('Invalid token');
+    try {
+      if (!req.cookies.access_token) {
+        throw new BadRequestException('Invalid token');
+      } else {
+        const payload = await this.jwtService.verifyAsync(
+          req.cookies.access_token,
+          {
+            secret: process.env.ACCESS_TOKEN_SECRET,
+          },
+        );
 
-    const payload = await this.jwtService.verifyAsync(
-      req.cookies.access_token,
-      {
-        secret: process.env.ACCESS_TOKEN_SECRET,
-      },
-    );
-
-    return res.send({ status: 'ok', id: payload.id });
+        if (payload) {
+          return {
+            status: 'ok',
+            id: payload.id,
+          };
+        }
+      }
+    } catch (error) {
+      // Handle the error properly
+      throw new UnauthorizedException();
+    }
   }
 }
