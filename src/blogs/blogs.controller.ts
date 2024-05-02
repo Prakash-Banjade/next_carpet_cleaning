@@ -48,8 +48,19 @@ export class BlogsController {
     return this.blogsService.update(id, updateBlogDto);
   }
 
+  @Patch(':id/restore')
+  @ApiConsumes('multipart/form-data')
+  restore(@Param('id') id: string) {
+    return this.blogsService.restore(id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.blogsService.remove(id);
+  }
+
+  @Delete(':id/permanent')
+  removeForever(@Param('id') id: string) {
+    return this.blogsService.deletePermanent(id);
   }
 }
