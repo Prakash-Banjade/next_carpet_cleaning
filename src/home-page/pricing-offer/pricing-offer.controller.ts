@@ -5,6 +5,8 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
+  Patch,
+  Param,
 } from '@nestjs/common';
 import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { PricingOfferDto } from '../dto/pricingOffer.dto';
@@ -19,8 +21,6 @@ export class PricingOfferController {
   constructor(private readonly pricingOfferService: PricingOfferService) {}
 
   @Post()
-
-  // @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() pricingOfferDto: PricingOfferDto) {
     return this.pricingOfferService.setData(pricingOfferDto);
@@ -30,5 +30,10 @@ export class PricingOfferController {
   @Get()
   findAll() {
     return this.pricingOfferService.getData();
+  }
+
+  @Patch()
+  update(@Body() pricingOfferDto: PricingOfferDto) {
+    return this.pricingOfferService.update(pricingOfferDto);
   }
 }
