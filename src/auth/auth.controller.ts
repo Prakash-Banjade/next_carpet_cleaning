@@ -47,7 +47,7 @@ export class AuthController {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        expires: new Date(Date.now() + 2 * 24 * 60 * 1000), // Hour Minute Second Millisecond
+        expires: new Date(Date.now() + 2 * 60 * 60 * 1000), // Hour Minute Second Millisecond
       })
       .send({ status: 'ok', id });
   }
