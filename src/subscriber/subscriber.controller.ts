@@ -21,6 +21,7 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 export class SubscriberController {
   constructor(private readonly subscriberService: SubscriberService) {}
 
+  @Public()
   @Post()
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
     return this.subscriberService.create(createSubscriberDto);

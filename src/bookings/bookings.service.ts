@@ -6,7 +6,7 @@ import {
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booking } from './entities/booking.entity';
+import { Booking, Status } from './entities/booking.entity';
 import { Repository } from 'typeorm';
 import { UserService } from '../users/users.service';
 import { ServicesService } from '../services/services.service';
@@ -113,7 +113,15 @@ export class BookingsService {
 
     return await this.bookingRepository.save(existingBooking);
   }
-  async changeStatus(id: string) {}
+  async changeStatus(id: string, status: Status) {
+    const existingBooking = await this.findOne(id);
+
+    Object.assign(existingBooking, {
+      status: status,
+    });
+
+    return await this.bookingRepository.save(existingBooking);
+  }
 
   async remove(id: string) {
     const existingBooking = await this.findOne(id);

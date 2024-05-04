@@ -14,6 +14,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
+import { Status } from './entities/booking.entity';
 
 @ApiBearerAuth()
 @ApiTags('Bookings')
@@ -42,6 +43,11 @@ export class BookingsController {
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
     return this.bookingsService.update(id, updateBookingDto);
+  }
+
+  @Patch(':id/status')
+  updateStatus(@Param('id') id: string, @Body() status: any) {
+    return this.bookingsService.changeStatus(id, status.value);
   }
 
   @Delete(':id')
