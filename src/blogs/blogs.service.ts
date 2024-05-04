@@ -24,9 +24,9 @@ export class BlogsService {
     });
   }
 
-  async findAll() {
+  async findAll(deleted: boolean) {
     return await this.blogRepo.find({
-      withDeleted: true,
+      withDeleted: deleted || false,
       order: {
         createdAt: 'ASC',
       },
