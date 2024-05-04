@@ -8,6 +8,7 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
+  Query,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
@@ -31,8 +32,8 @@ export class BlogsController {
 
   @Get()
   @Public()
-  findAll() {
-    return this.blogsService.findAll();
+  findAll(@Query('deleted') deleted: boolean) {
+    return this.blogsService.findAll(deleted);
   }
 
   @Get(':id')
