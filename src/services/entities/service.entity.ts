@@ -1,6 +1,7 @@
+import { Gallery } from 'src/gallery/entities/gallery.entity';
 import { Booking } from '../../bookings/entities/booking.entity';
 import { BaseEntity } from '../../entities/base.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
 
 @Entity()
 export class Service extends BaseEntity {
@@ -14,5 +15,8 @@ export class Service extends BaseEntity {
   coverImage: string;
 
   @OneToMany(() => Booking, (booking) => booking.service, { nullable: true })
-  bookings: Booking[]
+  bookings: Booking[];
+
+  @OneToOne(() => Gallery, (gallery) => gallery.service, { nullable: true })
+  gallery: Gallery;
 }

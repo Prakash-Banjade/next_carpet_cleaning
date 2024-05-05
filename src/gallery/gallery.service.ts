@@ -10,39 +10,35 @@ import { Gallery } from './entities/gallery.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import getImageUrl from '../utils/getImageUrl';
+import { ServicesService } from 'src/services/services.service';
 
 @Injectable()
 export class GalleryService {
   constructor(
     @InjectRepository(Gallery)
     private readonly galleryRepo: Repository<Gallery>,
+    private readonly servicesService: ServicesService,
   ) {}
 
   async create(createGalleryDto: CreateGalleryDto) {
+    const service = await this.servicesService.findOne(
+      createGalleryDto.serviceId,
+    );
+
     const images: string[] = [];
 
-    // <----- Below code is for FileSystemStoredFile ---->
-    // if (createGalleryDto.images instanceof Array) { // checking for array because file can be single also
-    //   createGalleryDto.images?.map((image: FileSystemStoredFile | string) => {
-    //     const fileName = this.getFileName(image);
-    //     images.push(fileName);
-    //   })
-    // } else {
-    //   const singleImage = createGalleryDto.images as FileSystemStoredFile; // FormDataRequest doesn't create array for single file upload
-    //   const fileName = this.getFileName(singleImage);
-    //   images.push(fileName);
-    // }
-
-    // <----- Below code is for MemoryStoredFile ---->
     for (const image of createGalleryDto.images) {
       const url = await getImageUrl(image);
       images.push(url);
     }
 
-    return await this.galleryRepo.save({
+    const gallery = this.galleryRepo.create({
       title: createGalleryDto.title,
       images: images || [],
+      service,
     });
+
+    return await this.galleryRepo.save(gallery);
   }
 
   async findAll() {
@@ -50,28 +46,32 @@ export class GalleryService {
       order: {
         createdAt: 'ASC',
       },
+      relations: {
+        service: true,
+      },
     });
   }
 
   async findOne(id: string) {
-    const existingGallery = await this.galleryRepo.findOneBy({ id });
+    const existingGallery = await this.galleryRepo.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        service: true,
+      },
+    });
     if (!existingGallery) throw new NotFoundException('Gallery not found');
     return existingGallery;
   }
 
   async update(id: string, updateGalleryDto: UpdateGalleryDto) {
+    console.log(updateGalleryDto, 'this is dto');
+    const service = await this.servicesService.findOne(
+      updateGalleryDto.serviceId,
+    );
+
     const existingGallery = await this.findOne(id);
-
-    // const images: string[] = updateGalleryDto?.previousImages instanceof Array ? updateGalleryDto?.previousImages : typeof updateGalleryDto?.previousImages === 'string' ? [updateGalleryDto?.previousImages] : [];
-
-    // updateGalleryDto.images instanceof Array ? updateGalleryDto.images?.map((image: FileSystemStoredFile) => {
-    //   images.push(this.getFileName(image));
-    // }) : updateGalleryDto.images && images.push(this.getFileName(updateGalleryDto.images));
-
-    // Object.assign(existingGallery, {
-    //   title: updateGalleryDto.title,
-    //   images: images || []
-    // });
 
     const { images, previousImages, title } = updateGalleryDto;
 
@@ -95,6 +95,7 @@ export class GalleryService {
     Object.assign(existingGallery, {
       title,
       images: [...previousImagesArray, ...imagesUrlArray],
+      service,
     });
 
     return await this.galleryRepo.save(existingGallery);
