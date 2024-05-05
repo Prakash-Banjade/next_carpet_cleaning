@@ -6,8 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ValidationPipe,
-  UsePipes,
 } from '@nestjs/common';
 import { GalleryService } from './gallery.service';
 import { CreateGalleryDto } from './dto/create-gallery.dto';
