@@ -17,7 +17,7 @@ const configService: TypeOrmModuleOptions = {
   // },
 
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: true,
 };
 
 export { configService };
