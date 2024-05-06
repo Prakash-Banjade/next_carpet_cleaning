@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+
 import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,7 +11,7 @@ import { Gallery } from './entities/gallery.entity';
 import { Repository } from 'typeorm';
 import { FileSystemStoredFile } from 'nestjs-form-data';
 import getImageUrl from '../utils/getImageUrl';
-import { ServicesService } from 'src/services/services.service';
+import { ServicesService } from '../services/services.service';
 
 @Injectable()
 export class GalleryService {
@@ -66,7 +67,6 @@ export class GalleryService {
   }
 
   async update(id: string, updateGalleryDto: UpdateGalleryDto) {
-    console.log(updateGalleryDto, 'this is dto');
     const service = await this.servicesService.findOne(
       updateGalleryDto.serviceId,
     );

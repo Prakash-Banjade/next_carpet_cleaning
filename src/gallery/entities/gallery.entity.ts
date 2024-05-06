@@ -1,4 +1,4 @@
-import { Service } from 'src/services/entities/service.entity';
+import { Service } from '../../services/entities/service.entity';
 import { BaseEntity } from '../../entities/base.entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 

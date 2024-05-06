@@ -6,7 +6,7 @@ import { APP_GUARD } from '@nestjs/core';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Member } from '../members/entities/member.entity';
-import { MembersModule } from 'src/members/members.module';
+import { MembersModule } from '../members/members.module';
 
 @Module({
   imports: [MembersModule, TypeOrmModule.forFeature([Member])],

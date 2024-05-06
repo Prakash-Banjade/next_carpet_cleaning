@@ -6,7 +6,7 @@ import { Gallery } from './entities/gallery.entity';
 import { GalleryPageController } from './gallery-page.controller';
 import { GalleryPageService } from './gallery-page.service';
 import { GalleryPage } from './entities/gallery-page.entity';
-import { ServicesModule } from 'src/services/services.module';
+import { ServicesModule } from '../services/services.module';
 
 @Module({
   imports: [ServicesModule, TypeOrmModule.forFeature([Gallery, GalleryPage])],
