@@ -5,7 +5,7 @@ import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
 
 @Entity()
 export class Service extends BaseEntity {
-  @Column({ type: 'text' })
+  @Column({ type: 'text', unique: true })
   title: string;
 
   @Column()

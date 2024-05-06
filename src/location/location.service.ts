@@ -27,15 +27,15 @@ export class LocationService {
     return existingLocation;
   }
 
-  async update(
-    @Param('id') id: string,
-    @Body() updateLocationDto: UpdateLocationDto,
-  ) {
-    const existingLocation = await this.locationRepo.findBy({ id });
+  async update(id: string, updateLocationDto: UpdateLocationDto) {
+    const existingLocation = await this.locationRepo.findOneBy({ id });
     if (!existingLocation) {
       throw new NotFoundException();
     }
-    return await this.locationRepo.save(updateLocationDto);
+    Object.assign(existingLocation, {
+      ...updateLocationDto,
+    });
+    return await this.locationRepo.save(existingLocation);
   }
 
   async remove(id: string) {

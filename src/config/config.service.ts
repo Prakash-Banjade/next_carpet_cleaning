@@ -16,7 +16,7 @@ const configService: TypeOrmModuleOptions = {
   //     migrationsDir: 'src/migration',
   // },
 
-  autoLoadEntities: true,
+  autoLoadEntities: false,
   synchronize: false,
 };
 
