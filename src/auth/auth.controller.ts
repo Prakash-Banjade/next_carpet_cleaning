@@ -4,8 +4,6 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  UsePipes,
-  ValidationPipe,
   Res,
   Req,
   BadRequestException,
@@ -15,10 +13,10 @@ import {
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { ApiBody, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { MembersService } from 'src/members/members.service';
+import { MembersService } from '../members/members.service';
 require('dotenv').config();
 
 @ApiTags('auth')
@@ -38,7 +36,7 @@ export class AuthController {
   })
   async signin(
     @Body() signInDto: SignInAuthDto,
-  @Res({ passthrough: true }) res: Response,
+    @Res({ passthrough: true }) res: Response,
   ) {
     const { access_token, id } = await this.authService.signIn(signInDto);
 

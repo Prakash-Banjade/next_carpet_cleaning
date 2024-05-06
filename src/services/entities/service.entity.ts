@@ -1,4 +1,4 @@
-import { Gallery } from 'src/gallery/entities/gallery.entity';
+import { Gallery } from '../../gallery/entities/gallery.entity';
 import { Booking } from '../../bookings/entities/booking.entity';
 import { BaseEntity } from '../../entities/base.entity';
 import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
