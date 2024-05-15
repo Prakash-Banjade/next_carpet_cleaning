@@ -15,7 +15,7 @@ export class TopQualityService {
 
   async set(topQualityDto: TopQualityDto) {
     // const image = topQualityDto.image && this.getFileName(topQualityDto.image);
-    const image = await getImageUrl(topQualityDto.image);
+    const image = getImageUrl(topQualityDto.image);
 
     const existingSettings = await this.topQualityRepo.find();
 
@@ -39,7 +39,7 @@ export class TopQualityService {
 
   async get() {
     const existingSettings = await this.topQualityRepo.find();
-    return existingSettings.length > 0 ? existingSettings[0] : null;
+    return existingSettings.length > 0 ? existingSettings[0] : {};
   }
 
   public getFileName(file: FileSystemStoredFile | string) {

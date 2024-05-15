@@ -1,8 +1,12 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booking } from './entities/booking.entity';
+import { Booking, Status } from './entities/booking.entity';
 import { Repository } from 'typeorm';
 import { UserService } from '../users/users.service';
 import { ServicesService } from '../services/services.service';
@@ -14,8 +18,8 @@ export class BookingsService {
   constructor(
     @InjectRepository(Booking) private bookingRepository: Repository<Booking>,
     private readonly userService: UserService,
-    private readonly servicesService: ServicesService
-  ) { }
+    private readonly servicesService: ServicesService,
+  ) {}
 
   async create(createBookingDto: CreateBookingDto) {
     const email = createBookingDto.email;
@@ -26,20 +30,24 @@ export class BookingsService {
       user = await this.userService.create({
         email: email,
         name: createBookingDto.name,
-        password: Array.from({ length: 8 }, () => Math.floor(Math.random() * 10)).join(''),
+        password: Array.from({ length: 8 }, () =>
+          Math.floor(Math.random() * 10),
+        ).join(''),
         phone: createBookingDto.phone,
-      })
+      });
     }
 
-    const bookedService = await this.servicesService.findOne(createBookingDto.service);
+    const bookedService = await this.servicesService.findOne(
+      createBookingDto.service,
+    );
 
     const booking = this.bookingRepository.create({
       location: createBookingDto.location,
       service: bookedService,
       message: createBookingDto.message,
       time: createBookingDto.time,
-      user: user as User
-    })
+      user: user as User,
+    });
 
     return await this.bookingRepository.save(booking);
   }
@@ -57,11 +65,14 @@ export class BookingsService {
           title: true,
           id: true,
           coverImage: true,
-        }
+        },
       },
       relations: {
         user: true,
-        service: true
+        service: true,
+      },
+      order: {
+        createdAt: 'ASC',
       },
     });
   }
@@ -81,7 +92,9 @@ export class BookingsService {
 
     let service: Service;
     if (updateBookingDto.service) {
-      const bookedService = await this.servicesService.findOne(updateBookingDto.service);
+      const bookedService = await this.servicesService.findOne(
+        updateBookingDto.service,
+      );
 
       if (!bookedService) throw new NotFoundException('Service not found');
 
@@ -95,7 +108,16 @@ export class BookingsService {
       message: updateBookingDto.message,
       time: updateBookingDto.time,
       user,
-      service: service
+      service: service,
+    });
+
+    return await this.bookingRepository.save(existingBooking);
+  }
+  async changeStatus(id: string, status: Status) {
+    const existingBooking = await this.findOne(id);
+
+    Object.assign(existingBooking, {
+      status: status,
     });
 
     return await this.bookingRepository.save(existingBooking);

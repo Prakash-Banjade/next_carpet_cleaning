@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { MemoryStoredFile } from "nestjs-form-data";
+import { FileSystemStoredFile } from "nestjs-form-data";
 
 export class ServicePageDto {
 
@@ -15,5 +15,5 @@ export class ServicePageDto {
 
     @ApiPropertyOptional({ type: 'string', format: 'binary' })
     @IsOptional()
-    bannerImage: MemoryStoredFile | string;
+    bannerImage: FileSystemStoredFile | string;
 }

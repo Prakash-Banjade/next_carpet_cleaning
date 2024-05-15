@@ -15,7 +15,7 @@ export class MembersService {
 
   async create(createMemberDto: CreateMemberDto) {
     // const image = createMemberDto.image && this.getFileName(createMemberDto.image);
-    const image = await getImageUrl(createMemberDto.image);
+    const image = getImageUrl(createMemberDto.image);
 
     const existingMemberWithEmail = await this.memberRepository.findOneBy({
       email: createMemberDto.email,
@@ -64,7 +64,7 @@ export class MembersService {
 
   async update(id: string, updateMemberDto: UpdateMemberDto) {
     // const image = updateMemberDto.image && this.getFileName(updateMemberDto.image);
-    const image = await getImageUrl(updateMemberDto.image);
+    const image = getImageUrl(updateMemberDto.image);
 
     const existingMember = await this.findOne(id);
 

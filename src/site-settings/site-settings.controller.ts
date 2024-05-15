@@ -1,6 +1,13 @@
-import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { SiteSettingsService } from './site-settings.service';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { SiteSettingsDto } from './dto/site-settings.dto';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -9,11 +16,10 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('siteSettings')
 @Controller('siteSettings')
 export class SiteSettingsController {
-  constructor(private readonly siteSettingsService: SiteSettingsService) { }
+  constructor(private readonly siteSettingsService: SiteSettingsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: MemoryStoredFile })
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   setSettings(@Body() siteSettingsDto: SiteSettingsDto) {
     return this.siteSettingsService.set(siteSettingsDto);

@@ -1,20 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TestimonialsService } from './testimonials.service';
 import { CreateTestimonialDto } from './dto/create-testimonial.dto';
 import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 @ApiBearerAuth()
 @ApiTags('testimonials')
 @Controller('testimonials')
 export class TestimonialsController {
-  constructor(private readonly testimonialsService: TestimonialsService) { }
+  constructor(private readonly testimonialsService: TestimonialsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: MemoryStoredFile })
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createTestimonialDto: CreateTestimonialDto) {
     return this.testimonialsService.create(createTestimonialDto);
@@ -33,10 +42,12 @@ export class TestimonialsController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: MemoryStoredFile })
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
-  update(@Param('id') id: string, @Body() updateTestimonialDto: UpdateTestimonialDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateTestimonialDto: UpdateTestimonialDto,
+  ) {
     return this.testimonialsService.update(id, updateTestimonialDto);
   }
 

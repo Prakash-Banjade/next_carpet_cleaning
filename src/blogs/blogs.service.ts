@@ -9,13 +9,13 @@ import getImageUrl from '../utils/getImageUrl';
 @Injectable()
 export class BlogsService {
   constructor(
-    @InjectRepository(Blog) private readonly blogRepo: Repository<Blog>
-  ) { }
+    @InjectRepository(Blog) private readonly blogRepo: Repository<Blog>,
+  ) {}
 
   async create(createBlogDto: CreateBlogDto) {
     const { content, title, coverImage } = createBlogDto;
 
-    const url = await getImageUrl(coverImage);
+    const url = getImageUrl(coverImage);
 
     return await this.blogRepo.save({
       content,
@@ -24,11 +24,12 @@ export class BlogsService {
     });
   }
 
-  async findAll() {
+  async findAll(deleted: boolean) {
     return await this.blogRepo.find({
+      withDeleted: deleted || false,
       order: {
         createdAt: 'ASC',
-      }
+      },
     });
   }
 
@@ -41,7 +42,7 @@ export class BlogsService {
   async update(id: string, updateBlogDto: UpdateBlogDto) {
     const existingBlog = await this.findOne(id);
 
-    const coverImage = await getImageUrl(updateBlogDto.coverImage);
+    const coverImage = getImageUrl(updateBlogDto.coverImage);
 
     Object.assign(existingBlog, {
       ...updateBlogDto,
@@ -57,11 +58,30 @@ export class BlogsService {
     return deleted;
   }
 
+  async deletePermanent(id: string) {
+    const existingBlog = await this.blogRepo.find({
+      where: {
+        id: id,
+      },
+      withDeleted: true,
+    });
+
+    if (!existingBlog) throw new BadRequestException('Failed to remove blog');
+
+    await this.blogRepo.remove(existingBlog);
+
+    return {
+      message: 'Deleted Permanently',
+    };
+  }
+
   async restore(id: string) {
     const blog = await this.blogRepo.restore({ id });
 
     if (!blog) throw new BadRequestException('Failed to restore blog');
-    return blog;
+    return {
+      message: 'Restore Successfully',
+    };
   }
 
   // public getFileName(file: FileSystemStoredFile | string) {

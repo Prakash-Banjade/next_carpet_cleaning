@@ -1,4 +1,4 @@
-import { MemoryStoredFile } from 'nestjs-form-data';
+import { FileSystemStoredFile } from 'nestjs-form-data';
 import { IsOptional, } from 'class-validator';
 import { ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { PartialType } from '@nestjs/mapped-types';
@@ -8,6 +8,6 @@ export class UpdateBlogDto extends PartialType(OmitType(CreateBlogDto, ['coverIm
 
     @ApiPropertyOptional({ type: 'string', format: 'binary' })
     @IsOptional()
-    coverImage?: MemoryStoredFile | string
+    coverImage?: FileSystemStoredFile | string
 
 }

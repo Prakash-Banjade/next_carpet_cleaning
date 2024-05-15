@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
-import { MemoryStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
+import { FileSystemStoredFile, HasMimeType, IsFile } from "nestjs-form-data";
 
 export class CreateServiceDto {
     @ApiProperty()
@@ -16,5 +16,5 @@ export class CreateServiceDto {
     @ApiProperty({ type: 'string', format: 'binary' })
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for cover image. Cover image must be a jpeg or png' })
     @IsFile({ message: 'Invalid type for cover image. Cover image must be a file' })
-    coverImage: MemoryStoredFile;
+    coverImage: FileSystemStoredFile;
 }

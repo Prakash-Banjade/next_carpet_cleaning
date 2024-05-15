@@ -27,6 +27,6 @@ export class PrivacyPolicyService {
 
   async get() {
     const existingData = await this.privacyPolicyRepo.find();
-    return existingData.length > 0 ? existingData[0] : null;
+    return existingData.length > 0 ? existingData[0] : {};
   }
 }

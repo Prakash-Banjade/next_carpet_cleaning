@@ -19,6 +19,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import cookieParser from 'cookie-parser';
 import { BookingsModule } from './bookings/bookings.module';
+import { ValidationPipe } from '@nestjs/common';
 const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
@@ -27,7 +28,14 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: ['https://rebelcleaning-cms.vercel.app', 'http://localhost:5173', 'http://localhost:3000'],
+    origin: [
+      'https://rebelcleaning-cms.vercel.app',
+      'https://rebelcleaning.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:4173',
+      'http://localhost:3000',
+    ],
     credentials: true,
     optionsSuccessStatus: 200,
     methods: ['GET', 'POST', 'DELETE', 'PATCH'],
@@ -35,7 +43,7 @@ async function bootstrap() {
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
-
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.use(cookieParser());
 
   // swagger
@@ -43,20 +51,35 @@ async function bootstrap() {
     .setTitle('Rebel Cleaning API Docs')
     .setDescription('This is the documentation of backend apis.')
     .setVersion('1.0')
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
-        in: 'header',
-      }
-    )
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'JWT',
+      description: 'Enter JWT token',
+      in: 'header',
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    include: [ServicesModule, BlogsModule, GalleryModule, AboutModule, ContactModule, FaqModule, HomePageModule, MembersModule, PricingsModule, AuthModule, PrivacyPolicyModule, SiteSettingsModule, SubscriberModule, TestimonialsModule, UsersModule, BookingsModule],
+    include: [
+      ServicesModule,
+      BlogsModule,
+      GalleryModule,
+      AboutModule,
+      ContactModule,
+      FaqModule,
+      HomePageModule,
+      MembersModule,
+      PricingsModule,
+      AuthModule,
+      PrivacyPolicyModule,
+      SiteSettingsModule,
+      SubscriberModule,
+      TestimonialsModule,
+      UsersModule,
+      BookingsModule,
+    ],
   });
   SwaggerModule.setup('api', app, document, {
     customSiteTitle: 'Next Carpet Cleaning',

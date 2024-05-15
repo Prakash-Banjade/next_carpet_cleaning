@@ -1,4 +1,4 @@
-import { MemoryStoredFile } from 'nestjs-form-data';
+import { FileSystemStoredFile } from 'nestjs-form-data';
 import { IsOptional, IsString } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -15,5 +15,5 @@ export class UpdateServiceDto {
 
     @ApiPropertyOptional({ type: 'string', format: 'binary' })
     @IsOptional()
-    coverImage?: MemoryStoredFile | string
+    coverImage?: FileSystemStoredFile | string
 }

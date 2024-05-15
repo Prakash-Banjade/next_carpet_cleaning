@@ -7,7 +7,7 @@ import { configService } from './config/config.service';
 import { BaseEntity } from 'typeorm';
 import { ServicesModule } from './services/services.module';
 import { BlogsModule } from './blogs/blogs.module';
-import { MemoryStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
+import { FileSystemStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GalleryModule } from './gallery/gallery.module';
@@ -28,6 +28,8 @@ import { PricingsModule } from './pricings/pricings.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { EnquiryModule } from './enquiry/enquiry.module';
+import { LocationModule } from './location/location.module';
 require('dotenv').config();
 
 @Module({
@@ -40,25 +42,29 @@ require('dotenv').config();
     TypeOrmModule.forRoot(configService),
     TypeOrmModule.forFeature([BaseEntity]),
     NestjsFormDataModule.config({
-      storage: MemoryStoredFile,
+      storage: FileSystemStoredFile,
       isGlobal: true,
       fileSystemStoragePath: 'public',
-      autoDeleteFile: true,
+      autoDeleteFile: false,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'), // serve static files eg: localhost:3000/filename.png
+      rootPath: join(__dirname, '..', '../public'), // added ../ to get one folder back
+      serveRoot: '/public/' //last slash was important
     }),
     JwtModule.register({
       global: true,
       secret: process.env.ACCESS_TOKEN_SECRET,
       signOptions: {
-        expiresIn: '86400s',
+        expiresIn: '2h',
       },
     }),
-    ThrottlerModule.forRoot([{ // rate limiting, only 3 requests per second
-      ttl: 1000, // mili second
-      limit: 3,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        // rate limiting, only 3 requests per second
+        ttl: 1000, // mili second
+        limit: 3,
+      },
+    ]),
     ServicesModule,
     BlogsModule,
     GalleryModule,
@@ -75,15 +81,16 @@ require('dotenv').config();
     TestimonialsModule,
     PricingsModule,
     BookingsModule,
+    EnquiryModule,
+    LocationModule,
   ],
   controllers: [AppController],
-  providers:
-    [
-      AppService,
-      {
-        provide: APP_GUARD,
-        useClass: ThrottlerGuard // global throttler guard (rate limiting for all routes)
-      }
-    ],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard, // global throttler guard (rate limiting for all routes)
+    },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

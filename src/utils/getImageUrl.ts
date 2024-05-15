@@ -1,12 +1,14 @@
-import { put } from "@vercel/blob";
-import { MemoryStoredFile } from "nestjs-form-data";
+import { FileSystemStoredFile } from "nestjs-form-data";
+require('dotenv').config();
 
-export default async function getImageUrl(image: MemoryStoredFile | string | undefined) {
-    if (!image) return null;
-    
-    if (typeof image === 'string') return image;
+export default function getFileName(file: FileSystemStoredFile | string | undefined) {
+    if (!file) return null;
 
-    const { url } = await put(image.originalName, image.buffer, { access: 'public' });
-
-    return url;
+    if (file instanceof FileSystemStoredFile) {
+        const pathSegments = file?.path.split('\\');
+        const fileName = pathSegments[pathSegments.length - 1];
+        const imageName = fileName?.split('/').at(-1);
+        
+        return process.env.BACKEND_URL + '/public/' + imageName;
+    } else return file;
 }

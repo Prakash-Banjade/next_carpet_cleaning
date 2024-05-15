@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { GalleryService } from './gallery.service';
 import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
-import { FormDataRequest, MemoryStoredFile } from 'nestjs-form-data';
+import { FormDataRequest, FileSystemStoredFile } from 'nestjs-form-data';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
@@ -10,12 +18,11 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('gallery')
 @Controller('gallery')
 export class GalleryController {
-  constructor(private readonly galleryService: GalleryService) { }
+  constructor(private readonly galleryService: GalleryService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
-  @FormDataRequest({ storage: MemoryStoredFile })
   create(@Body() createGalleryDto: CreateGalleryDto) {
     return this.galleryService.create(createGalleryDto);
   }
@@ -33,9 +40,8 @@ export class GalleryController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
-  @FormDataRequest({ storage: MemoryStoredFile })
   update(@Param('id') id: string, @Body() updateGalleryDto: UpdateGalleryDto) {
     return this.galleryService.update(id, updateGalleryDto);
   }

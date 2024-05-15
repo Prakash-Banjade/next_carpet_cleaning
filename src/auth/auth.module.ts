@@ -3,15 +3,13 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { MembersModule } from '../members/members.module';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Member } from 'src/members/entities/member.entity';
+import { Member } from '../members/entities/member.entity';
+import { MembersModule } from '../members/members.module';
 
 @Module({
-  imports: [
-    MembersModule,
-    TypeOrmModule.forFeature([Member])
-  ],
+  imports: [MembersModule, TypeOrmModule.forFeature([Member])],
   controllers: [AuthController],
   providers: [
     AuthService,
@@ -22,4 +20,4 @@ import { Member } from 'src/members/entities/member.entity';
   ],
   // exports: [AuthService]
 })
-export class AuthModule { }
+export class AuthModule {}

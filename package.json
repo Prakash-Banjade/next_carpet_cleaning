@@ -36,6 +36,7 @@
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.1",
+    "mysql2": "^3.9.7",
     "nestjs-form-data": "^1.9.5",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",

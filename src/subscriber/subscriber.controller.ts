@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
@@ -9,10 +19,10 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('subscribers')
 @Controller('subscribers')
 export class SubscriberController {
-  constructor(private readonly subscriberService: SubscriberService) { }
+  constructor(private readonly subscriberService: SubscriberService) {}
 
+  @Public()
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
     return this.subscriberService.create(createSubscriberDto);
   }
@@ -30,8 +40,10 @@ export class SubscriberController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  update(@Param('id') id: string, @Body() updateSubscriberDto: UpdateSubscriberDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSubscriberDto: UpdateSubscriberDto,
+  ) {
     return this.subscriberService.update(id, updateSubscriberDto);
   }
 

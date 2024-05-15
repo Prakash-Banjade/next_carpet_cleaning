@@ -16,8 +16,8 @@ export class SiteSettingsService {
   async set(siteSettingsDto: SiteSettingsDto) {
     // const primaryImage = siteSettingsDto.primaryImage && this.getFileName(siteSettingsDto.primaryImage);
     // const secondaryImage = siteSettingsDto.secondaryImage && this.getFileName(siteSettingsDto.secondaryImage);
-    const primaryImage = await getImageUrl(siteSettingsDto.primaryImage)
-    const secondaryImage = await getImageUrl(siteSettingsDto.secondaryImage)
+    const primaryImage = getImageUrl(siteSettingsDto.primaryImage)
+    const secondaryImage = getImageUrl(siteSettingsDto.secondaryImage)
 
     const existingSettings = await this.siteSettingsRepo.find();
 
@@ -43,7 +43,7 @@ export class SiteSettingsService {
 
   async get() {
     const existingSettings = await this.siteSettingsRepo.find();
-    return existingSettings.length > 0 ? existingSettings[0] : null;
+    return existingSettings.length > 0 ? existingSettings[0] : {};
   }
 
   public getFileName(file: FileSystemStoredFile | string) {

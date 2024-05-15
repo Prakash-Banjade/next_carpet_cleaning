@@ -15,7 +15,7 @@ export class CurrentOfferService {
 
   async create(createCurrentOfferDto: CreateCurrentOfferDto) {
     // const image = currentOfferDto.image && this.getFileName(currentOfferDto.image);
-    const image = await getImageUrl(createCurrentOfferDto.image);
+    const image = getImageUrl(createCurrentOfferDto.image);
 
     const newPricing = this.currentOfferRepo.create({
       ...createCurrentOfferDto,
@@ -45,7 +45,7 @@ export class CurrentOfferService {
     const existingOffer = await this.findOne(id)
 
     // const image = updateCurrentOfferDto.image && this.getFileName(updateCurrentOfferDto.image);
-    const image = await getImageUrl(updateCurrentOfferDto.image);
+    const image = getImageUrl(updateCurrentOfferDto.image);
 
     Object.assign(existingOffer, {
       ...updateCurrentOfferDto,

@@ -17,7 +17,10 @@ export class ContactService {
   ) {}
 
   async fetch() {
-    return await this.contactRepo.find();
+    const data = await this.contactRepo.find();
+    if (!data?.length) return {}
+    
+    return data[0];
   }
 
   async create(createContactDto: CreateContactDto) {
