@@ -20,7 +20,7 @@ export class TestimonialsService {
 
   async create(createTestimonialDto: CreateTestimonialDto) {
     // const image = createTestimonialDto.image && this.getFileName(createTestimonialDto.image);
-    const image = await getImageUrl(createTestimonialDto.image);
+    const image = getImageUrl(createTestimonialDto.image);
     console.log(image);
 
     if (createTestimonialDto.email) {
@@ -59,7 +59,7 @@ export class TestimonialsService {
     const existingReview = await this.findOne(id);
 
     // const image = updateTestimonialDto.image && this.getFileName(updateTestimonialDto.image);
-    const image = await getImageUrl(updateTestimonialDto.image);
+    const image = getImageUrl(updateTestimonialDto.image);
 
     Object.assign(existingReview, {
       ...updateTestimonialDto,

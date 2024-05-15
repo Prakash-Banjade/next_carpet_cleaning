@@ -21,7 +21,7 @@ export class GalleryPageService {
     async setPageData(galleryPageDto: GalleryPageDto) {
         const existingPageData = await this.galleryRepo.find()
         // const bannerImage = galleryPageDto.bannerImage && this.getFileName(galleryPageDto.bannerImage)
-        const bannerImage = await getImageUrl(galleryPageDto.bannerImage)
+        const bannerImage = getImageUrl(galleryPageDto.bannerImage)
 
         if (!existingPageData?.length) {
             const newGalleryData = await this.galleryRepo.save({
@@ -42,7 +42,7 @@ export class GalleryPageService {
     async setBannerImage(bannerImageDto: BannerImageDto) {
         // const bannerImage = banner && this.getFileName(banner)
 
-        const bannerImage = await getImageUrl(bannerImageDto.bannerImage)
+        const bannerImage = getImageUrl(bannerImageDto.bannerImage)
         const existingAboutData = await this.galleryRepo.find();
 
         if (!existingAboutData?.length) { // if no data is present in the database create a new one with banner image

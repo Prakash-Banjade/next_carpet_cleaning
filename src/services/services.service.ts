@@ -17,7 +17,7 @@ export class ServicesService {
     const { content, title } = createServiceDto
 
     // createServiceDto.coverImage = this.getFileName(coverImage)
-    const coverImage = await getImageUrl(createServiceDto.coverImage)
+    const coverImage = getImageUrl(createServiceDto.coverImage)
 
     return await this.serviceRepo.save({
       content,
@@ -52,7 +52,7 @@ export class ServicesService {
     const existingService = await this.findOne(id)
 
     // updateServiceDto.coverImage = this.getFileName(updateServiceDto.coverImage)
-    const coverImage = await getImageUrl(updateServiceDto.coverImage)
+    const coverImage = getImageUrl(updateServiceDto.coverImage)
 
     Object.assign(existingService, {
       ...updateServiceDto,

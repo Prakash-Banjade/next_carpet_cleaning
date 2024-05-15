@@ -18,7 +18,7 @@ export class BlogPageService {
 
     async setPageData(blogPageDto: BlogPageDto) {
         const existingPageData = await this.blogRepo.find()
-        const bannerImage = await getImageUrl(blogPageDto.bannerImage)
+        const bannerImage = getImageUrl(blogPageDto.bannerImage)
 
         if (!existingPageData?.length) {
             const newBlogPageData = await this.blogRepo.save({

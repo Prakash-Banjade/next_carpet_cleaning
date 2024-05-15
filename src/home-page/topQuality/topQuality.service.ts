@@ -15,7 +15,7 @@ export class TopQualityService {
 
   async set(topQualityDto: TopQualityDto) {
     // const image = topQualityDto.image && this.getFileName(topQualityDto.image);
-    const image = await getImageUrl(topQualityDto.image);
+    const image = getImageUrl(topQualityDto.image);
 
     const existingSettings = await this.topQualityRepo.find();
 

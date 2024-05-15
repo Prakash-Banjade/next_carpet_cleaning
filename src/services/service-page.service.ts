@@ -17,7 +17,7 @@ export class ServicePage_Service {
         const { content, title } = servicePageDto
 
         // servicePageDto.bannerImage = this.getFileName(bannerImage)
-        const bannerImage = await getImageUrl(servicePageDto.bannerImage)
+        const bannerImage = getImageUrl(servicePageDto.bannerImage)
 
         const existingPageData = await this.servicePageRepo.find();
 
@@ -47,7 +47,7 @@ export class ServicePage_Service {
 
     async setBannerImage(bannerImageDto: BannerImageDto) {
         // const bannerImage = banner && this.getFileName(banner)
-        const bannerImage = await getImageUrl(bannerImageDto.bannerImage)
+        const bannerImage = getImageUrl(bannerImageDto.bannerImage)
         const existingAboutData = await this.servicePageRepo.find();
 
         if (!existingAboutData?.length) { // if no data is present in the database create a new one with banner image

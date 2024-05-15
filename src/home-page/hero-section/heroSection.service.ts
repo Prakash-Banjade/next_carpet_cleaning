@@ -15,7 +15,7 @@ export class HeroSectionService {
   async setData(heroSectionDto: HeroSectionDto) {
     const existingheroData = await this.heroRepo.find();
     // const image = heroSectionDto.image && this.getFileName(heroSectionDto.image);
-    const image = await getImageUrl(heroSectionDto.image);
+    const image = getImageUrl(heroSectionDto.image);
 
     if (!existingheroData.length) {
       const newheroData = await this.heroRepo.save({

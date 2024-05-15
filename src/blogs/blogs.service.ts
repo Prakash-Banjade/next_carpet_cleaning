@@ -15,7 +15,7 @@ export class BlogsService {
   async create(createBlogDto: CreateBlogDto) {
     const { content, title, coverImage } = createBlogDto;
 
-    const url = await getImageUrl(coverImage);
+    const url = getImageUrl(coverImage);
 
     return await this.blogRepo.save({
       content,
@@ -41,7 +41,7 @@ export class BlogsService {
   async update(id: string, updateBlogDto: UpdateBlogDto) {
     const existingBlog = await this.findOne(id);
 
-    const coverImage = await getImageUrl(updateBlogDto.coverImage);
+    const coverImage = getImageUrl(updateBlogDto.coverImage);
 
     Object.assign(existingBlog, {
       ...updateBlogDto,

@@ -14,8 +14,8 @@ export class AboutService {
   async setData(createAboutDto: CreateAboutDto) {
     const existingAboutData = await this.aboutRepo.find();
 
-    const bannerImage = await getImageUrl(createAboutDto.bannerImage);
-    const coverImage = await getImageUrl(createAboutDto.coverImage);
+    const bannerImage = getImageUrl(createAboutDto.bannerImage);
+    const coverImage = getImageUrl(createAboutDto.coverImage);
 
     if (!existingAboutData.length) {
       const newAboutData = await this.aboutRepo.save({
@@ -47,7 +47,7 @@ export class AboutService {
   }
 
   async setBannerImage(bannerImageDto: BannerImageDto) {
-    const bannerImage = await getImageUrl(bannerImageDto.bannerImage);
+    const bannerImage = getImageUrl(bannerImageDto.bannerImage);
     const existingAboutData = await this.aboutRepo.find();
 
     if (!existingAboutData?.length) { // if no data is present in the database create a new one with banner image
