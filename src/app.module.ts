@@ -44,7 +44,7 @@ require('dotenv').config();
       storage: FileSystemStoredFile,
       isGlobal: true,
       fileSystemStoragePath: 'public',
-      autoDeleteFile: true,
+      autoDeleteFile: false,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'), // serve static files eg: localhost:3000/filename.png
