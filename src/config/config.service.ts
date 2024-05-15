@@ -3,7 +3,7 @@ import { join } from 'path';
 require('dotenv').config();
 
 const configService: TypeOrmModuleOptions = {
-  type: 'postgres',
+  type: 'mysql',
   url: process.env.DATABASE_URL!,
 
   entities: [join(__dirname, '**', '*.entity.{ts,js}')],
