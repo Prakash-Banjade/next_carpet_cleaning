@@ -45,6 +45,7 @@ export class AuthController {
         httpOnly: true,
         secure: process.env.MODE! === 'prod' ? true : false,
         sameSite: 'none',
+        domain: "hubit.com.np",
         expires: new Date(Date.now() + 2 * 60 * 60 * 1000), // Hour Minute Second Millisecond
       })
       .send({ status: 'ok', id });
