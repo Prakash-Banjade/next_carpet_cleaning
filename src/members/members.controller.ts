@@ -14,6 +14,7 @@ import { User } from '../decorators/user.decorator';
 export class MembersController {
   constructor(private readonly membersService: MembersService) { }
 
+  @Public()
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @FormDataRequest({ storage: FileSystemStoredFile })

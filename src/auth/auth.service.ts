@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { JwtService } from '@nestjs/jwt';
