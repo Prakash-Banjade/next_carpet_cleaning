@@ -12,7 +12,7 @@ export class SubscriberController {
   constructor(private readonly subscriberService: SubscriberService) { }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
     return this.subscriberService.create(createSubscriberDto);
   }
@@ -30,7 +30,7 @@ export class SubscriberController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   update(@Param('id') id: string, @Body() updateSubscriberDto: UpdateSubscriberDto) {
     return this.subscriberService.update(id, updateSubscriberDto);
   }

@@ -42,7 +42,7 @@ export class TestimonialsController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(

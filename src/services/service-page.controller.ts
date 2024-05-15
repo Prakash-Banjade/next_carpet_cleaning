@@ -15,7 +15,7 @@ export class ServicePageController {
     constructor(private readonly servicePage_service: ServicePage_Service) { }
 
     @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     setData(@Body() servicePageDto: ServicePageDto) {
@@ -25,7 +25,7 @@ export class ServicePageController {
     @Post('banner')
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     setBanner(@Body() bannerImageDto: BannerImageDto) {
         return this.servicePage_service.setBannerImage(bannerImageDto)
     }

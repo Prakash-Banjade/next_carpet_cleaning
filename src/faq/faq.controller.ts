@@ -12,7 +12,7 @@ export class FaqController {
   constructor(private readonly faqService: FaqService) { }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   create(@Body() createFaqDto: CreateFaqDto) {
     return this.faqService.create(createFaqDto);
   }
@@ -30,7 +30,7 @@ export class FaqController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
     return this.faqService.update(id, updateFaqDto);
   }

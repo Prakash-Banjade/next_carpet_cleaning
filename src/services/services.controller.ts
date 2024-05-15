@@ -14,7 +14,7 @@ export class ServicesController {
   constructor(private readonly servicesService: ServicesService) { }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createServiceDto: CreateServiceDto) {
@@ -35,7 +35,7 @@ export class ServicesController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {

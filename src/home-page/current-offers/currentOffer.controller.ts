@@ -13,7 +13,7 @@ export class CurrentOfferController {
     constructor(private readonly currentOfferService: CurrentOfferService) { }
 
     @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     create(@Body() createCurrentOfferDto: CreateCurrentOfferDto) {
@@ -34,7 +34,7 @@ export class CurrentOfferController {
 
     @Patch(':id')
     @FormDataRequest({ storage: FileSystemStoredFile })
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     @ApiConsumes('multipart/form-data')
     update(@Param('id') id: string, @Body() updateCurrentOfferDto: UpdateCurrentOfferDto) {
         return this.currentOfferService.update(id, updateCurrentOfferDto);

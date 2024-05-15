@@ -20,7 +20,7 @@ export class ContactPageController {
     constructor(private readonly contactPageService: ContactPageService) { }
 
     @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     set(@Body() contactPageDto: ContactPageDto) {
@@ -36,7 +36,7 @@ export class ContactPageController {
     @Post('banner')
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     setBanner(@Body() bannerImageDto: BannerImageDto) {
         return this.contactPageService.setBannerImage(bannerImageDto)
     }

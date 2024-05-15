@@ -16,7 +16,7 @@ export class MembersController {
 
   @Public()
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createMemberDto: CreateMemberDto) {
@@ -36,7 +36,7 @@ export class MembersController {
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {

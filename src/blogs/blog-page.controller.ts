@@ -19,7 +19,7 @@ export class BlogPageController {
     constructor(private readonly blogPageService: BlogPageService) { }
 
     @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     set(@Body() blogPageDto: BlogPageDto) {

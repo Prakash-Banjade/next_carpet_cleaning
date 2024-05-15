@@ -12,7 +12,7 @@ export class HeroSectionController {
   constructor(private readonly heroService: HeroSectionService) { }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createAboutDto: HeroSectionDto) {

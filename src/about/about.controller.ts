@@ -14,7 +14,7 @@ export class AboutController {
 
   @Post()
   @ApiConsumes('multipart/form-data')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   create(@Body() createAboutDto: CreateAboutDto) {
     return this.aboutService.setData(createAboutDto);
@@ -23,7 +23,7 @@ export class AboutController {
   @Post('banner')
   @ApiConsumes('multipart/form-data')
   @FormDataRequest({ storage: FileSystemStoredFile })
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   setBanner(@Body() bannerImageDto: BannerImageDto) {
     return this.aboutService.setBannerImage(bannerImageDto)
   }

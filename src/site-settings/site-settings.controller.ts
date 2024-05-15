@@ -12,7 +12,7 @@ export class SiteSettingsController {
   constructor(private readonly siteSettingsService: SiteSettingsService) { }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   setSettings(@Body() siteSettingsDto: SiteSettingsDto) {

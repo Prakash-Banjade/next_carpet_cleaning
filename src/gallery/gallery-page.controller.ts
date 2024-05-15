@@ -20,7 +20,7 @@ export class GalleryPageController {
     constructor(private readonly galleryPageService: GalleryPageService) { }
 
     @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     @ApiConsumes('multipart/form-data')
     @FormDataRequest({ storage: FileSystemStoredFile })
     set(@Body() galleryPageDto: GalleryPageDto) {
@@ -36,7 +36,7 @@ export class GalleryPageController {
     @Post('banner')
     @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     setBanner(@Body() bannerImageDto: BannerImageDto) {
         return this.galleryPageService.setBannerImage(bannerImageDto)
     }

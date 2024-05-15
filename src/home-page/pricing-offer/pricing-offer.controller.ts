@@ -12,7 +12,7 @@ export class PricingOfferController {
     constructor(private readonly pricingOfferService: PricingOfferService) { }
 
     @Post()
-    @UsePipes(new ValidationPipe({ whitelist: true }))
+    
     // @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     create(@Body() pricingOfferDto: PricingOfferDto) {
