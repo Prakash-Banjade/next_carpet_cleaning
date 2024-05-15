@@ -48,7 +48,8 @@ require('dotenv').config();
       autoDeleteFile: false,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'), // serve static files eg: localhost:3000/filename.png
+      rootPath: join(__dirname, '..', '../public'), // added ../ to get one folder back
+      serveRoot: '/public/' //last slash was important
     }),
     JwtModule.register({
       global: true,
