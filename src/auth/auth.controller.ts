@@ -4,19 +4,19 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  UsePipes,
-  ValidationPipe,
   Res,
   Req,
   BadRequestException,
   Get,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signin-auth.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
-import { ApiBody, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
+import { MembersService } from '../members/members.service';
 require('dotenv').config();
 
 @ApiTags('auth')
@@ -24,6 +24,7 @@ require('dotenv').config();
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly memberService: MembersService,
     private jwtService: JwtService,
   ) {}
 
@@ -44,35 +45,48 @@ export class AuthController {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+        expires: new Date(Date.now() + 2 * 60 * 60 * 1000), // Hour Minute Second Millisecond
       })
       .send({ status: 'ok', id });
   }
 
-  @Post('logout')
+  @Get('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   logout(@Res({ passthrough: true }) res: Response) {
     res.clearCookie('access_token');
     return;
   }
 
-  @Public()
   @Get('verifyToken')
-  @ApiExcludeEndpoint()
-  async veryfyToken(
+  // @ApiExcludeEndpoint()
+  async verifyToken(
     @Res({ passthrough: true }) res: Response,
     @Req() req: Request,
   ) {
-    if (!req.cookies.access_token)
-      throw new BadRequestException('Invalid token');
+    try {
+      if (!req.cookies.access_token) {
+        throw new BadRequestException('Invalid token');
+      } else {
+        const payload = await this.jwtService.verifyAsync(
+          req.cookies.access_token,
+          {
+            secret: process.env.ACCESS_TOKEN_SECRET,
+          },
+        );
 
-    const payload = await this.jwtService.verifyAsync(
-      req.cookies.access_token,
-      {
-        secret: process.env.ACCESS_TOKEN_SECRET,
-      },
-    );
-
-    return res.send({ status: 'ok', id: payload.id });
+        if (payload) {
+          const user = await this.memberService.findOne(payload.id);
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            post: user.post,
+          };
+        }
+      }
+    } catch (error) {
+      // Handle the error properly
+      throw new UnauthorizedException();
+    }
   }
 }

@@ -8,6 +8,7 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
+  Query,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
@@ -23,7 +24,6 @@ export class BlogsController {
   constructor(private readonly blogsService: BlogsService) {}
 
   @Post()
-  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createBlogDto: CreateBlogDto) {
@@ -32,8 +32,8 @@ export class BlogsController {
 
   @Get()
   @Public()
-  findAll() {
-    return this.blogsService.findAll();
+  findAll(@Query('deleted') deleted: boolean) {
+    return this.blogsService.findAll(deleted);
   }
 
   @Get(':id')
@@ -43,15 +43,25 @@ export class BlogsController {
   }
 
   @Patch(':id')
-  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
     return this.blogsService.update(id, updateBlogDto);
   }
 
+  @Patch(':id/restore')
+  @ApiConsumes('multipart/form-data')
+  restore(@Param('id') id: string) {
+    return this.blogsService.restore(id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.blogsService.remove(id);
+  }
+
+  @Delete(':id/permanent')
+  removeForever(@Param('id') id: string) {
+    return this.blogsService.deletePermanent(id);
   }
 }

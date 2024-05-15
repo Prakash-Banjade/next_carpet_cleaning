@@ -29,6 +29,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { EnquiryModule } from './enquiry/enquiry.module';
+import { LocationModule } from './location/location.module';
 require('dotenv').config();
 
 @Module({
@@ -53,7 +54,7 @@ require('dotenv').config();
       global: true,
       secret: process.env.ACCESS_TOKEN_SECRET,
       signOptions: {
-        expiresIn: '86400s',
+        expiresIn: '2h',
       },
     }),
     ThrottlerModule.forRoot([
@@ -80,6 +81,7 @@ require('dotenv').config();
     PricingsModule,
     BookingsModule,
     EnquiryModule,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [

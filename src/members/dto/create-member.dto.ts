@@ -25,12 +25,10 @@ export class CreateMemberDto {
   @IsNotEmpty()
   post: string;
 
-  @ApiPropertyOptional({ type: 'string', format: 'binary' })
-  @HasMimeType(
-    ['image/jpeg', 'image/jpg', 'image/png', 'image/png', 'image/webp'],
-    { message: 'Invalid type for image. Image must be jpeg or png or webp' },
-  )
-  @IsFile({ message: 'Invalid type for Image. Image must be file type' })
+  @ApiProperty({ type: 'string', format: 'binary' })
+  @HasMimeType(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'], {
+    message: 'Invalid type for image. Image must be jpeg or png or webp',
+  })
   image?: FileSystemStoredFile;
 
   @ApiPropertyOptional()

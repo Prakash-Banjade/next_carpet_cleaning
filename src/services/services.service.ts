@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,15 +13,16 @@ import getImageUrl from '../utils/getImageUrl';
 
 @Injectable()
 export class ServicesService {
-
-  constructor(@InjectRepository(Service) private readonly serviceRepo: Repository<Service>) { }
-
+  constructor(
+    @InjectRepository(Service)
+    private readonly serviceRepo: Repository<Service>,
+  ) {}
 
   async create(createServiceDto: CreateServiceDto) {
-    const { content, title } = createServiceDto
+    const { content, title } = createServiceDto;
 
     // createServiceDto.coverImage = this.getFileName(coverImage)
-    const coverImage = getImageUrl(createServiceDto.coverImage)
+    const coverImage = await getImageUrl(createServiceDto.coverImage);
 
     return await this.serviceRepo.save({
       content,
@@ -29,7 +34,7 @@ export class ServicesService {
   async findAll(showContent: string = 'true') {
     return await this.serviceRepo.find({
       order: {
-        createdAt: 'ASC'
+        createdAt: 'ASC',
       },
       select: {
         id: true,
@@ -38,21 +43,28 @@ export class ServicesService {
         coverImage: true,
         createdAt: true,
         updatedAt: true,
-      }
+      },
     });
   }
 
   async findOne(id: string) {
-    const existingService = await this.serviceRepo.findOneBy({ id });
+    const existingService = await this.serviceRepo.findOne({
+      where: {
+        id: id,
+      },
+      relations: {
+        gallery: true,
+      },
+    });
     if (!existingService) throw new NotFoundException('Service not found');
     return existingService;
   }
 
   async update(id: string, updateServiceDto: UpdateServiceDto) {
-    const existingService = await this.findOne(id)
+    const existingService = await this.findOne(id);
 
     // updateServiceDto.coverImage = this.getFileName(updateServiceDto.coverImage)
-    const coverImage = getImageUrl(updateServiceDto.coverImage)
+    const coverImage = await getImageUrl(updateServiceDto.coverImage);
 
     Object.assign(existingService, {
       ...updateServiceDto,
@@ -69,8 +81,8 @@ export class ServicesService {
   async restore(id: string) {
     const srevice = await this.serviceRepo.restore({ id });
 
-    if (!srevice) throw new BadRequestException('Failed to restore service')
-    return srevice
+    if (!srevice) throw new BadRequestException('Failed to restore service');
+    return srevice;
   }
 
   public getFileName(file: FileSystemStoredFile | string) {

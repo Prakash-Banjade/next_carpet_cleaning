@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  UsePipes,
+} from '@nestjs/common';
 import { FaqService } from './faq.service';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
@@ -9,10 +19,9 @@ import { Public } from '../decorators/setPublicRoute.decorator';
 @ApiTags('faq')
 @Controller('faq')
 export class FaqController {
-  constructor(private readonly faqService: FaqService) { }
+  constructor(private readonly faqService: FaqService) {}
 
   @Post()
-  
   create(@Body() createFaqDto: CreateFaqDto) {
     return this.faqService.create(createFaqDto);
   }
@@ -30,7 +39,6 @@ export class FaqController {
   }
 
   @Patch(':id')
-  
   update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
     return this.faqService.update(id, updateFaqDto);
   }

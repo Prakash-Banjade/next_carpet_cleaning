@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MembersService } from './members.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
@@ -12,9 +20,9 @@ import { User } from '../decorators/user.decorator';
 @ApiTags('members')
 @Controller('members')
 export class MembersController {
-  constructor(private readonly membersService: MembersService) { }
+  constructor(private readonly membersService: MembersService) {}
 
-  @Post()  
+  @Post()
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createMemberDto: CreateMemberDto) {
@@ -34,7 +42,6 @@ export class MembersController {
   }
 
   @Patch(':id')
-  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {

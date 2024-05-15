@@ -42,7 +42,6 @@ export class TestimonialsController {
   }
 
   @Patch(':id')
-  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(

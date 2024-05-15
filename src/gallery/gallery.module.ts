@@ -6,10 +6,11 @@ import { Gallery } from './entities/gallery.entity';
 import { GalleryPageController } from './gallery-page.controller';
 import { GalleryPageService } from './gallery-page.service';
 import { GalleryPage } from './entities/gallery-page.entity';
+import { ServicesModule } from '../services/services.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Gallery, GalleryPage])],
+  imports: [ServicesModule, TypeOrmModule.forFeature([Gallery, GalleryPage])],
   controllers: [GalleryController, GalleryPageController],
   providers: [GalleryService, GalleryPageService],
 })
-export class GalleryModule { }
+export class GalleryModule {}

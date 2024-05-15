@@ -26,13 +26,12 @@ export class ContactController {
   }
 
   @Post()
-  
   create(@Body() createContactDto: CreateContactDto) {
     return this.contactService.create(createContactDto);
   }
 
   // @Patch()
-  // 
+  //
   // update(@Body() updateContactDto: UpdateContactDto) {
   //   return this.contactService.update(updateContactDto);
   // }
