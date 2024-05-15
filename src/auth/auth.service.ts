@@ -14,12 +14,8 @@ import { Repository } from 'typeorm';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-<<<<<<< HEAD
     @InjectRepository(Member) private memberRepository: Repository<Member>,
   ) { }
-=======
-  ) {}
->>>>>>> f42516ab59a2c59abb7c6bb1cb1554c6104d8ab3
 
   async signIn(signInAuthDto: SignInAuthDto) {
     const { email, password } = signInAuthDto;
