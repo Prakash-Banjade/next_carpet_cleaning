@@ -14,9 +14,9 @@ export class Service extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   coverImage: string;
 
-  @OneToMany(() => Booking, (booking) => booking.service, { nullable: true })
+  @OneToMany(() => Booking, (booking) => booking.service, { nullable: true, onDelete: 'NO ACTION' })
   bookings: Booking[];
 
-  @OneToOne(() => Gallery, (gallery) => gallery.service, { nullable: true })
+  @OneToOne(() => Gallery, (gallery) => gallery.service, { nullable: true, onDelete: 'NO ACTION' })
   gallery: Gallery;
 }

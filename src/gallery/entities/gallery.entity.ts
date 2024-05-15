@@ -10,7 +10,7 @@ export class Gallery extends BaseEntity {
   @Column({ type: 'simple-array' })
   images: string[];
 
-  @OneToOne(() => Service, (service) => service.gallery, { nullable: true })
+  @OneToOne(() => Service, (service) => service.gallery, { nullable: true, onDelete: 'NO ACTION' })
   @JoinColumn()
   service: Service;
 }
