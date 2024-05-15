@@ -40,7 +40,7 @@ export class AboutService {
 
   async getData() {
     const aboutData = await this.aboutRepo.find();
-    if (!aboutData?.length) return null;
+    if (!aboutData?.length) return {};
 
     const aboutPageData = aboutData[0];
     return aboutPageData;

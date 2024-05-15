@@ -39,7 +39,7 @@ export class TopQualityService {
 
   async get() {
     const existingSettings = await this.topQualityRepo.find();
-    return existingSettings.length > 0 ? existingSettings[0] : null;
+    return existingSettings.length > 0 ? existingSettings[0] : {};
   }
 
   public getFileName(file: FileSystemStoredFile | string) {

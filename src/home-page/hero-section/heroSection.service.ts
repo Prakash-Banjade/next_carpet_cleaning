@@ -40,7 +40,7 @@ export class HeroSectionService {
 
   async getData() {
     const heroData = await this.heroRepo.find();
-    if (!heroData?.length) return null;
+    if (!heroData?.length) return {};
 
     const heroPageData = heroData[0];
     return heroPageData;

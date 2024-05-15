@@ -33,7 +33,7 @@ export class PricingOfferService {
 
   async getData() {
     const pricingOfferData = await this.pricingOfferRepo.find();
-    if (!pricingOfferData?.length) return null;
+    if (!pricingOfferData?.length) return {};
 
     const pricingOfferPageData = pricingOfferData[0];
     return pricingOfferPageData;
