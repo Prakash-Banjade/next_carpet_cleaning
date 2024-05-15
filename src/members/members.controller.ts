@@ -14,9 +14,7 @@ import { User } from '../decorators/user.decorator';
 export class MembersController {
   constructor(private readonly membersService: MembersService) { }
 
-  @Public()
-  @Post()
-  
+  @Post()  
   @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createMemberDto: CreateMemberDto) {

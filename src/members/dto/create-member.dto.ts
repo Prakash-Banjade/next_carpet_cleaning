@@ -45,8 +45,8 @@ export class CreateMemberDto {
   @IsOptional()
   instagram?: string;
 
-  @IsString()
-  password: string;
+  // @IsString()
+  // password: string;
 
   @ApiPropertyOptional()
   @IsString()
