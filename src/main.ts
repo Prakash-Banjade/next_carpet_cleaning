@@ -29,6 +29,7 @@ async function bootstrap() {
     origin: [
       'https://rebelcleaning-cms.vercel.app',
       'https://rebelcleaning.vercel.app',
+      'https://cmsrebelgreen.hubit.com.np',
       'http://localhost:5173',
       'http://localhost:5174',
       'http://localhost:4173',
