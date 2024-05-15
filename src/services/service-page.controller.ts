@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, ValidationPipe, UsePipes } from '@nestjs/common';
 import { } from './dto/create-service.dto';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ServicePage_Service } from './service-page.service';
 import { ServicePageDto } from './dto/service-page.dto';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -16,14 +16,14 @@ export class ServicePageController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     setData(@Body() servicePageDto: ServicePageDto) {
         return this.servicePage_service.setPageData(servicePageDto);
     }
 
     @Post('banner')
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     @UsePipes(new ValidationPipe({ whitelist: true }))
     setBanner(@Body() bannerImageDto: BannerImageDto) {

@@ -10,7 +10,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { HasMimeType, IsFile, MemoryStoredFile } from 'nestjs-form-data';
+import { HasMimeType, IsFile, FileSystemStoredFile } from 'nestjs-form-data';
 
 export class CreateTestimonialDto {
   @ApiProperty()
@@ -33,7 +33,7 @@ export class CreateTestimonialDto {
     message: 'Invalid type for images. Image must be jpeg or png or webp',
   })
   @IsFile({ message: 'Invalid type for Image. Image must be file type' })
-  image?: MemoryStoredFile;
+  image?: FileSystemStoredFile;
 
   @ApiProperty()
   @IsString({ message: 'Message must be a string' })

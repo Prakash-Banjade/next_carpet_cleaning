@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { HeroSectionDto } from '../dto/heroSection.dto';
 import { HeroSectionService } from './heroSection.service';
 import { Public } from '../../decorators/setPublicRoute.decorator';
@@ -13,7 +13,7 @@ export class HeroSectionController {
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: MemoryStoredFile })
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createAboutDto: HeroSectionDto) {
     return this.heroService.setData(createAboutDto);

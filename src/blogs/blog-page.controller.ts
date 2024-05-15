@@ -7,7 +7,7 @@ import {
     UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { BlogPageDto } from './dto/blog-page.dto';
 import { BlogPageService } from './blog-page.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -20,7 +20,7 @@ export class BlogPageController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     set(@Body() blogPageDto: BlogPageDto) {
         return this.blogPageService.setPageData(blogPageDto)

@@ -7,7 +7,7 @@ import {
     UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { ContactPageDto } from './dto/contact-page.dto';
 import { ContactPageService } from './contact-page.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -21,7 +21,7 @@ export class ContactPageController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     set(@Body() contactPageDto: ContactPageDto) {
         return this.contactPageService.setPageData(contactPageDto)
@@ -34,7 +34,7 @@ export class ContactPageController {
     }
 
     @Post('banner')
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     @UsePipes(new ValidationPipe({ whitelist: true }))
     setBanner(@Body() bannerImageDto: BannerImageDto) {

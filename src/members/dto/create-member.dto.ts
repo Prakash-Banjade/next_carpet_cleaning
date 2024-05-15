@@ -7,7 +7,7 @@ import {
   IsString,
   IsUrl,
 } from 'class-validator';
-import { HasMimeType, IsFile, MemoryStoredFile } from 'nestjs-form-data';
+import { HasMimeType, IsFile, FileSystemStoredFile } from 'nestjs-form-data';
 
 export class CreateMemberDto {
   @ApiProperty()
@@ -31,7 +31,7 @@ export class CreateMemberDto {
     { message: 'Invalid type for image. Image must be jpeg or png or webp' },
   )
   @IsFile({ message: 'Invalid type for Image. Image must be file type' })
-  image?: MemoryStoredFile;
+  image?: FileSystemStoredFile;
 
   @ApiPropertyOptional()
   @IsString()

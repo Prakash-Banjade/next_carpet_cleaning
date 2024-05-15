@@ -33,9 +33,9 @@ export class GalleryService {
     //   images.push(fileName);
     // }
 
-    // <----- Below code is for MemoryStoredFile ---->
+    // <----- Below code is for FileSystemStoredFile ---->
     for (const image of createGalleryDto.images) {
-      const url = await getImageUrl(image);
+      const url = getImageUrl(image);
       images.push(url);
     }
 
@@ -79,7 +79,7 @@ export class GalleryService {
 
     if (images?.length) {
       for (const image of images) {
-        const url = await getImageUrl(image);
+        const url = getImageUrl(image);
         imagesUrlArray.push(url);
       }
     }

@@ -7,7 +7,7 @@ import {
     UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { FormDataRequest, MemoryStoredFile } from 'nestjs-form-data';
+import { FormDataRequest, FileSystemStoredFile } from 'nestjs-form-data';
 import { GalleryPageDto } from './dto/gallery-page.dto';
 import { GalleryPageService } from './gallery-page.service';
 import { Public } from '../decorators/setPublicRoute.decorator';
@@ -22,7 +22,7 @@ export class GalleryPageController {
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
     @ApiConsumes('multipart/form-data')
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     set(@Body() galleryPageDto: GalleryPageDto) {
         return this.galleryPageService.setPageData(galleryPageDto)
     }
@@ -34,7 +34,7 @@ export class GalleryPageController {
     }
 
     @Post('banner')
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     @UsePipes(new ValidationPipe({ whitelist: true }))
     setBanner(@Body() bannerImageDto: BannerImageDto) {

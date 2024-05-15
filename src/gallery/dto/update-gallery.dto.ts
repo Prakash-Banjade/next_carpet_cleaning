@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
-import { HasMimeType, IsFile, MemoryStoredFile } from 'nestjs-form-data';
+import { HasMimeType, IsFile, FileSystemStoredFile } from 'nestjs-form-data';
 
 export class UpdateGalleryDto {
     @ApiPropertyOptional()
@@ -12,7 +12,7 @@ export class UpdateGalleryDto {
     @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], { message: 'Invalid type for images. Images must be jpeg or png or webp', each: true })
     @IsFile({ message: 'Invalid type for images. Images must be file type', each: true })
     @IsOptional()
-    images?: MemoryStoredFile[]
+    images?: FileSystemStoredFile[]
 
     @ApiPropertyOptional()
     @IsOptional()

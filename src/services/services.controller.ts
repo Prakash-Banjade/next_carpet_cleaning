@@ -3,7 +3,7 @@ import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { FileSystemStoredFile, FormDataRequest } from 'nestjs-form-data';
 import { Public } from '../decorators/setPublicRoute.decorator';
 
 
@@ -15,7 +15,7 @@ export class ServicesController {
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: MemoryStoredFile })
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   create(@Body() createServiceDto: CreateServiceDto) {
     return this.servicesService.create(createServiceDto);
@@ -36,7 +36,7 @@ export class ServicesController {
 
   @Patch(':id')
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  @FormDataRequest({ storage: MemoryStoredFile })
+  @FormDataRequest({ storage: FileSystemStoredFile })
   @ApiConsumes('multipart/form-data')
   update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
     return this.servicesService.update(id, updateServiceDto);

@@ -3,7 +3,7 @@ import { Public } from '../../decorators/setPublicRoute.decorator';
 import { CurrentOfferService } from './currentOffer.service';
 import { CreateCurrentOfferDto } from '../dto/create-currentOffer.dto';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { FormDataRequest, MemoryStoredFile } from 'nestjs-form-data';
+import { FormDataRequest, FileSystemStoredFile } from 'nestjs-form-data';
 import { UpdateCurrentOfferDto } from '../dto/update-currentOffer.dto';
 
 @ApiBearerAuth()
@@ -14,7 +14,7 @@ export class CurrentOfferController {
 
     @Post()
     @UsePipes(new ValidationPipe({ whitelist: true }))
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @ApiConsumes('multipart/form-data')
     create(@Body() createCurrentOfferDto: CreateCurrentOfferDto) {
         return this.currentOfferService.create(createCurrentOfferDto);
@@ -33,7 +33,7 @@ export class CurrentOfferController {
     }
 
     @Patch(':id')
-    @FormDataRequest({ storage: MemoryStoredFile })
+    @FormDataRequest({ storage: FileSystemStoredFile })
     @UsePipes(new ValidationPipe({ whitelist: true }))
     @ApiConsumes('multipart/form-data')
     update(@Param('id') id: string, @Body() updateCurrentOfferDto: UpdateCurrentOfferDto) {
