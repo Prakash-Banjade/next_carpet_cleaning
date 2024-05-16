@@ -1,9 +1,9 @@
-# Rebel Cleaning Backend Documentation
+# Next Carpet Cleaning Backend Documentation
 
-Welcome to the documentation for Rebel Cleaning's backend application. This application serves as the backend for managing content related to Rebel Cleaning, an Australian-based carpet cleaning company.
+Welcome to the documentation for Next Carpet Cleaning's backend application. This application serves as the backend for managing content related to Next Carpet Cleaning, an Australian-based carpet cleaning company.
 
 ## Table of Contents
-- [Rebel Cleaning Backend Documentation](#rebel-cleaning-backend-documentation)
+- [Next Carpet Cleaning Backend Documentation](#rebel-cleaning-backend-documentation)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Routes](#routes)
@@ -14,7 +14,7 @@ Welcome to the documentation for Rebel Cleaning's backend application. This appl
 
 ## Introduction
 
-The Rebel Cleaning backend application is built using Nest.js, a progressive Node.js framework. It provides a set of routes for managing content such as services, testimonials, gallery, and blog posts for Rebel Cleaning's website.
+The Next Carpet Cleaning backend application is built using Nest.js, a progressive Node.js framework. It provides a set of routes for managing content such as services, testimonials, gallery, and blog posts for Next Carpet Cleaning's website.
 
 ## Routes
 
@@ -28,19 +28,19 @@ The Rebel Cleaning backend application is built using Nest.js, a progressive Nod
 
 ### Content Management Routes (public)
 
-- **GET /services**: Retrieve all carpet cleaning services offered by Rebel Cleaning.
+- **GET /services**: Retrieve all carpet cleaning services offered by Next Carpet Cleaning.
 - **GET /blog**: Retrieve all blog posts related to carpet cleaning tips, news, and updates.
 - **GET /testimonials**: Retrieve all testimonials from satisfied customers.
-- **GET /members**: Retrieve all members working at Rebel Cleaning.
+- **GET /members**: Retrieve all members working at Next Carpet Cleaning.
 - **GET /contact**: Retrieve the contact informations.
-- **GET /faq**: Retrieve all the frequently asked questions with their answers related to Rebel Cleaning.
+- **GET /faq**: Retrieve all the frequently asked questions with their answers related to Next Carpet Cleaning.
 - **GET /gallery**: Retrieve gallery posts.  
 And other private routes.
 
 ## Contributing
 
-This project is not open to external contributions. Only authorized developers within Rebel Cleaning have access to modify or extend the backend application. If you have suggestions or improvements, please contact the development team at [Rebel Cleaning](mailto:rebelcleaningaus@gmail.com) for consideration.
+This project is not open to external contributions. Only authorized developers within Next Carpet Cleaning have access to modify or extend the backend application. If you have suggestions or improvements, please contact the development team at [Next Carpet Cleaning](mailto:rebelcleaningaus@gmail.com) for consideration.
 
 ## License
 
-This project is proprietary to Rebel Cleaning. Unauthorized use, reproduction, or distribution of this codebase is prohibited. For inquiries regarding the use of this software, please contact [Rebel Cleaning](mailto:rebelcleaningaus@gmail.com).
+This project is proprietary to Next Carpet Cleaning. Unauthorized use, reproduction, or distribution of this codebase is prohibited. For inquiries regarding the use of this software, please contact [Next Carpet Cleaning](mailto:rebelcleaningaus@gmail.com).
