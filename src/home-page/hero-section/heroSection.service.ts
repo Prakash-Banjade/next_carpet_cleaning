@@ -31,7 +31,7 @@ export class HeroSectionService {
     Object.assign(existingheroData[0], {
       title: heroSectionDto.title,
       subtitle: heroSectionDto.subtitle,
-      content: heroSectionDto.description,
+      description: heroSectionDto.description,
       image,
     })
 
