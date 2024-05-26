@@ -8,7 +8,7 @@ export class Service extends BaseEntity {
   @Column({ type: 'text', unique: true })
   title: string;
 
-  @Column()
+  @Column({ type: 'longtext' })
   content: string;
 
   @Column({ nullable: true, type: 'text' })

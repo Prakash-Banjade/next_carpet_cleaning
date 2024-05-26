@@ -6,6 +6,6 @@ export class PricingOffer extends BaseEntity {
     @Column({ type: 'text' })
     title: string;
 
-    @Column({ type: 'text' })
+    @Column({ type: 'longtext' })
     description: string;
 }

@@ -6,6 +6,6 @@ export class Faq extends BaseEntity {
   @Column({ type: 'text' })
   question: string;
 
-  @Column()
+  @Column({ type: 'longtext' })
   answer: string;
 }

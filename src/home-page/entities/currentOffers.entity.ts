@@ -6,7 +6,7 @@ export class CurrentOffer extends BaseEntity {
     @Column({ type: 'text' })
     title: string
 
-    @Column({ type: 'text' })
+    @Column({ type: 'longtext' })
     description: string
 
     @Column({ type: 'text', nullable: true })

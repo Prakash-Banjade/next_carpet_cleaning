@@ -9,6 +9,6 @@ export class TopQuality extends BaseEntity {
     @Column()
     title: string;
 
-    @Column()
+    @Column({ type: 'longtext' })
     description: string;
 }

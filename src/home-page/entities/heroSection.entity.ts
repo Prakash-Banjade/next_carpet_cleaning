@@ -9,7 +9,7 @@ export class HeroSection extends BaseEntity {
     @Column()
     subtitle: string;
 
-    @Column()
+    @Column({ type: 'longtext' })
     description: string;
 
     @Column()

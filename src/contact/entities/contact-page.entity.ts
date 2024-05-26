@@ -9,7 +9,7 @@ export class ContactPage extends BaseEntity {
     @Column()
     title: string;
 
-    @Column()
+    @Column({ type: 'longtext' })
     content: string;
 
 }

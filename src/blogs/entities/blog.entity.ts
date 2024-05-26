@@ -7,7 +7,7 @@ export class Blog extends BaseEntity {
   @Column({ type: 'text' })
   title: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'longtext' })
   content: string;
 
   @Column({ nullable: true })
