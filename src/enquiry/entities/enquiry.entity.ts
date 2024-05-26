@@ -12,6 +12,6 @@ export class Enquiry extends BaseEntity {
   @Column({ type: 'text' })
   phone: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'longtext' })
   message: string;
 }

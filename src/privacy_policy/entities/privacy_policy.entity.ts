@@ -6,6 +6,6 @@ export class PrivacyPolicy extends BaseEntity {
     @Column()
     title: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'longtext' })
     content: string;
 }
